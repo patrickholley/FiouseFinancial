@@ -7,7 +7,7 @@ export default class App extends React.Component {
   render() {
     return (
       <Router>
-        <Stack key="root">
+        <Stack key="root" hideNavBar>
           <Scene key="login" component={LoginContainer} title="Login" />
         </Stack>
       </Router>
