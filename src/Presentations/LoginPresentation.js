@@ -1,7 +1,8 @@
 import React from 'react';
-import { Button, TextInput, View } from 'react-native';
+import { Text, TextInput, TouchableOpacity, View } from 'react-native';
+import styled from 'styled-components';
 
-import firebase from 'react-native-firebase';
+import Button from '../Components/Button';
 
 export default class LoginPresentation extends React.PureComponent {
   constructor() {
@@ -12,19 +13,11 @@ export default class LoginPresentation extends React.PureComponent {
   }
 
   render() {
-    const styles = {
-      button: {
-        height: "50%",
-        width: "50%",
-      },
-    }
-
     return (
       <View>
         <TextInput placeholder="Username" />
         <TextInput placeholder="Password" />
-        <Button title="Need an account?" color="darkslategrey" styles={styles.button} />
-        <Button title="Forgot your password?" color="darkgreen" styles={styles.button} />
+        <Button backgroundColor="darkgreen" color="white" text="Need an account?" />
       </View>
     );
   }
