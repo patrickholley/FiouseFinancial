@@ -1,11 +1,9 @@
 import React from 'react';
-import { Image, Text, TextInput, TouchableOpacity, ScrollView, View } from 'react-native';
+import { ScrollView } from 'react-native';
 import styled from 'styled-components';
 import { Actions } from 'react-native-router-flux';
-
-import FButton from '../Components/FButton';
-import FCredentialsForm from '../Components/FCredentialsForm';
-import colors from '../constants/colors';
+import FButton from '../FiouseUI/FButton';
+import FCredentialsForm from '../FiouseUI/FCredentialsForm';
 
 const AppNameText = styled.Text`
 color: darkgoldenrod;
@@ -46,20 +44,7 @@ export default class LoginPresentation extends React.PureComponent {
           <AppNameText>
             Financial Assistant
           </AppNameText>
-          <FCredentialsForm />
-          <FButton
-            backgroundColor="darkgoldenrod"
-            textColor="white"
-            text="Login"
-            buttonStyles={{
-              margin: 20,
-              width: '60%',
-              height: 54
-            }}
-            textStyles={{
-              fontSize: 24
-            }}
-          />
+          <FCredentialsForm submitText="Login" />
           <FButton
             backgroundColor="darkgreen"
             textColor="white"
@@ -68,6 +53,7 @@ export default class LoginPresentation extends React.PureComponent {
               marginBottom: 10,
               width: '60%',
             }}
+            onPress={() => Actions.resetPassword()}
           />
           <FButton
             backgroundColor="darkslategrey"

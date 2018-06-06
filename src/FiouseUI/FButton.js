@@ -1,8 +1,7 @@
 import React from 'react';
-import { Text, TextInput, TouchableOpacity, View } from 'react-native';
 import styled from 'styled-components';
 
-const ButtonWrapper = styled.TouchableOpacity`
+const ButtonTouchableOpacity = styled.TouchableOpacity`
   backgroundColor: ${props => props.backgroundColor};
   height: 36;
   borderRadius: 3;
@@ -11,7 +10,7 @@ const ButtonWrapper = styled.TouchableOpacity`
   alignItems: center;
 `;
 
-const ButtonContent = styled.Text`
+const ButtonText = styled.Text`
   color: ${props => props.color};
   fontSize: 16;
   fontWeight: bold,
@@ -20,18 +19,18 @@ const ButtonContent = styled.Text`
 export default class FButton extends React.PureComponent {
   render() {
     return (
-      <ButtonWrapper
+      <ButtonTouchableOpacity
         backgroundColor={this.props.backgroundColor}
         onPress={this.props.onPress}
         style={this.props.buttonStyles}
       >
-        <ButtonContent
+        <ButtonText
           color={this.props.textColor}
           style={this.props.textStyles}
         >
           {this.props.text.toUpperCase()}
-        </ButtonContent>
-      </ButtonWrapper>
+        </ButtonText>
+      </ButtonTouchableOpacity>
     );
   }
 }

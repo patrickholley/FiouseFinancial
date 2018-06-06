@@ -1,5 +1,4 @@
 import React from 'react';
-import { TextInput, View } from 'react-native';
 import styled from 'styled-components';
 
 const WrapperView = styled.View`
