@@ -6,54 +6,59 @@ import { Actions } from 'react-native-router-flux';
 import FButton from '../Components/FButton';
 import colors from '../constants/colors';
 
+const AppNameText = styled.Text`
+  fontSize: 24;
+  color: darkgoldenrod;
+  fontWeight: bold;
+  marginBottom: 20;
+`;
+
+const CopyrightText = styled.Text`
+  margin: 10px;
+`;
+
+const CredentialTextInput = styled.TextInput`
+  fontSize: 20;
+  width: 90%;
+`;
+
+const FooterView = styled.View`
+  flex: 1;
+`;
+
+const LoginView = styled.View`
+  display: flex;
+  flex: 1;
+  alignItems: center;
+`;
+
+const LogoImage = styled.Image`
+  height: 150;
+  margin: 10px;
+  borderRadius: 150;
+`;
+
 export default class LoginPresentation extends React.PureComponent {
   render() {
-    const styles = {
-      input: {
-        fontSize: 20,
-        width: '90%',
-      },
-    };
-
     return (
       <ScrollView contentContainerStyle={{flexGrow: 1}}>
-        <View
-          style={{
-            display: 'flex',
-            flex: 1,
-            alignItems: 'center',
-          }}
-        >
-          <Image
+        <LoginView>
+          <LogoImage
             source={require('../../assets/fiouse-short.jpg')}
             resizeMode="center"
-            style={{
-              height: 150,
-              margin: 10,
-              borderRadius: 150,
-            }}
           />
-          <Text
-            style={{
-              fontSize: 24,
-              color: 'darkgoldenrod',
-              fontWeight: 'bold',
-              marginBottom: 20,
-            }}
-          >
+          <AppNameText>
             Financial Assistant
-          </Text>
-          <TextInput
+          </AppNameText>
+          <CredentialTextInput
             placeholder="Username"
             selectionColor="darkslategrey"
-            style={styles.input}
             underlineColorAndroid="darkslategrey"
           />
-          <TextInput
+          <CredentialTextInput
             placeholder="Password"
             secureTextEntry
             selectionColor="darkslategrey"
-            style={styles.input}
             underlineColorAndroid="darkslategrey"
           />
           <FButton
@@ -87,15 +92,11 @@ export default class LoginPresentation extends React.PureComponent {
             }}
             onPress={() => Actions.newAccount()}
           />
-          <View style={{ flex: 1 }} />
-          <Text
-            style={{
-              margin: 10,
-            }}
-          >
+          <FooterView />
+          <CopyrightText>
             Copyright {'\u00A9'} 2018 Patrick Holley
-          </Text>
-        </View>
+          </CopyrightText>
+        </LoginView>
       </ScrollView>
     );
   }

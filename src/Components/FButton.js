@@ -2,23 +2,23 @@ import React from 'react';
 import { Text, TextInput, TouchableOpacity, View } from 'react-native';
 import styled from 'styled-components';
 
+const ButtonWrapper = styled.TouchableOpacity`
+  backgroundColor: ${props => props.backgroundColor};
+  height: 36;
+  borderRadius: 3;
+  display: flex;
+  justifyContent: center;
+  alignItems: center;
+`;
+
+const ButtonContent = styled.Text`
+  color: ${props => props.color};
+  fontSize: 16;
+  fontWeight: bold,
+`;
+
 export default class Button extends React.PureComponent {
   render() {
-    const ButtonWrapper = styled.TouchableOpacity`
-      backgroundColor: ${props => props.backgroundColor};
-      height: 36;
-      borderRadius: 3;
-      display: flex;
-      justifyContent: center;
-      alignItems: center;
-    `;
-
-    const ButtonContent = styled.Text`
-      color: ${props => props.color};
-      fontSize: 16;
-      fontWeight: bold,
-    `;
-
     return (
       <ButtonWrapper
         backgroundColor={this.props.backgroundColor}

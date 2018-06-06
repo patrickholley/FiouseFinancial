@@ -7,13 +7,6 @@ import colors from '../constants/colors';
 
 export default class LoginPresentation extends React.PureComponent {
   render() {
-    const styles = {
-      input: {
-        fontSize: 20,
-        width: '90%',
-      },
-    };
-
     return (
       <View>
         <Text>
