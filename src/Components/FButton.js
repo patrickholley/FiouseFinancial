@@ -17,7 +17,7 @@ const ButtonContent = styled.Text`
   fontWeight: bold,
 `;
 
-export default class Button extends React.PureComponent {
+export default class FButton extends React.PureComponent {
   render() {
     return (
       <ButtonWrapper

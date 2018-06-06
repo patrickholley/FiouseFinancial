@@ -4,11 +4,12 @@ import styled from 'styled-components';
 import { Actions } from 'react-native-router-flux';
 
 import FButton from '../Components/FButton';
+import FCredentialsForm from '../Components/FCredentialsForm';
 import colors from '../constants/colors';
 
 const AppNameText = styled.Text`
+color: darkgoldenrod;
   fontSize: 24;
-  color: darkgoldenrod;
   fontWeight: bold;
   marginBottom: 20;
 `;
@@ -17,25 +18,20 @@ const CopyrightText = styled.Text`
   margin: 10px;
 `;
 
-const CredentialTextInput = styled.TextInput`
-  fontSize: 20;
-  width: 90%;
-`;
-
 const FooterView = styled.View`
   flex: 1;
 `;
 
 const LoginView = styled.View`
+  alignItems: center;
   display: flex;
   flex: 1;
-  alignItems: center;
 `;
 
 const LogoImage = styled.Image`
+  borderRadius: 150;
   height: 150;
   margin: 10px;
-  borderRadius: 150;
 `;
 
 export default class LoginPresentation extends React.PureComponent {
@@ -50,17 +46,7 @@ export default class LoginPresentation extends React.PureComponent {
           <AppNameText>
             Financial Assistant
           </AppNameText>
-          <CredentialTextInput
-            placeholder="Username"
-            selectionColor="darkslategrey"
-            underlineColorAndroid="darkslategrey"
-          />
-          <CredentialTextInput
-            placeholder="Password"
-            secureTextEntry
-            selectionColor="darkslategrey"
-            underlineColorAndroid="darkslategrey"
-          />
+          <FCredentialsForm />
           <FButton
             backgroundColor="darkgoldenrod"
             textColor="white"
