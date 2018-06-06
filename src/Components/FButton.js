@@ -15,7 +15,7 @@ export default class Button extends React.PureComponent {
 
     const ButtonContent = styled.Text`
       color: ${props => props.color};
-      fontSize: 14;
+      fontSize: 16;
       fontWeight: bold,
     `;
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Image, Text, TextInput, TouchableOpacity, ScrollView, View } from 'react-native';
 import styled from 'styled-components';
+import { Actions } from 'react-native-router-flux';
 
 import FButton from '../Components/FButton';
 import colors from '../constants/colors';
@@ -10,7 +11,7 @@ export default class LoginPresentation extends React.PureComponent {
     const styles = {
       input: {
         fontSize: 20,
-        width: '80%',
+        width: '90%',
       },
     };
 
@@ -56,22 +57,35 @@ export default class LoginPresentation extends React.PureComponent {
             underlineColorAndroid="darkslategrey"
           />
           <FButton
+            backgroundColor="darkgoldenrod"
+            textColor="white"
+            text="Login"
+            buttonStyles={{
+              margin: 20,
+              width: '60%',
+              height: 54
+            }}
+            textStyles={{
+              fontSize: 24
+            }}
+          />
+          <FButton
             backgroundColor="darkgreen"
             textColor="white"
             text="Forgot your password?"
             buttonStyles={{
-              margin: 10,
+              marginBottom: 10,
               width: '60%',
             }}
           />
           <FButton
-            backgroundColor="darkgoldenrod"
+            backgroundColor="darkslategrey"
             textColor="white"
             text="Need an account?"
             buttonStyles={{
-              marginTop: 10,
               width: '60%',
             }}
+            onPress={() => Actions.newAccount()}
           />
           <View style={{ flex: 1 }} />
           <Text
