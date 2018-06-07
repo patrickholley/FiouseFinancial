@@ -9,6 +9,7 @@ export default class ResetPasswordPresentation extends React.PureComponent {
         <FCredentialsForm
           noPassword
           submitText="Reset Password"
+          buttonStyles={{width: '100%'}}
         />
       </View>
     );

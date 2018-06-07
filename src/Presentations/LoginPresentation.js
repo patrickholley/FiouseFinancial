@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { Actions } from 'react-native-router-flux';
 import FButton from '../FiouseUI/FButton';
 import FCredentialsForm from '../FiouseUI/FCredentialsForm';
+import colors from '../constants/colors';
 
 const AppNameText = styled.Text`
 color: darkgoldenrod;
@@ -38,15 +39,16 @@ export default class LoginPresentation extends React.PureComponent {
       <ScrollView contentContainerStyle={{flexGrow: 1}}>
         <LoginView>
           <LogoImage
-            source={require('../../assets/fiouse-short.jpg')}
+            source={require('../../assets/fiouse_logo.png')}
             resizeMode="center"
           />
+          {/* Raleway font? */}
           <AppNameText>
             Financial Assistant
           </AppNameText>
-          <FCredentialsForm submitText="Login" />
+          <FCredentialsForm submitText="Login" buttonStyles={{ width: '60%' }} />
           <FButton
-            backgroundColor="darkgreen"
+            backgroundColor={colors[2]}
             textColor="white"
             text="Forgot your password?"
             buttonStyles={{
@@ -56,7 +58,7 @@ export default class LoginPresentation extends React.PureComponent {
             onPress={() => Actions.resetPassword()}
           />
           <FButton
-            backgroundColor="darkslategrey"
+            backgroundColor={colors[0]}
             textColor="white"
             text="Need an account?"
             buttonStyles={{
@@ -65,6 +67,7 @@ export default class LoginPresentation extends React.PureComponent {
             onPress={() => Actions.newAccount()}
           />
           <FooterView />
+          {/* Add Shaylee as Design Aid */}
           <CopyrightText>
             Copyright {'\u00A9'} 2018 Patrick Holley
           </CopyrightText>
