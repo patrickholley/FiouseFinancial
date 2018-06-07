@@ -4,6 +4,8 @@ import AccountAccessContainer from './Containers/AccountAccessContainer';
 
 export default class App extends React.Component {
   render() {
+    console.disableYellowBox = true;
+
     return (
       <Router>
         <Stack key="root">

@@ -19,7 +19,15 @@ export default class FForm extends React.PureComponent {
   generateFields() {
     const FFormFields = [];
     this.props.fields.forEach(field => {
-      FFormFields.push(<FFormField key={field} placeholder={field} />);
+      FFormFields.push(
+        <FFormField
+          key={field.placeholder}
+          keyboardType={field.keyboardType}
+          autoCapitalize={field.autoCapitalize}
+          placeholder={field.placeholder}
+          secureTextEntry={field.isSecure}
+        />
+      );
     });
     return FFormFields;
   }
