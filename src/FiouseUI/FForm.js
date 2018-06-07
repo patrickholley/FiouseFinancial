@@ -1,6 +1,6 @@
 import React from 'react';
 import FButton from './FButton';
-import FCredentialsField from './FCredentialsField';
+import FFormField from './FFormField';
 import FWrapper from './FWrapper';
 import colors from '../constants/colors';
 
@@ -15,25 +15,28 @@ const defaultStyles = {
   }
 }
 
-export default class FCredentialsForm extends React.PureComponent {
+export default class FForm extends React.PureComponent {
+  generateFields() {
+    const FFormFields = [];
+    this.props.fields.forEach(field => {
+      FFormFields.push(<FFormField key={field} placeholder={field} />);
+    });
+    return FFormFields;
+  }
+
   render() {
     return (
       <FWrapper>
-        <FCredentialsField placeholder="Username" />
-        {this.props.requireEmail && <FCredentialsField placeholder="Email Address" />}
-        {!this.props.noPassword && <FCredentialsField placeholder="Password" secureTextEntry />}
-        {!this.props.noPassword
-          && this.props.confirmPassword
-          && <FCredentialsField placeholder="Confirm Password" secureTextEntry />}
+        {this.generateFields()}
         <FButton
           backgroundColor={colors[3]}
           textColor="white"
           text={this.props.submitText.toUpperCase()}
-          buttonStyles={Object.assign(
+          buttonStyles={Object.assign({},
             defaultStyles.button,
             this.props.buttonStyles
           )}
-          textStyles={Object.assign(
+          textStyles={Object.assign({},
             defaultStyles.buttonText,
             this.props.buttonTextStyles
           )}

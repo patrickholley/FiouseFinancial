@@ -1,15 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const CredentialsTextInput = styled.TextInput`
+const FieldTextInput = styled.TextInput`
   fontSize: 20;
   width: 90%;
 `;
 
-export default class FCredentialsField extends React.PureComponent {
+export default class FFormField extends React.PureComponent {
   render() {
     return (
-      <CredentialsTextInput
+      <FieldTextInput
         placeholder={this.props.placeholder}
         secureTextEntry={this.props.secureTextEntry}
         selectionColor="darkslategrey"
