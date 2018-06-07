@@ -1,6 +1,7 @@
 import React from 'react';
 import { Router, Scene, Stack } from 'react-native-router-flux';
 import AccountAccessContainer from './Containers/AccountAccessContainer';
+import HomeContainer from './Containers/HomeContainer';
 
 export default class App extends React.Component {
   render() {
@@ -15,6 +16,12 @@ export default class App extends React.Component {
             formType="login"
             component={AccountAccessContainer}
             title="Login"
+          />
+          <Scene
+            hideNavBar
+            key="home"
+            component={HomeContainer}
+            title="Home"
           />
         </Stack>
       </Router>

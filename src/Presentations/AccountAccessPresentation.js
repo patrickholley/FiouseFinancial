@@ -27,6 +27,10 @@ const HeaderText = styled.Text`
   fontWeight: bold;
 `;
 
+const HeaderMarginView = styled.View`
+  marginBottom: 20px;
+`;
+
 const LargeLogoImage = styled.Image`
   borderRadius: 150;
   height: 150;
@@ -44,39 +48,10 @@ const SubheaderText = styled.Text`
   fontSize: 16;
   fontStyle: italic;
   textAlign: center;
-  marginBottom: 20px;
 `;
 
 export default class AccountAccessPresentation extends React.PureComponent {
-  formValues = {
-    login: {
-      fields: [
-        { placeholder: 'Email', keyboardType: 'email-address' },
-        { placeholder: 'Password', isSecure: true },
-      ],
-      headerText: 'Financial Assistant',
-      submitText: 'Login',
-    },
-    resetPassword: {
-      fields: [
-        { placeholder: 'Email', keyboardType: 'email-address' },
-      ],
-      headerText: 'Reset Password',
-      subheaderText: 'Please enter the email address associated with your account below.',
-      submitText: 'Submit',
-    },
-    createAccount: {
-      fields: [
-        { placeholder: 'Email', keyboardType: 'email-address' },
-        { placeholder: 'Confirm Email', keyboardType: 'email-address' },
-        { placeholder: 'Password', isSecure: true },
-        { placeholder: 'Confirm Password', isSecure: true },
-      ],
-      headerText: 'Create New Account',
-      subheaderText: 'Your email address will be used for authentication, technical support, and password recovery only',
-      submitText: 'Submit',
-    },
-  };
+
 
   render() {
     const resetPasswordParams = {
@@ -89,8 +64,7 @@ export default class AccountAccessPresentation extends React.PureComponent {
       hideNavBar: false,
       title: 'Create New Account',
     };
-    const { formType } = this.props;
-    const isLoginForm = formType === 'login';
+    const { isLoginForm } = this.props;
 
     return (
       <ScrollView contentContainerStyle={{flexGrow: 1}}>
@@ -105,16 +79,19 @@ export default class AccountAccessPresentation extends React.PureComponent {
                 resizeMode="center"
               />}
           <HeaderText>
-            {this.formValues[formType].headerText}
+            {this.props.formValues.headerText}
           </HeaderText>
           {!isLoginForm
             ? <SubheaderText>
-                {this.formValues[formType].subheaderText}
+                {this.props.formValues.subheaderText}
               </SubheaderText>
             : <View />}
+          <HeaderMarginView />
           <FForm
-            fields={this.formValues[formType].fields}
-            submitText={this.formValues[formType].submitText}
+            fields={this.props.formValues.fields}
+            onFieldChange={this.props.onFieldChange}
+            onFormSubmit={this.props.onFormSubmit}
+            submitText={this.props.formValues.submitText}
             buttonStyles={{ width: '60%' }}
           />
           {isLoginForm ? [
@@ -126,7 +103,7 @@ export default class AccountAccessPresentation extends React.PureComponent {
                 marginBottom: 10,
                 width: '60%',
               }}
-              onPress={() => Actions.accountAccess(resetPasswordParams)}
+              onPress={() => Actions.push('accountAccess', resetPasswordParams)}
             />,
             <FButton
               backgroundColor={colors[0]}
@@ -135,7 +112,7 @@ export default class AccountAccessPresentation extends React.PureComponent {
               buttonStyles={{
                 width: '60%',
               }}
-              onPress={() => Actions.accountAccess(createAccountParams)}
+              onPress={() => Actions.push('accountAccess', createAccountParams)}
             />
           ] : <View />}
           <FooterView />

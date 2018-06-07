@@ -13,6 +13,7 @@ export default class FFormField extends React.PureComponent {
       <FieldTextInput
         autoCapitalize={this.props.autoCapitalize || 'none'}
         keyboardType={this.props.keyboardType}
+        onChangeText={this.props.onChangeText}
         placeholder={this.props.placeholder}
         secureTextEntry={this.props.secureTextEntry}
         selectionColor={colors[2]}

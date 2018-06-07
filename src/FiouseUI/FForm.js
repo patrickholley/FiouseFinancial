@@ -18,12 +18,15 @@ const defaultStyles = {
 export default class FForm extends React.PureComponent {
   generateFields() {
     const FFormFields = [];
-    this.props.fields.forEach(field => {
+    Object.keys(this.props.fields).forEach(fieldId => {
+      const field = this.props.fields[fieldId];
+
       FFormFields.push(
         <FFormField
-          key={field.placeholder}
-          keyboardType={field.keyboardType}
+          key={fieldId}
           autoCapitalize={field.autoCapitalize}
+          keyboardType={field.keyboardType}
+          onChangeText={(...args) => { this.props.onFieldChange(fieldId, ...args); }}
           placeholder={field.placeholder}
           secureTextEntry={field.isSecure}
         />
@@ -32,12 +35,17 @@ export default class FForm extends React.PureComponent {
     return FFormFields;
   }
 
+  validateForm() {
+    return true;
+  }
+
   render() {
     return (
       <FWrapper>
         {this.generateFields()}
         <FButton
           backgroundColor={colors[3]}
+          onPress={() => { this.props.onFormSubmit(this.validateForm()); }}
           textColor="white"
           text={this.props.submitText.toUpperCase()}
           buttonStyles={Object.assign({},
