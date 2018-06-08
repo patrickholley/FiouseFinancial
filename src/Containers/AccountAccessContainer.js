@@ -10,8 +10,8 @@ export default class AccountAccessContainer extends React.Component {
 
     const { formType } = Actions.currentParams;
     const formValues = allFormsValues[formType];
-    Object.keys(formValues.fields).forEach(field => {
-      formValues.fields[field].value = '';
+    Object.keys(formValues.fields).forEach(fieldId => {
+      formValues.fields[fieldId].value = '';
     });
 
     this.state = {
@@ -20,12 +20,16 @@ export default class AccountAccessContainer extends React.Component {
     };
   }
 
-  onFieldChange(fieldId, ...args) {
-    Alert.alert(fieldId, args[0]);
+  onFieldChange = (fieldId, updatedValue) => {
+    const { formValues } = this.state;
+    formValues.fields[fieldId].value = updatedValue;
+    this.setState({ formValues });
   }
 
-  onFormSubmit(isFormValid) {
-    Alert.alert(isFormValid);
+  onFormSubmit = () => {
+    const { fields } = this.state.formValues;
+    const isFormValid = Object.keys(fields).every(fieldId => fields[fieldId].value !== '');
+    Alert.alert(`${isFormValid}`);
   }
 
   render() {

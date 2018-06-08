@@ -26,7 +26,7 @@ export default class FForm extends React.PureComponent {
           key={fieldId}
           autoCapitalize={field.autoCapitalize}
           keyboardType={field.keyboardType}
-          onChangeText={(...args) => { this.props.onFieldChange(fieldId, ...args); }}
+          onChangeText={(updatedValue) => { this.props.onFieldChange(fieldId, updatedValue); }}
           placeholder={field.placeholder}
           secureTextEntry={field.isSecure}
         />
@@ -45,7 +45,7 @@ export default class FForm extends React.PureComponent {
         {this.generateFields()}
         <FButton
           backgroundColor={colors[3]}
-          onPress={() => { this.props.onFormSubmit(this.validateForm()); }}
+          onPress={this.props.onFormSubmit}
           textColor="white"
           text={this.props.submitText.toUpperCase()}
           buttonStyles={Object.assign({},
