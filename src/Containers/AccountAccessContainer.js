@@ -39,10 +39,10 @@ export default class AccountAccessContainer extends React.Component {
     this.setState({ formValues });
   }
 
-  onFormSubmit = (callback) => {
+  onFormSubmit = () => {
     const { fields } = this.state.formValues;
     const emptyFields = Object.keys(fields).filter(fieldId => fields[fieldId].value === '');
-    if (emptyFields.length > 0) this.postSubheader(callback, 'Please fill all required fields');
+    if (emptyFields.length > 0) this.postSubheader('Please fill all required fields');
   }
 
   render() {
