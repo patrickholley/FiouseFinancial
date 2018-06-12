@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, View } from 'react-native';
+import { Animated, ScrollView, View } from 'react-native';
 import styled from 'styled-components';
 import { Actions } from 'react-native-router-flux';
 import FButton from '../FiouseUI/FButton';
@@ -27,10 +27,6 @@ const HeaderText = styled.Text`
   fontWeight: bold;
 `;
 
-const HeaderMarginView = styled.View`
-  marginBottom: 20px;
-`;
-
 const LargeLogoImage = styled.Image`
   borderRadius: 150;
   height: 150;
@@ -43,15 +39,15 @@ const SmallLogoImage = styled.Image`
   margin: 10px;
 `;
 
-const SubheaderText = styled.Text`
-  color: ${colors[2]};
+const SubheaderAnimatedText = Animated.createAnimatedComponent(styled.Text`
+  color: ${props => props.error ? 'red' : colors[2]};
   fontSize: 16;
   fontStyle: italic;
+  height: 40px;
   textAlign: center;
-`;
+`);
 
 export default class AccountAccessPresentation extends React.PureComponent {
-
 
   render() {
     const resetPasswordParams = {
@@ -64,7 +60,8 @@ export default class AccountAccessPresentation extends React.PureComponent {
       hideNavBar: false,
       title: 'Create New Account',
     };
-    const { isLoginForm } = this.props;
+
+    const { formValues, isLoginForm, onFieldChange, onFormSubmit } = this.props;
 
     return (
       <ScrollView contentContainerStyle={{flexGrow: 1}}>
@@ -79,19 +76,19 @@ export default class AccountAccessPresentation extends React.PureComponent {
                 resizeMode="center"
               />}
           <HeaderText>
-            {this.props.formValues.headerText}
+            {formValues.headerText}
           </HeaderText>
-          {!isLoginForm
-            ? <SubheaderText>
-                {this.props.formValues.subheaderText}
-              </SubheaderText>
-            : <View />}
-          <HeaderMarginView />
+          <SubheaderAnimatedText
+            error={formValues.error}
+            style={{ opacity: this.props.fadeAnim }}
+          >
+            {formValues.subheaderText}
+          </SubheaderAnimatedText>
           <FForm
-            fields={this.props.formValues.fields}
-            onFieldChange={this.props.onFieldChange}
-            onFormSubmit={this.props.onFormSubmit}
-            submitText={this.props.formValues.submitText}
+            fields={formValues.fields}
+            onFieldChange={onFieldChange}
+            onFormSubmit={onFormSubmit}
+            submitText={formValues.submitText}
             buttonStyles={{ width: '60%' }}
           />
           {isLoginForm ? [

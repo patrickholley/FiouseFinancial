@@ -12,10 +12,10 @@ export default class FFormField extends React.PureComponent {
     return (
       <FieldTextInput
         autoCapitalize={this.props.autoCapitalize || 'none'}
-        keyboardType={this.props.keyboardType}
+        keyboardType={this.props.type === 'email' ? 'email-address' : 'default'}
         onChangeText={this.props.onChangeText}
         placeholder={this.props.placeholder}
-        secureTextEntry={this.props.secureTextEntry}
+        secureTextEntry={this.props.type === 'password'}
         selectionColor={colors[2]}
         underlineColorAndroid={colors[2]}
       />

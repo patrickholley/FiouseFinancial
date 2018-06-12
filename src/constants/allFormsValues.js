@@ -1,15 +1,16 @@
 export default allFormsValues = {
   login: {
     fields: {
-      email: { placeholder: 'Email', keyboardType: 'email-address' },
-      password: { placeholder: 'Password', isSecure: true },
+      email: { placeholder: 'Email', type: 'email' },
+      password: { placeholder: 'Password', type: 'password' },
     },
     headerText: 'Financial Assistant',
+    subheaderText: '',
     submitText: 'Login',
   },
   resetPassword: {
     fields: {
-      email: { placeholder: 'Email', keyboardType: 'email-address' },
+      email: { placeholder: 'Email', type: 'email' },
     },
     headerText: 'Reset Password',
     subheaderText: 'Please enter the email address associated with your account below.',
@@ -17,10 +18,10 @@ export default allFormsValues = {
   },
   createAccount: {
     fields: {
-      email: { placeholder: 'Email', keyboardType: 'email-address' },
-      confirmEmail: { placeholder: 'Confirm Email', keyboardType: 'email-address' },
-      password: { placeholder: 'Password', isSecure: true },
-      confirmPassword: { placeholder: 'Confirm Password', isSecure: true },
+      email: { placeholder: 'Email', type: 'email' },
+      confirmEmail: { placeholder: 'Confirm Email', type: 'email' },
+      password: { placeholder: 'Password', type: 'password' },
+      confirmPassword: { placeholder: 'Confirm Password', type: 'password' },
     },
     headerText: 'Create New Account',
     subheaderText: 'Your email address will be used for authentication, technical support, and password recovery only',
