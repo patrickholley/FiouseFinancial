@@ -10,7 +10,6 @@ const AccountAccessView = styled.View`
   alignItems: center;
   display: flex;
   flex: 1;
-  textAlign: center;
 `;
 
 const CopyrightText = styled.Text`
@@ -94,6 +93,7 @@ export default class AccountAccessPresentation extends React.PureComponent {
           {isLoginForm ? [
             <FButton
               backgroundColor={colors[2]}
+              key="resetPassword"
               textColor="white"
               text="Forgot your password?"
               buttonStyles={{
@@ -104,6 +104,7 @@ export default class AccountAccessPresentation extends React.PureComponent {
             />,
             <FButton
               backgroundColor={colors[0]}
+              key="createAccount"
               textColor="white"
               text="Need an account?"
               buttonStyles={{
