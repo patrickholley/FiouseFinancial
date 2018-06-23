@@ -1,30 +1,19 @@
 import React from 'react';
-import { Router, Scene, Stack } from 'react-native-router-flux';
-import AccountAccessContainer from './Containers/AccountAccessContainer';
-import HomeContainer from './Containers/HomeContainer';
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
+import RouterWrapper from './RouterWrapper';
+import reducers from './reducers';
 
 export default class App extends React.Component {
   render() {
     console.disableYellowBox = true;
 
+    const store = createStore(reducers);
+
     return (
-      <Router>
-        <Stack key="root">
-          <Scene
-            hideNavBar
-            key="accountAccess"
-            formType="login"
-            component={AccountAccessContainer}
-            title="Login"
-          />
-          <Scene
-            hideNavBar
-            key="home"
-            component={HomeContainer}
-            title="Home"
-          />
-        </Stack>
-      </Router>
+      <Provider store={store}>
+        <RouterWrapper />
+      </Provider>
     );
   }
 }

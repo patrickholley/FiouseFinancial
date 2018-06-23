@@ -42,7 +42,7 @@ export default class AccountAccessContainer extends React.Component {
   }
 
   onFormSubmit = () => {
-    /* const { fields } = this.state.formValues;
+    const { fields } = this.state.formValues;
     const emptyFields = Object.keys(fields).filter(fieldId => fields[fieldId].value === '');
     if (emptyFields.length > 0) this.postSubheader('Please fill all required fields');
 
@@ -50,20 +50,14 @@ export default class AccountAccessContainer extends React.Component {
 
     let user;
 
-    fAuth.signInAndRetrieveDataWithEmailAndPassword("patrick_holley@outlook.com", "Aureole3907")
-      .then(signInRes => {
-        let user = signInRes.user;
-        user.getIdToken()
-          .then(idRes => {
-            axios.get('http://192.168.0.24:45455/api/lengthtypes/private', {
-                headers: {
-                  Authorization: `Bearer ${idRes}`,
-                }
-              }).then(res => {
-                console.log(res);
-              }).catch(err => console.log(err));
-          });
-      }); */
+      fAuth.signInAndRetrieveDataWithEmailAndPassword("pakarrhoy@gmail.com", "Aureolee3907")
+        .then(signInRes => {
+          user = signInRes.user;
+          console.log(user);
+        }).catch(err => {
+          console.log(err.code);
+          console.log(err.message);
+        });
   }
 
   render() {
