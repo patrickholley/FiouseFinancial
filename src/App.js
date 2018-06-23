@@ -1,16 +1,28 @@
 import React from 'react';
-import { Text, View } from 'react-native';
 import { Router, Scene, Stack } from 'react-native-router-flux';
-import LoginContainer from './Containers/LoginContainer';
-import NewAccountContainer from './Containers/NewAccountContainer';
+import AccountAccessContainer from './Containers/AccountAccessContainer';
+import HomeContainer from './Containers/HomeContainer';
 
 export default class App extends React.Component {
   render() {
+    console.disableYellowBox = true;
+
     return (
       <Router>
         <Stack key="root">
-          <Scene hideNavBar key="login" component={LoginContainer} title="Login" />
-          <Scene key="newAccount" component={NewAccountContainer} title="New Account" />
+          <Scene
+            hideNavBar
+            key="accountAccess"
+            formType="login"
+            component={AccountAccessContainer}
+            title="Login"
+          />
+          <Scene
+            hideNavBar
+            key="home"
+            component={HomeContainer}
+            title="Home"
+          />
         </Stack>
       </Router>
     );
