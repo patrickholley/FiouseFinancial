@@ -28,7 +28,7 @@ export default class FForm extends React.PureComponent {
           keyboardType={field.keyboardType}
           onChangeText={(updatedValue) => { this.props.onFieldChange(fieldId, updatedValue); }}
           placeholder={field.placeholder}
-          secureTextEntry={field.isSecure}
+          type={field.type}
         />
       );
     });

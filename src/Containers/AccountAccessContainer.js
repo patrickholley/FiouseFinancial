@@ -50,9 +50,9 @@ class AccountAccessContainer extends React.Component {
   onFormSubmit = () => {
     const { fields } = this.state.formValues;
     const emptyFields = Object.keys(fields).filter(fieldId => fields[fieldId].value === '');
-    if (emptyFields.length > 0) this.postSubheader('Please fill all required fields');
 
-    this.props.onLogin(fields.email.value, fields.password.value);
+    if (emptyFields.length > 0) this.postSubheader('Please fill all fields');
+    else this.props.onLogin(fields.email.value, fields.password.value);
   }
 
   render() {
