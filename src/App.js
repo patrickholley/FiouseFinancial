@@ -1,14 +1,18 @@
 import React from 'react';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
+import createSagaMiddleware from 'redux-saga';
 import { Provider } from 'react-redux';
 import RouterWrapper from './RouterWrapper';
 import reducers from './reducers';
+import { watcherSaga } from './actions/sagas';
 
 export default class App extends React.Component {
   render() {
     console.disableYellowBox = true;
 
-    const store = createStore(reducers);
+    const sagaMiddleware = createSagaMiddleware();
+    const store = createStore(reducers, applyMiddleware(sagaMiddleware));
+    sagaMiddleware.run(watcherSaga);
 
     return (
       <Provider store={store}>

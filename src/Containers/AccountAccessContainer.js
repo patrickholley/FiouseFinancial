@@ -1,12 +1,14 @@
 import React from 'react';
 import { Animated } from 'react-native';
 import { Actions } from 'react-native-router-flux';
+import { connect } from 'react-redux';
 import firebase from 'react-native-firebase';
 import axios from 'axios';
 import AccountAccessPresentation from '../Presentations/AccountAccessPresentation';
 import allFormsValues from '../constants/allFormsValues';
+import { LOGIN_REQUEST } from '../constants/actions';
 
-export default class AccountAccessContainer extends React.Component {
+class AccountAccessContainer extends React.Component {
   constructor() {
     super();
 
@@ -22,6 +24,10 @@ export default class AccountAccessContainer extends React.Component {
       formValues,
     };
   }
+
+  componentWillUpdate = (newProps) => {
+    console.log(newProps.user);
+  };
 
   postSubheader = (subheaderText) => {
     const { formValues } = this.state;
@@ -46,18 +52,7 @@ export default class AccountAccessContainer extends React.Component {
     const emptyFields = Object.keys(fields).filter(fieldId => fields[fieldId].value === '');
     if (emptyFields.length > 0) this.postSubheader('Please fill all required fields');
 
-    const fAuth = firebase.auth();
-
-    let user;
-
-      fAuth.signInAndRetrieveDataWithEmailAndPassword("pakarrhoy@gmail.com", "Aureolee3907")
-        .then(signInRes => {
-          user = signInRes.user;
-          console.log(user);
-        }).catch(err => {
-          console.log(err.code);
-          console.log(err.message);
-        });
+    this.props.onLogin(fields.email.value, fields.password.value);
   }
 
   render() {
@@ -74,3 +69,19 @@ export default class AccountAccessContainer extends React.Component {
     );
   }
 }
+
+const mapStateToProps = state => {
+  const { user } = state.auth;
+  return { user };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onLogin: (email, password) => dispatch({
+      type: LOGIN_REQUEST,
+      payload: { email, password },
+    }),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(AccountAccessContainer);
