@@ -9,7 +9,6 @@ const FieldTextInput = styled.TextInput`
 
 export default class FFormField extends React.PureComponent {
   render() {
-    console.log(this.props);
     return (
       <FieldTextInput
         autoCapitalize={this.props.autoCapitalize || 'none'}

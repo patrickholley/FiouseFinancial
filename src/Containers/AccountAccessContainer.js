@@ -2,11 +2,10 @@ import React from 'react';
 import { Animated } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
-import firebase from 'react-native-firebase';
-import axios from 'axios';
 import AccountAccessPresentation from '../Presentations/AccountAccessPresentation';
 import allFormsValues from '../constants/allFormsValues';
-import { LOGIN_REQUEST } from '../constants/actions';
+import { CLEAR_ERROR, LOGIN_REQUEST } from '../constants/actions';
+import userFriendlyErrors from '../constants/userFriendlyErrors';
 
 class AccountAccessContainer extends React.Component {
   constructor() {
@@ -26,14 +25,19 @@ class AccountAccessContainer extends React.Component {
   }
 
   componentWillUpdate = (newProps) => {
-    console.log(newProps.user);
+    const { error } = newProps;
+
+    if (error) {
+      this.postSubheader(userFriendlyErrors[error.code], true);
+      this.props.clearError();
+    }
   };
 
-  postSubheader = (subheaderText) => {
+  postSubheader = (subheaderText, isError) => {
     const { formValues } = this.state;
-    formValues.error = true;
+    formValues.error = isError;
     formValues.subheaderText = subheaderText;
-    this.setState({ fadeAnim: new Animated.Value(0), formValues }, () => {
+    this.setState({ fadeAnim: new Animated.Value(0), formValues, }, () => {
       Animated.timing(
         this.state.fadeAnim,
         { toValue: 1, duration: 1000 },
@@ -51,7 +55,7 @@ class AccountAccessContainer extends React.Component {
     const { fields } = this.state.formValues;
     const emptyFields = Object.keys(fields).filter(fieldId => fields[fieldId].value === '');
 
-    if (emptyFields.length > 0) this.postSubheader('Please fill all fields');
+    if (emptyFields.length > 0) this.postSubheader('Please fill all fields', true);
     else this.props.onLogin(fields.email.value, fields.password.value);
   }
 
@@ -71,12 +75,15 @@ class AccountAccessContainer extends React.Component {
 }
 
 const mapStateToProps = state => {
-  const { user } = state.auth;
-  return { user };
+  const { error, user } = state.auth;
+  return { error, user };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
+    clearError: () => dispatch({
+      type: CLEAR_ERROR,
+    }),
     onLogin: (email, password) => dispatch({
       type: LOGIN_REQUEST,
       payload: { email, password },
