@@ -4,7 +4,12 @@ import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import AccountAccessPresentation from '../Presentations/AccountAccessPresentation';
 import allFormsValues from '../constants/allFormsValues';
-import { CLEAR_ERROR, LOGIN_REQUEST } from '../constants/actions';
+import {
+  CREATE_ACCOUNT_REQUEST,
+  CLEAR_AUTH_ERROR,
+  LOGIN_REQUEST,
+  RESET_PASSWORD_REQUEST,
+} from '../constants/actions';
 import userFriendlyErrors from '../constants/userFriendlyErrors';
 
 class AccountAccessContainer extends React.Component {
@@ -25,11 +30,11 @@ class AccountAccessContainer extends React.Component {
   }
 
   componentWillUpdate = (newProps) => {
-    const { error } = newProps;
+    const { authError } = newProps;
 
-    if (error) {
-      this.postSubheader(userFriendlyErrors[error.code], true);
-      this.props.clearError();
+    if (authError) {
+      this.postSubheader(userFriendlyErrors[authError.code], true);
+      this.props.clearAuthError();
     }
   };
 
@@ -56,7 +61,7 @@ class AccountAccessContainer extends React.Component {
     const emptyFields = Object.keys(fields).filter(fieldId => fields[fieldId].value === '');
 
     if (emptyFields.length > 0) this.postSubheader('Please fill all fields', true);
-    else this.props.onLogin(fields.email.value, fields.password.value);
+    else this.props.onDispatchSubmit(fields);
   }
 
   render() {
@@ -75,18 +80,37 @@ class AccountAccessContainer extends React.Component {
 }
 
 const mapStateToProps = state => {
-  const { error, user } = state.auth;
-  return { error, user };
+  const { authError, user } = state.auth;
+  return { authError, user };
 };
 
 const mapDispatchToProps = dispatch => {
+  let submitAction;
+
+  switch(Actions.currentParams.formType) {
+    case 'createAccount':
+      submitAction = NEW_ACCOUNT_REQUEST;
+      break;
+    case 'resetPassword':
+      submitAction = RESET_PASSWORD_REQUEST;
+      break;
+    case 'login':
+      submitAction = LOGIN_REQUEST;
+      break;
+    default:
+      submitAction = null;
+      break;
+  }
+
+  console.log(Actions.currentParams.formType, submitAction);
+
   return {
-    clearError: () => dispatch({
-      type: CLEAR_ERROR,
+    clearAuthError: () => dispatch({
+      type: CLEAR_AUTH_ERROR,
     }),
-    onLogin: (email, password) => dispatch({
-      type: LOGIN_REQUEST,
-      payload: { email, password },
+    onDispatchSubmit: fields => dispatch({
+      type: submitAction,
+      payload: { fields },
     }),
   };
 };
