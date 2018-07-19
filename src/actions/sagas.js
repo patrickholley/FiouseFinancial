@@ -52,23 +52,13 @@ function* newAccountSaga({ payload }) {
 
 function* resetPasswordSaga({ payload }) {
   try {
-    console.log('Reset email', payload.fields.email.value);
-
     const user = yield call(
       [
         firebase.auth(),
         'sendPasswordResetEmail'
       ],
-      payload.fields.email.value,
-      {
-        handleCodeInApp: true,
-        url: 'https://financialassistant-29177.firebaseapp.com',
-        iOS: { bundleId: 'com.fiouse.fiousefinances' },
-        android: { packageName: 'com.fiouse.fiousefinances' },
-      }
+      payload.fields.email.value
     );
-
-    console.log('user', user);
 
     yield put({ type: RESET_PASSWORD_RESPONSE, user });
   } catch (authError) {
