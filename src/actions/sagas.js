@@ -10,11 +10,15 @@ import {
   RESET_PASSWORD_REQUEST,
   RESET_PASSWORD_RESPONSE,
   RESET_PASSWORD_ERROR,
+  LOGOUT_RESPONSE,
+  LOGOUT_ERROR,
+  LOGOUT_REQUEST,
 } from '../constants/actions';
 import firebase from 'react-native-firebase';
 
 export function* watcherSaga() {
   yield takeLatest(LOGIN_REQUEST, loginSaga);
+  yield takeLatest(LOGOUT_REQUEST, logoutSaga);
   yield takeLatest(NEW_ACCOUNT_REQUEST, newAccountSaga);
   yield takeLatest(RESET_PASSWORD_REQUEST, resetPasswordSaga);
 }
@@ -46,26 +50,22 @@ function* loginSaga({ payload }) {
 }
 
 function* logoutSaga({ payload }) {
-  try {
-    const user = yield call(
-      [
-        firebase.auth(),
-        'signOut'
-      ],
-    );
+  const user = yield call(
+    [
+      firebase.auth(),
+      'signOut'
+    ],
+  );
 
-    yield call(
-      [
-        AsyncStorage,
-        'removeItem'
-      ],
-      'user',
-    );
+  yield call(
+    [
+      AsyncStorage,
+      'removeItem'
+    ],
+    'user',
+  );
 
-    yield put({ type: LOGIN_RESPONSE, user });
-  } catch (authError) {
-    yield put({ type: LOGIN_ERROR, authError});
-  }
+  yield put({ type: LOGOUT_RESPONSE, user });
 }
 
 function* newAccountSaga({ payload }) {
@@ -97,7 +97,6 @@ function* resetPasswordSaga({ payload }) {
 
     yield put({ type: RESET_PASSWORD_RESPONSE, user });
   } catch (authError) {
-    console.error(authError);
-    // yield put({ type: RESET_PASSWORD_ERROR, authError});
+    yield put({ type: RESET_PASSWORD_ERROR, authError});
   }
 }

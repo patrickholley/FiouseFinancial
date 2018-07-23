@@ -1,47 +1,41 @@
 import React from 'react';
 import HomePresentation from '../Presentations/HomePresentation';
+import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
+import { View } from 'react-native';
+import { LOGOUT_REQUEST } from '../constants/actions';
 
 class HomeContainer extends React.Component {
+  componentWillUpdate = (newProps) => {
+    console.log(newProps.user, null);
+
+    if (newProps.user === null) {
+      Actions.push('accountAccess', { formType: 'login' });
+    }
+  };
+
   render() {
     return (
-      <HomePresentation
-        user={this.props.user}
-      />
+      <View>
+        {this.props.user
+          ? <HomePresentation
+              user={this.props.user}
+              onLogout={this.props.onLogout}
+            />
+          : <View />
+        }
+      </View>
     );
   }
 }
 
-/* const mapDispatchToProps = dispatch => {
-  let submitAction;
-
-  switch(Actions.currentParams.formType) {
-    case 'createAccount':
-      submitAction = NEW_ACCOUNT_REQUEST;
-      break;
-    case 'resetPassword':
-      submitAction = RESET_PASSWORD_REQUEST;
-      break;
-    case 'login':
-      submitAction = LOGIN_REQUEST;
-      break;
-    default:
-      submitAction = null;
-      break;
-  }
-
-  console.log(Actions.currentParams.formType, submitAction);
-
+const mapDispatchToProps = dispatch => {
   return {
-    clearAuthError: () => dispatch({
-      type: CLEAR_AUTH_ERROR,
-    }),
-    onDispatchSubmit: fields => dispatch({
-      type: submitAction,
-      payload: { fields },
+    onLogout: () => dispatch({
+      type: LOGOUT_REQUEST,
     }),
   };
-}; */
+};
 
 const mapStateToProps = state => {
   console.log(state);
@@ -49,4 +43,4 @@ const mapStateToProps = state => {
   return { user };
 };
 
-export default connect(mapStateToProps)(HomeContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(HomeContainer);

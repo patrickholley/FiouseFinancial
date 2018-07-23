@@ -1,6 +1,5 @@
 import React from 'react';
 import { Text, View } from 'react-native';
-import { Actions } from 'react-native-router-flux';
 import FButton from '../FiouseUI/FButton';
 import colors from '../constants/colors';
 
@@ -13,17 +12,11 @@ export default class HomePresentation extends React.Component {
           backgroundColor={colors[0]}
           key="signOut"
           textColor="white"
-          text="Sign Out"
+          text="Logout"
           buttonStyles={{
             width: '60%',
           }}
-          onPress={() => {
-            try {
-              Actions.push('accountAccess', { formType: 'login' });
-            } catch(error) {
-              console.error(error);
-            }
-          }}
+          onPress={this.props.onLogout}
         />
       </View>
     );
