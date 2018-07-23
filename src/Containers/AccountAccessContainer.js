@@ -32,8 +32,17 @@ class AccountAccessContainer extends React.Component {
   componentWillUpdate = (newProps) => {
     const { authError } = newProps;
 
+    if (newProps.user) {
+      Actions.push('home');
+    }
+
     if (authError) {
-      this.postSubheader(userFriendlyErrors[authError.code], true);
+      let errorMessage;
+      errorMessage = authError.code
+      ? userFriendlyErrors[authError.code]
+      : 'Something went wrong.';
+
+      this.postSubheader(errorMessage, true);
       this.props.clearAuthError();
     }
   };

@@ -2,6 +2,7 @@ import React from 'react';
 import { Router, Scene, Stack } from 'react-native-router-flux';
 import AccountAccessContainer from './Containers/AccountAccessContainer';
 import HomeContainer from './Containers/HomeContainer';
+import PlaceholderContainer from './Containers/PlaceholderContainer';
 
 export default class RouterWrapper extends React.Component {
   render() {
@@ -10,11 +11,18 @@ export default class RouterWrapper extends React.Component {
         <Stack key="root">
           <Scene
             hideNavBar
+            key="placeholder"
+            component={PlaceholderContainer}
+          />
+
+          <Scene
+            hideNavBar
             key="accountAccess"
             formType="login"
             component={AccountAccessContainer}
             title="Login"
           />
+
           <Scene
             hideNavBar
             key="home"

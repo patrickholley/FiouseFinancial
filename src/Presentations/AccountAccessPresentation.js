@@ -47,7 +47,6 @@ const SubheaderAnimatedText = Animated.createAnimatedComponent(styled.Text`
 `);
 
 export default class AccountAccessPresentation extends React.PureComponent {
-
   render() {
     const resetPasswordParams = {
       formType: 'resetPassword',

@@ -1,9 +1,12 @@
 import { call, takeLatest, put } from 'redux-saga/effects';
+import { AsyncStorage } from 'react-native';
 import {
   LOGIN_REQUEST,
   LOGIN_RESPONSE,
   LOGIN_ERROR,
   NEW_ACCOUNT_REQUEST,
+  NEW_ACCOUNT_RESPONSE,
+  NEW_ACCOUNT_ERROR,
   RESET_PASSWORD_REQUEST,
   RESET_PASSWORD_RESPONSE,
   RESET_PASSWORD_ERROR,
@@ -24,7 +27,16 @@ function* loginSaga({ payload }) {
         'signInAndRetrieveDataWithEmailAndPassword'
       ],
       payload.fields.email.value,
-      payload.fields.password.value
+      payload.fields.password.value,
+    );
+
+    yield call(
+      [
+        AsyncStorage,
+        'setItem'
+      ],
+      'user',
+      JSON.stringify(user),
     );
 
     yield put({ type: LOGIN_RESPONSE, user });
@@ -44,9 +56,9 @@ function* newAccountSaga({ payload }) {
       payload.fields.confirmEmail.value,
     );
 
-    yield put({ type: LOGIN_RESPONSE, user });
+    yield put({ type: NEW_ACCOUNT_RESPONSE, user });
   } catch (authError) {
-    yield put({ type: LOGIN_ERROR, authError});
+    yield put({ type: NEW_ACCOUNT_ERROR, authError});
   }
 }
 
@@ -57,7 +69,7 @@ function* resetPasswordSaga({ payload }) {
         firebase.auth(),
         'sendPasswordResetEmail'
       ],
-      payload.fields.email.value
+      payload.fields.email.value,
     );
 
     yield put({ type: RESET_PASSWORD_RESPONSE, user });
