@@ -1,12 +1,11 @@
 import React from 'react';
-import { AsyncStorage, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import FButton from '../FiouseUI/FButton';
 import colors from '../constants/colors';
 
 export default class HomePresentation extends React.Component {
   render() {
-
     return (
       <View>
         <Text>User: {this.props.user.user.email}</Text>
@@ -20,7 +19,6 @@ export default class HomePresentation extends React.Component {
           }}
           onPress={() => {
             try {
-              AsyncStorage.removeItem('user');
               Actions.push('accountAccess', { formType: 'login' });
             } catch(error) {
               console.error(error);

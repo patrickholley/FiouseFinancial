@@ -111,8 +111,6 @@ const mapDispatchToProps = dispatch => {
       break;
   }
 
-  console.log(Actions.currentParams.formType, submitAction);
-
   return {
     clearAuthError: () => dispatch({
       type: CLEAR_AUTH_ERROR,

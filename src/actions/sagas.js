@@ -45,6 +45,29 @@ function* loginSaga({ payload }) {
   }
 }
 
+function* logoutSaga({ payload }) {
+  try {
+    const user = yield call(
+      [
+        firebase.auth(),
+        'signOut'
+      ],
+    );
+
+    yield call(
+      [
+        AsyncStorage,
+        'removeItem'
+      ],
+      'user',
+    );
+
+    yield put({ type: LOGIN_RESPONSE, user });
+  } catch (authError) {
+    yield put({ type: LOGIN_ERROR, authError});
+  }
+}
+
 function* newAccountSaga({ payload }) {
   try {
     const user = yield call(
