@@ -43,6 +43,7 @@ const SubheaderAnimatedText = Animated.createAnimatedComponent(styled.Text`
   fontSize: 16;
   fontStyle: italic;
   height: 40px;
+  width: 90%;
   textAlign: center;
 `);
 
@@ -60,17 +61,18 @@ export default class AccountAccessPresentation extends React.PureComponent {
     };
 
     const { formValues, isLoginForm, onFieldChange, onFormSubmit } = this.props;
+    const logoPath = '../../assets/fiouse_logo_clear.png';
 
     return (
       <ScrollView contentContainerStyle={{flexGrow: 1}}>
         <AccountAccessView>
           {isLoginForm
             ? <LargeLogoImage
-                source={require('../../assets/fiouse_logo.png')}
+                source={require(logoPath)}
                 resizeMode="center"
               />
             : <SmallLogoImage
-                source={require('../../assets/fiouse_logo.png')}
+                source={require(logoPath)}
                 resizeMode="center"
               />}
           <HeaderText>

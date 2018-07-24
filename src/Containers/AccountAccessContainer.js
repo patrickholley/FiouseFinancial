@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import AccountAccessPresentation from '../Presentations/AccountAccessPresentation';
 import allFormsValues from '../constants/allFormsValues';
 import {
-  CREATE_ACCOUNT_REQUEST,
+  NEW_ACCOUNT_REQUEST,
   CLEAR_AUTH_ERROR,
   LOGIN_REQUEST,
   RESET_PASSWORD_REQUEST,
