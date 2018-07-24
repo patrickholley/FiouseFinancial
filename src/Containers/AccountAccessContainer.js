@@ -67,15 +67,28 @@ class AccountAccessContainer extends React.Component {
 
   onFormSubmit = () => {
     const { fields } = this.state.formValues;
-    const emptyFields = Object.keys(fields).filter(fieldId => fields[fieldId].value === '');
 
-    if (emptyFields.length > 0) this.postSubheader('Please fill all fields', true);
-    else this.props.onDispatchSubmit(fields);
+    const canSubmit = Object.keys(fields)
+      .every(fieldId => fields[fieldId].value !== '');
+
+    if (canSubmit) {
+      const { formType } = Actions.currentParams;
+      if (formType === 'createAccount'
+        && fields['password'].value !== fields['confirmPassword'].value) {
+        this.postSubheader('Passwords must match', true);
+      } else this.props.onDispatchSubmit(fields);
+    }
   }
 
   render() {
+    const { fields } = this.state.formValues;
+
+    const canSubmit = Object.keys(fields)
+      .every(fieldId => fields[fieldId].value !== '');
+
     return (
       <AccountAccessPresentation
+        canSubmit={canSubmit}
         fadeAnim={this.state.fadeAnim}
         formError={this.state.formError}
         formValues={this.state.formValues}

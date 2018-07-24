@@ -13,13 +13,12 @@ export default allFormsValues = {
       email: { placeholder: 'Email', type: 'email' },
     },
     headerText: 'Reset Password',
-    subheaderText: 'Please enter the email address associated with your account below.',
+    subheaderText: 'Please enter the email address associated with your account below',
     submitText: 'Submit',
   },
   createAccount: {
     fields: {
       email: { placeholder: 'Email', type: 'email' },
-      confirmEmail: { placeholder: 'Confirm Email', type: 'email' },
       password: { placeholder: 'Password', type: 'password' },
       confirmPassword: { placeholder: 'Confirm Password', type: 'password' },
     },

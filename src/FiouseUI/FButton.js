@@ -12,7 +12,7 @@ const ButtonTouchableOpacity = styled.TouchableOpacity`
 
 const ButtonText = styled.Text`
   color: ${props => props.color};
-  fontSize: 16;
+  fontSize: 14;
   fontWeight: bold,
 `;
 
@@ -20,6 +20,7 @@ export default class FButton extends React.PureComponent {
   render() {
     return (
       <ButtonTouchableOpacity
+        disabled={this.props.isDisabled}
         backgroundColor={this.props.backgroundColor}
         onPress={this.props.onPress}
         style={this.props.buttonStyles}

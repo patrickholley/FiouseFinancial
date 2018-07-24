@@ -44,7 +44,8 @@ export default class FForm extends React.PureComponent {
       <FWrapper>
         {this.generateFields()}
         <FButton
-          backgroundColor={colors[3]}
+          backgroundColor={this.props.canSubmit ? colors[3] : 'lightgrey'}
+          isDisabled={!this.props.canSubmit}
           onPress={this.props.onFormSubmit}
           textColor="white"
           text={this.props.submitText.toUpperCase()}

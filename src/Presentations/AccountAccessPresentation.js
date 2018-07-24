@@ -40,9 +40,9 @@ const SmallLogoImage = styled.Image`
 
 const SubheaderAnimatedText = Animated.createAnimatedComponent(styled.Text`
   color: ${props => props.error ? 'red' : colors[2]};
-  fontSize: 16;
+  fontSize: 14;
   fontStyle: italic;
-  height: 40px;
+  height: 50px;
   width: 90%;
   textAlign: center;
 `);
@@ -86,6 +86,7 @@ export default class AccountAccessPresentation extends React.PureComponent {
           </SubheaderAnimatedText>
           <FForm
             fields={formValues.fields}
+            canSubmit={this.props.canSubmit}
             onFieldChange={onFieldChange}
             onFormSubmit={onFormSubmit}
             submitText={formValues.submitText}
