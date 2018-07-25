@@ -1,0 +1,21 @@
+{
+    "env": {
+        "node": true,
+        "browser": true,
+        "es6": true
+    },
+    "parser": "babel-eslint",
+    "extends": "airbnb",
+    "rules": {
+        "arrow-parens": "off",
+        "linebreak-style": [
+            "error",
+            "windows"
+        ],
+        "react/forbid-prop-types": "disabled",
+        "react/jsx-wrap-multilines": {
+            "condition": "ignore"
+        },
+        "react/destructuring-assignment": "never"
+    }
+}

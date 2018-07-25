@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Animated } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
@@ -30,33 +31,20 @@ class AccountAccessContainer extends React.Component {
   }
 
   componentWillUpdate = (newProps) => {
-    const { authError } = newProps;
+    const { authError, clearAuthError } = newProps;
 
     if (newProps.user) {
       Actions.push('home');
     }
 
     if (authError) {
-      let errorMessage;
-      errorMessage = authError.code
-      ? userFriendlyErrors[authError.code]
-      : 'Something went wrong.';
+      const errorMessage = authError.code
+        ? userFriendlyErrors[authError.code]
+        : 'Something went wrong';
 
       this.postSubheader(errorMessage, true);
-      this.props.clearAuthError();
+      clearAuthError();
     }
-  };
-
-  postSubheader = (subheaderText, isError) => {
-    const { formValues } = this.state;
-    formValues.error = isError;
-    formValues.subheaderText = subheaderText;
-    this.setState({ fadeAnim: new Animated.Value(0), formValues, }, () => {
-      Animated.timing(
-        this.state.fadeAnim,
-        { toValue: 1, duration: 1000 },
-      ).start();
-    });
   };
 
   onFieldChange = (fieldId, updatedValue) => {
@@ -67,28 +55,30 @@ class AccountAccessContainer extends React.Component {
 
   onFormSubmit = () => {
     const { fields } = this.state.formValues;
+    const { formType } = Actions.currentParams;
 
-    const canSubmit = Object.keys(fields)
-      .every(fieldId => fields[fieldId].value !== '');
-
-    if (canSubmit) {
-      const { formType } = Actions.currentParams;
-      if (formType === 'createAccount'
-        && fields['password'].value !== fields['confirmPassword'].value) {
-        this.postSubheader('Passwords must match', true);
-      } else this.props.onDispatchSubmit(fields);
-    }
+    if (formType === 'createAccount'
+      && fields.password.value !== fields.confirmPassword.value) {
+      this.postSubheader('Passwords must match', true);
+    } else this.props.onDispatchSubmit(fields);
   }
 
+  postSubheader = (subheaderText, isError) => {
+    const { formValues } = this.state;
+    formValues.error = isError;
+    formValues.subheaderText = subheaderText;
+    this.setState({ fadeAnim: new Animated.Value(0), formValues }, () => {
+      Animated.timing(
+        this.state.fadeAnim,
+        { toValue: 1, duration: 1000 },
+      ).start();
+    });
+  };
+
   render() {
-    const { fields } = this.state.formValues;
-
-    const canSubmit = Object.keys(fields)
-      .every(fieldId => fields[fieldId].value !== '');
-
     return (
       <AccountAccessPresentation
-        canSubmit={canSubmit}
+        canSubmit={this.state.canSubmit}
         fadeAnim={this.state.fadeAnim}
         formError={this.state.formError}
         formValues={this.state.formValues}
@@ -109,7 +99,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   let submitAction;
 
-  switch(Actions.currentParams.formType) {
+  switch (Actions.currentParams.formType) {
     case 'createAccount':
       submitAction = NEW_ACCOUNT_REQUEST;
       break;
@@ -133,6 +123,10 @@ const mapDispatchToProps = dispatch => {
       payload: { fields },
     }),
   };
+};
+
+AccountAccessContainer.propTypes = {
+  onDispatchSubmit: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(AccountAccessContainer);

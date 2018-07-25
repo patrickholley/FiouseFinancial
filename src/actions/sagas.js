@@ -11,7 +11,6 @@ import {
   RESET_PASSWORD_RESPONSE,
   RESET_PASSWORD_ERROR,
   LOGOUT_RESPONSE,
-  LOGOUT_ERROR,
   LOGOUT_REQUEST,
 } from '../constants/actions';
 import firebase from 'react-native-firebase';
@@ -34,14 +33,7 @@ function* loginSaga({ payload }) {
       payload.fields.password.value,
     );
 
-    yield call(
-      [
-        AsyncStorage,
-        'setItem'
-      ],
-      'user',
-      JSON.stringify(user),
-    );
+    yield call([AsyncStorage, 'setItem'], 'user', JSON.stringify(user));
 
     yield put({ type: LOGIN_RESPONSE, user });
   } catch (authError) {
@@ -49,23 +41,10 @@ function* loginSaga({ payload }) {
   }
 }
 
-function* logoutSaga({ payload }) {
-  const user = yield call(
-    [
-      firebase.auth(),
-      'signOut'
-    ],
-  );
-
-  yield call(
-    [
-      AsyncStorage,
-      'removeItem'
-    ],
-    'user',
-  );
-
-  yield put({ type: LOGOUT_RESPONSE, user });
+function* logoutSaga() {
+  yield call([firebase.auth(), 'signOut']);
+  yield call([AsyncStorage, 'removeItem'], 'user');
+  yield put({ type: LOGOUT_RESPONSE });
 }
 
 function* newAccountSaga({ payload }) {
@@ -87,7 +66,7 @@ function* newAccountSaga({ payload }) {
 
 function* resetPasswordSaga({ payload }) {
   try {
-    const user = yield call(
+    yield call(
       [
         firebase.auth(),
         'sendPasswordResetEmail'
@@ -95,7 +74,7 @@ function* resetPasswordSaga({ payload }) {
       payload.fields.email.value,
     );
 
-    yield put({ type: RESET_PASSWORD_RESPONSE, user });
+    yield put({ type: RESET_PASSWORD_RESPONSE });
   } catch (authError) {
     yield put({ type: RESET_PASSWORD_ERROR, authError});
   }
