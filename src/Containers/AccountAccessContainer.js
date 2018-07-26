@@ -24,6 +24,7 @@ class AccountAccessContainer extends React.Component {
     });
 
     this.state = {
+      canSubmit: false,
       fadeAnim: new Animated.Value(1),
       formType,
       formValues,
@@ -49,8 +50,12 @@ class AccountAccessContainer extends React.Component {
 
   onFieldChange = (fieldId, updatedValue) => {
     const { formValues } = this.state;
-    formValues.fields[fieldId].value = updatedValue;
-    this.setState({ formValues });
+    const { fields } = formValues;
+    fields[fieldId].value = updatedValue;
+    this.setState({
+      canSubmit: Object.keys(fields).every(fId => fields[fId].value !== ''),
+      formValues,
+    });
   }
 
   onFormSubmit = () => {

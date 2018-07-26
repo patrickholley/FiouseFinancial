@@ -41,12 +41,14 @@ FButton.propTypes = {
   isDisabled: PropTypes.bool,
   onPress: PropTypes.func.isRequired,
   backgroundColor: PropTypes.string.isRequired,
-  buttonStyles: PropTypes.object.isRequired,
+  buttonStyles: PropTypes.object,
   textColor: PropTypes.string.isRequired,
-  textStyles: PropTypes.object.isRequired,
+  textStyles: PropTypes.object,
   text: PropTypes.string.isRequired,
 };
 
 FButton.defaultProps = {
+  buttonStyles: {},
   isDisabled: false,
+  textStyles: {},
 };
