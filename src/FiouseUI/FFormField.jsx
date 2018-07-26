@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 import colors from '../constants/colors';
 
 const FieldTextInput = styled.TextInput`
@@ -11,7 +12,7 @@ export default class FFormField extends React.PureComponent {
   render() {
     return (
       <FieldTextInput
-        autoCapitalize={this.props.autoCapitalize || 'none'}
+        autoCapitalize={this.props.autoCapitalize}
         keyboardType={this.props.type === 'email' ? 'email-address' : 'default'}
         onChangeText={this.props.onChangeText}
         placeholder={this.props.placeholder}
@@ -22,3 +23,15 @@ export default class FFormField extends React.PureComponent {
     );
   }
 }
+
+FFormField.propTypes = {
+  autoCapitalize: PropTypes.string,
+  type: PropTypes.string.isRequired,
+  onChangeText: PropTypes.func.isRequired,
+  placeholder: PropTypes.string,
+};
+
+FFormField.defaultProps = {
+  autoCapitalize: 'none',
+  placeholder: '',
+};

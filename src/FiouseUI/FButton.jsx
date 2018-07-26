@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 const ButtonTouchableOpacity = styled.TouchableOpacity`
   backgroundColor: ${props => props.backgroundColor};
@@ -35,3 +36,17 @@ export default class FButton extends React.PureComponent {
     );
   }
 }
+
+FButton.propTypes = {
+  isDisabled: PropTypes.bool,
+  onPress: PropTypes.func.isRequired,
+  backgroundColor: PropTypes.string.isRequired,
+  buttonStyles: PropTypes.object.isRequired,
+  textColor: PropTypes.string.isRequired,
+  textStyles: PropTypes.object.isRequired,
+  text: PropTypes.string.isRequired,
+};
+
+FButton.defaultProps = {
+  isDisabled: false,
+};

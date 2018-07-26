@@ -94,7 +94,7 @@ export default class AccountAccessPresentation extends React.PureComponent {
             onFieldChange={onFieldChange}
             onFormSubmit={onFormSubmit}
             submitText={formValues.submitText}
-            buttonStyles={{ width: '60%' }}
+            submitButtonStyles={{ width: '60%' }}
           />
           {isLoginForm ? [
             <FButton

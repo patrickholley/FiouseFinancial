@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import FButton from './FButton';
 import FFormField from './FFormField';
 import FWrapper from './FWrapper';
@@ -10,7 +11,7 @@ const defaultStyles = {
     width: '80%',
     height: 54,
   },
-  buttonText: {
+  submitText: {
     fontSize: 24,
   },
 };
@@ -47,12 +48,28 @@ export default class FForm extends React.PureComponent {
           text={this.props.submitText.toUpperCase()}
           buttonStyles={Object.assign({},
             defaultStyles.button,
-            this.props.buttonStyles)}
+            this.props.submitButtonStyles)}
           textStyles={Object.assign({},
-            defaultStyles.buttonText,
-            this.props.buttonTextStyles)}
+            defaultStyles.submitText,
+            this.props.submitTextStyles)}
         />
       </FWrapper>
     );
   }
 }
+
+FForm.propTypes = {
+  fields: PropTypes.object.isRequired,
+  onFieldChange: PropTypes.func.isRequired,
+  canSubmit: PropTypes.bool,
+  onFormSubmit: PropTypes.func.isRequired,
+  submitText: PropTypes.string.isRequired,
+  submitButtonStyles: PropTypes.object,
+  submitTextStyles: PropTypes.object,
+};
+
+FForm.defaultProps = {
+  canSubmit: true,
+  submitButtonStyles: {},
+  submitTextStyles: {},
+};
