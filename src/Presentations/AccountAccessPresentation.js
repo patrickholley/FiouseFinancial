@@ -6,8 +6,7 @@ import PropTypes from 'prop-types';
 import FButton from '../FiouseUI/FButton';
 import FForm from '../FiouseUI/FForm';
 import colors from '../constants/colors';
-
-const logoPath = require('../../assets/fiouse_logo_clear.png');
+import logoPath from '../../assets/fiouse_logo_clear.png';
 
 const AccountAccessView = styled.View`
   alignItems: center;

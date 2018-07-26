@@ -10,7 +10,7 @@ export default class HomePresentation extends React.Component {
     return (
       <View>
         <Text>
-          {`User: ${this.props.user.user.email}`}
+          {this.props.user ? `User: ${this.props.user.user.email}` : 'Signing out . . .'}
         </Text>
         <FButton
           backgroundColor={colors[0]}
@@ -28,6 +28,10 @@ export default class HomePresentation extends React.Component {
 }
 
 HomePresentation.propTypes = {
-  user: PropTypes.object.isRequired,
+  user: PropTypes.object,
   onLogout: PropTypes.func.isRequired,
+};
+
+HomePresentation.defaultProps = {
+  user: null,
 };
