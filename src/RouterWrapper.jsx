@@ -4,6 +4,7 @@ import AccountAccessContainer from './Containers/AccountAccessContainer';
 import HomeContainer from './Containers/HomeContainer';
 import PlaceholderContainer from './Containers/PlaceholderContainer';
 
+/* eslint-disable react/prefer-stateless-function */
 export default class RouterWrapper extends React.Component {
   render() {
     return (

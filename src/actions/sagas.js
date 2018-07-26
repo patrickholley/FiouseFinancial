@@ -1,5 +1,6 @@
 import { call, takeLatest, put } from 'redux-saga/effects';
 import { AsyncStorage } from 'react-native';
+import firebase from 'react-native-firebase';
 import {
   LOGIN_REQUEST,
   LOGIN_RESPONSE,
@@ -13,21 +14,13 @@ import {
   LOGOUT_RESPONSE,
   LOGOUT_REQUEST,
 } from '../constants/actions';
-import firebase from 'react-native-firebase';
-
-export function* watcherSaga() {
-  yield takeLatest(LOGIN_REQUEST, loginSaga);
-  yield takeLatest(LOGOUT_REQUEST, logoutSaga);
-  yield takeLatest(NEW_ACCOUNT_REQUEST, newAccountSaga);
-  yield takeLatest(RESET_PASSWORD_REQUEST, resetPasswordSaga);
-}
 
 function* loginSaga({ payload }) {
   try {
     const user = yield call(
       [
         firebase.auth(),
-        'signInAndRetrieveDataWithEmailAndPassword'
+        'signInAndRetrieveDataWithEmailAndPassword',
       ],
       payload.fields.email.value,
       payload.fields.password.value,
@@ -37,7 +30,7 @@ function* loginSaga({ payload }) {
 
     yield put({ type: LOGIN_RESPONSE, user });
   } catch (authError) {
-    yield put({ type: LOGIN_ERROR, authError});
+    yield put({ type: LOGIN_ERROR, authError });
   }
 }
 
@@ -52,7 +45,7 @@ function* newAccountSaga({ payload }) {
     const user = yield call(
       [
         firebase.auth(),
-        'createUserWithEmailAndPassword'
+        'createUserWithEmailAndPassword',
       ],
       payload.fields.email.value,
       payload.fields.confirmEmail.value,
@@ -60,7 +53,7 @@ function* newAccountSaga({ payload }) {
 
     yield put({ type: NEW_ACCOUNT_RESPONSE, user });
   } catch (authError) {
-    yield put({ type: NEW_ACCOUNT_ERROR, authError});
+    yield put({ type: NEW_ACCOUNT_ERROR, authError });
   }
 }
 
@@ -69,13 +62,20 @@ function* resetPasswordSaga({ payload }) {
     yield call(
       [
         firebase.auth(),
-        'sendPasswordResetEmail'
+        'sendPasswordResetEmail',
       ],
       payload.fields.email.value,
     );
 
     yield put({ type: RESET_PASSWORD_RESPONSE });
   } catch (authError) {
-    yield put({ type: RESET_PASSWORD_ERROR, authError});
+    yield put({ type: RESET_PASSWORD_ERROR, authError });
   }
+}
+
+export default function* watcherSaga() {
+  yield takeLatest(LOGIN_REQUEST, loginSaga);
+  yield takeLatest(LOGOUT_REQUEST, logoutSaga);
+  yield takeLatest(NEW_ACCOUNT_REQUEST, newAccountSaga);
+  yield takeLatest(RESET_PASSWORD_REQUEST, resetPasswordSaga);
 }

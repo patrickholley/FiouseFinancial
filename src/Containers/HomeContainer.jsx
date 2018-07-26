@@ -39,7 +39,7 @@ HomeContainer.propTypes = {
 };
 
 HomeContainer.defaultProps = {
-  user: { user: { email: 'null' } },
+  user: { user: { email: null } },
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomeContainer);

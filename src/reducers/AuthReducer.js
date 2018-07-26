@@ -6,10 +6,10 @@ import {
   LOGOUT_RESPONSE,
 } from '../constants/actions';
 
-const INITIAL_STATE = { user: null }
+const INITIAL_STATE = { user: null };
 
 export default(state = INITIAL_STATE, action) => {
-  switch(action.type) {
+  switch (action.type) {
     case CLEAR_AUTH_ERROR:
       return { ...state, authError: '' };
     case LOGIN_RESPONSE:

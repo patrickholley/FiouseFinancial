@@ -9,6 +9,10 @@ const WrapperView = styled.View`
 
 export default class FWrapper extends React.PureComponent {
   render() {
-    return (<WrapperView>{this.props.children}</WrapperView>);
+    return (
+      <WrapperView>
+        {this.props.children}
+      </WrapperView>
+    );
   }
 }

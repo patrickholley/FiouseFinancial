@@ -2,9 +2,12 @@ import React from 'react';
 import { Animated, ScrollView, View } from 'react-native';
 import styled from 'styled-components';
 import { Actions } from 'react-native-router-flux';
+import PropTypes from 'prop-types';
 import FButton from '../FiouseUI/FButton';
 import FForm from '../FiouseUI/FForm';
 import colors from '../constants/colors';
+
+const logoPath = require('../../assets/fiouse_logo_clear.png');
 
 const AccountAccessView = styled.View`
   alignItems: center;
@@ -39,7 +42,7 @@ const SmallLogoImage = styled.Image`
 `;
 
 const SubheaderAnimatedText = Animated.createAnimatedComponent(styled.Text`
-  color: ${props => props.error ? 'red' : colors[2]};
+  color: ${props => (props.error ? 'red' : colors[2])};
   fontSize: 14;
   fontStyle: italic;
   height: 50px;
@@ -60,21 +63,22 @@ export default class AccountAccessPresentation extends React.PureComponent {
       title: 'Create New Account',
     };
 
-    const { formValues, isLoginForm, onFieldChange, onFormSubmit } = this.props;
-    const logoPath = '../../assets/fiouse_logo_clear.png';
+    const {
+      formValues, isLoginForm, onFieldChange, onFormSubmit,
+    } = this.props;
 
     return (
-      <ScrollView contentContainerStyle={{flexGrow: 1}}>
+      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
         <AccountAccessView>
           {isLoginForm
             ? <LargeLogoImage
-                source={require(logoPath)}
-                resizeMode="center"
-              />
+              source={logoPath}
+              resizeMode="center"
+            />
             : <SmallLogoImage
-                source={require(logoPath)}
-                resizeMode="center"
-              />}
+              source={logoPath}
+              resizeMode="center"
+            />}
           <HeaderText>
             {formValues.headerText}
           </HeaderText>
@@ -113,14 +117,23 @@ export default class AccountAccessPresentation extends React.PureComponent {
                 width: '60%',
               }}
               onPress={() => Actions.push('accountAccess', createAccountParams)}
-            />
+            />,
           ] : <View />}
           <FooterView />
           <CopyrightText>
-            Copyright {'\u00A9'} 2018 Fiouse
+            {`Copyright${'\u00A9'} 2018 Fiouse`}
           </CopyrightText>
         </AccountAccessView>
       </ScrollView>
     );
   }
 }
+
+AccountAccessPresentation.propTypes = {
+  canSubmit: PropTypes.bool.isRequired,
+  fadeAnim: PropTypes.object.isRequired,
+  formValues: PropTypes.object.isRequired,
+  isLoginForm: PropTypes.bool.isRequired,
+  onFieldChange: PropTypes.func.isRequired,
+  onFormSubmit: PropTypes.func.isRequired,
+};

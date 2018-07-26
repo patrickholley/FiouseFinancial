@@ -1,4 +1,4 @@
-export default allFormsValues = {
+export default {
   login: {
     fields: {
       email: { placeholder: 'Email', type: 'email' },

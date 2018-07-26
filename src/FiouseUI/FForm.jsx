@@ -12,8 +12,8 @@ const defaultStyles = {
   },
   buttonText: {
     fontSize: 24,
-  }
-}
+  },
+};
 
 export default class FForm extends React.PureComponent {
   generateFields() {
@@ -29,14 +29,10 @@ export default class FForm extends React.PureComponent {
           onChangeText={(updatedValue) => { this.props.onFieldChange(fieldId, updatedValue); }}
           placeholder={field.placeholder}
           type={field.type}
-        />
+        />,
       );
     });
     return FFormFields;
-  }
-
-  validateForm() {
-    return true;
   }
 
   render() {
@@ -51,12 +47,10 @@ export default class FForm extends React.PureComponent {
           text={this.props.submitText.toUpperCase()}
           buttonStyles={Object.assign({},
             defaultStyles.button,
-            this.props.buttonStyles
-          )}
+            this.props.buttonStyles)}
           textStyles={Object.assign({},
             defaultStyles.buttonText,
-            this.props.buttonTextStyles
-          )}
+            this.props.buttonTextStyles)}
         />
       </FWrapper>
     );
