@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, View } from 'react-native';
 import PropTypes from 'prop-types';
-import FButton from '../FiouseUI/FButton';
+import { FButton } from '../FiouseUI';
 import colors from '../constants/colors';
 
 /* eslint-disable react/prefer-stateless-function */

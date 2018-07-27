@@ -3,8 +3,7 @@ import { Animated, ScrollView, View } from 'react-native';
 import styled from 'styled-components';
 import { Actions } from 'react-native-router-flux';
 import PropTypes from 'prop-types';
-import FButton from '../FiouseUI/FButton';
-import FForm from '../FiouseUI/FForm';
+import { FButton, FForm } from '../FiouseUI';
 import colors from '../constants/colors';
 import logoPath from '../../assets/fiouse_logo_clear.png';
 
