@@ -14,7 +14,7 @@ class PlaceholderContainer extends React.Component {
     AsyncStorage.getItem('user')
       .then(userData => {
         if (userData) {
-          // this.props.restoreUser(JSON.parse(userData));
+          this.props.restoreUser(JSON.parse(userData));
           Actions.push('home');
         } else {
           Actions.push('accountAccess', { formType: 'login' });

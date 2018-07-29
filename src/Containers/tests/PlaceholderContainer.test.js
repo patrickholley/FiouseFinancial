@@ -12,7 +12,14 @@ const AsyncStorage = new MockAsyncStorage({});
 jest.setMock('AsyncStorage', AsyncStorage);
 
 describe('PlaceholderContainer', () => {
-  const instance = shallow(<PlaceholderContainer.WrappedComponent />).instance();
+  const testUserData = { email: 'test@test.com' };
+  const restoreUserSpy = jest.fn();
+
+  const instance = shallow(
+    <PlaceholderContainer.WrappedComponent
+      restoreUser={restoreUserSpy}
+    />,
+  ).instance();
 
   beforeEach(async () => {
     await AsyncStorage.clear();
@@ -20,10 +27,12 @@ describe('PlaceholderContainer', () => {
   });
 
   it('redirects to home properly when AsyncStorage has a user', async () => {
-    await AsyncStorage.setItem('user', JSON.stringify({ email: 'test@test.com' }));
+    await AsyncStorage.setItem('user', JSON.stringify(testUserData));
     await instance.reroute();
     expect(Actions.push).toHaveBeenCalledTimes(1);
     expect(Actions.push.mock.calls[0][0]).toBe('home');
+    expect(restoreUserSpy).toHaveBeenCalledTimes(1);
+    expect(restoreUserSpy.mock.calls[0][0]).toEqual(testUserData);
   });
 
   it('redirects to login when AsyncStorage has no user', async () => {
@@ -31,5 +40,6 @@ describe('PlaceholderContainer', () => {
     expect(Actions.push).toHaveBeenCalledTimes(1);
     expect(Actions.push.mock.calls[0][0]).toBe('accountAccess');
     expect(Actions.push.mock.calls[0][1]).toEqual({ formType: 'login' });
+    expect(restoreUserSpy).toHaveBeenCalledTimes(0);
   });
 });
