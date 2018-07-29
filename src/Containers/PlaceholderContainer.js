@@ -7,10 +7,14 @@ import { RESTORE_USER } from '../constants/actions';
 
 class PlaceholderContainer extends React.Component {
   componentWillMount() {
+    this.reroute();
+  }
+
+  reroute = () => {
     AsyncStorage.getItem('user')
       .then(userData => {
         if (userData) {
-          this.props.restoreUser(JSON.parse(userData));
+          // this.props.restoreUser(JSON.parse(userData));
           Actions.push('home');
         } else {
           Actions.push('accountAccess', { formType: 'login' });
