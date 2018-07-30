@@ -73,7 +73,6 @@ class AccountAccessContainer extends React.Component {
 
   onFormSubmit = () => {
     const { fields } = this.state.formValues;
-    console.log(fields);
     const { formType } = Actions.currentParams;
 
     if (formType === 'createAccount'

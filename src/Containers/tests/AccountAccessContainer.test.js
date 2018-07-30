@@ -24,6 +24,7 @@ describe('AccountAccessContainer', () => {
   ).instance();
 
   const postSubheaderSpy = jest.spyOn(instance, 'postSubheader');
+  const prepDispatchSubmitSpy = jest.spyOn(instance, 'prepDispatchSubmit');
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -31,28 +32,49 @@ describe('AccountAccessContainer', () => {
   });
 
   describe('onFormSubmit', () => {
-    it(`posts an error subheader when formType is createAccount
-      and password and confirmPassword do not match`, () => {
-      Actions.setCurrentParams({ formType: 'createAccount' });
+    const testOnFormSubmit = (formType, fields) => {
+      Actions.setCurrentParams({ formType });
       instance.setState({
         formValues: {
-          fields: {
-            password: { value: 'correct' },
-            confirmPassword: { value: 'incorrect' },
-          },
+          fields,
         },
       }, () => {
         instance.onFormSubmit();
-        expect(postSubheaderSpy.mock.calls[0][0]).toBe('Passwords must match');
       });
+    };
+
+    const correctValue = { value: 'correct' };
+    const incorrectValue = { value: 'incorrect' };
+
+    const mismatchedFields = {
+      password: correctValue,
+      confirmPassword: incorrectValue,
+    };
+
+    const matchedFields = {
+      password: correctValue,
+      confirmPassword: correctValue,
+    };
+
+    it(`posts an error subheader when formType is createAccount
+      and password and confirmPassword do not match`, () => {
+      testOnFormSubmit('createAccount', mismatchedFields);
+      expect(postSubheaderSpy.mock.calls[0][0]).toBe('Passwords must match');
     });
 
-    it('calls prepDispatchSubmit otherwise', () => {
+    it(`calls prepDispatchSubmit when formType is createAccount
+      and password and confirmPassword do match`, () => {
+      testOnFormSubmit('createAccount', matchedFields);
+      expect(prepDispatchSubmitSpy.mock.calls[0][0]).toEqual(matchedFields);
+    });
 
+    it('calls prepDispatchSubmit when formType is not createAccount', () => {
+      testOnFormSubmit('login', mismatchedFields);
+      expect(prepDispatchSubmitSpy.mock.calls[0][0]).toEqual(mismatchedFields);
     });
   });
 
-  describe('preDispatchSubmit', () => {
+  describe('prepDispatchSubmit', () => {
     const testPrepDispatchSubmit = (formType, actionType) => {
       onDispatchSubmitSpy.mockClear();
       Actions.setCurrentParams({ formType });
