@@ -1,7 +1,6 @@
 import React from 'react';
 import { Animated, ScrollView, View } from 'react-native';
 import styled from 'styled-components';
-import { Actions } from 'react-native-router-flux';
 import PropTypes from 'prop-types';
 import { FButton, FForm } from '../FiouseUI';
 import colors from '../constants/colors';
@@ -50,17 +49,6 @@ const SubheaderAnimatedText = Animated.createAnimatedComponent(styled.Text`
 
 export default class AccountAccessPresentation extends React.PureComponent {
   render() {
-    const resetPasswordParams = {
-      formType: 'resetPassword',
-      hideNavBar: false,
-      title: 'Reset Password',
-    };
-    const createAccountParams = {
-      formType: 'createAccount',
-      hideNavBar: false,
-      title: 'Create New Account',
-    };
-
     const {
       formValues, isLoginForm, onFieldChange, onFormSubmit,
     } = this.props;
@@ -104,7 +92,7 @@ export default class AccountAccessPresentation extends React.PureComponent {
                 marginBottom: 10,
                 width: '60%',
               }}
-              onPress={() => Actions.push('accountAccess', resetPasswordParams)}
+              onPress={this.props.onFormTypeChange('resetPassword')}
             />,
             <FButton
               backgroundColor={colors[0]}
@@ -114,7 +102,7 @@ export default class AccountAccessPresentation extends React.PureComponent {
               buttonStyles={{
                 width: '60%',
               }}
-              onPress={() => Actions.push('accountAccess', createAccountParams)}
+              onPress={this.props.onFormTypeChange('createAccount')}
             />,
           ] : <View />}
           <FooterView />
@@ -134,4 +122,5 @@ AccountAccessPresentation.propTypes = {
   isLoginForm: PropTypes.bool.isRequired,
   onFieldChange: PropTypes.func.isRequired,
   onFormSubmit: PropTypes.func.isRequired,
+  onFormTypeChange: PropTypes.func.isRequired,
 };

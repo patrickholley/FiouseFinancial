@@ -18,6 +18,7 @@ describe('AccountAccessPresentation', () => {
       isLoginForm={isLoginForm}
       onFieldChange={dummyFn}
       onFormSubmit={dummyFn}
+      onFormTypeChange={dummyFn}
     />,
   );
 

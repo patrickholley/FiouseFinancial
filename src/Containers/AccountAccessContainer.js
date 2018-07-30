@@ -14,6 +14,19 @@ import {
 import userFriendlyErrors from '../constants/userFriendlyErrors';
 
 class AccountAccessContainer extends React.Component {
+  actionParams = {
+    createAccount: {
+      formType: 'createAccount',
+      hideNavBar: false,
+      title: 'Create New Account',
+    },
+    resetPassword: {
+      formType: 'resetPassword',
+      hideNavBar: false,
+      title: 'Reset Password',
+    },
+  };
+
   constructor() {
     super();
 
@@ -65,8 +78,10 @@ class AccountAccessContainer extends React.Component {
     if (formType === 'createAccount'
       && fields.password.value !== fields.confirmPassword.value) {
       this.postSubheader('Passwords must match', true);
-    } else this.props.onDispatchSubmit(fields);
+    } else this.prepDispatchSubmit(fields);
   }
+
+  onFormTypeChange = (formType) => { Actions.push(formType, this.actionParams[formType]); }
 
   postSubheader = (subheaderText, isError) => {
     const { formValues } = this.state;
@@ -80,6 +95,27 @@ class AccountAccessContainer extends React.Component {
     });
   };
 
+  prepDispatchSubmit = fields => {
+    let submitAction;
+
+    switch (Actions.currentParams.formType) {
+      case 'createAccount':
+        submitAction = NEW_ACCOUNT_REQUEST;
+        break;
+      case 'resetPassword':
+        submitAction = RESET_PASSWORD_REQUEST;
+        break;
+      case 'login':
+        submitAction = LOGIN_REQUEST;
+        break;
+      default:
+        submitAction = null;
+        break;
+    }
+
+    this.props.onDispatchSubmit(submitAction, fields);
+  };
+
   render() {
     return (
       <AccountAccessPresentation
@@ -90,6 +126,7 @@ class AccountAccessContainer extends React.Component {
         isLoginForm={this.state.formType === 'login'}
         onFieldChange={this.onFieldChange}
         onFormSubmit={this.onFormSubmit}
+        onFormTypeChange={this.onFormTypeChange}
         setContainerState={updatedState => { this.setState(updatedState); }}
       />
     );
@@ -101,34 +138,17 @@ const mapStateToProps = state => {
   return { authError, user };
 };
 
-const mapDispatchToProps = dispatch => {
-  let submitAction;
-
-  switch (Actions.currentParams.formType) {
-    case 'createAccount':
-      submitAction = NEW_ACCOUNT_REQUEST;
-      break;
-    case 'resetPassword':
-      submitAction = RESET_PASSWORD_REQUEST;
-      break;
-    case 'login':
-      submitAction = LOGIN_REQUEST;
-      break;
-    default:
-      submitAction = null;
-      break;
-  }
-
-  return {
+const mapDispatchToProps = dispatch => (
+  {
     clearAuthError: () => dispatch({
       type: CLEAR_AUTH_ERROR,
     }),
-    onDispatchSubmit: fields => dispatch({
+    onDispatchSubmit: (submitAction, fields) => dispatch({
       type: submitAction,
       payload: { fields },
     }),
-  };
-};
+  }
+);
 
 AccountAccessContainer.propTypes = {
   onDispatchSubmit: PropTypes.func.isRequired,
