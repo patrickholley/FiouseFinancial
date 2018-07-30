@@ -1,7 +1,14 @@
-import MockActions from './Actions';
+class MockActions {
+  constructor(params = {}) {
+    this.currentParams = params;
+  }
 
-const Actions = new MockActions({ formType: 'login' });
+  push = jest.fn();
+
+  // not actual method in library - helper method
+  setCurrentParams = params => { this.currentParams = params; }
+}
 
 module.exports = {
-  Actions,
+  Actions: new MockActions({ formType: 'login' }),
 };
