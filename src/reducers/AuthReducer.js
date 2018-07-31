@@ -1,5 +1,5 @@
 import {
-  CLEAR_AUTH_ERROR,
+  CLEAR_CLIENT_MESSAGE,
   LOGIN_RESPONSE,
   LOGIN_ERROR,
   RESTORE_USER,
@@ -10,12 +10,12 @@ const INITIAL_STATE = { user: null };
 
 export default(state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case CLEAR_AUTH_ERROR:
-      return { ...state, authError: '' };
+    case CLEAR_CLIENT_MESSAGE:
+      return { ...state, clientMessage: null };
     case LOGIN_RESPONSE:
       return { ...state, user: action.user };
     case LOGIN_ERROR:
-      return { ...state, authError: action.authError };
+      return { ...state, clientMessage: action.clientMessage };
     case LOGOUT_RESPONSE:
       return { ...state, user: null };
     case RESTORE_USER:

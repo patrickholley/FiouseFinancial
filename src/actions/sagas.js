@@ -14,6 +14,7 @@ import {
   LOGOUT_RESPONSE,
   LOGOUT_REQUEST,
 } from '../constants/actions';
+import userFriendlyErrors from '../constants/userFriendlyErrors';
 
 function* loginSaga({ payload }) {
   try {
@@ -30,7 +31,8 @@ function* loginSaga({ payload }) {
 
     yield put({ type: LOGIN_RESPONSE, user });
   } catch (authError) {
-    yield put({ type: LOGIN_ERROR, authError });
+    const clientMessage = userFriendlyErrors[authError.code] || 'Something went wrong';
+    yield put({ type: LOGIN_ERROR, clientMessage, isError: true });
   }
 }
 
@@ -53,7 +55,8 @@ function* newAccountSaga({ payload }) {
 
     yield put({ type: NEW_ACCOUNT_RESPONSE, user });
   } catch (authError) {
-    yield put({ type: NEW_ACCOUNT_ERROR, authError });
+    const clientMessage = userFriendlyErrors[authError.code] || 'Something went wrong';
+    yield put({ type: NEW_ACCOUNT_ERROR, clientMessage, isError: true });
   }
 }
 
@@ -69,7 +72,8 @@ function* resetPasswordSaga({ payload }) {
 
     yield put({ type: RESET_PASSWORD_RESPONSE });
   } catch (authError) {
-    yield put({ type: RESET_PASSWORD_ERROR, authError });
+    const clientMessage = userFriendlyErrors[authError.code] || 'Something went wrong';
+    yield put({ type: RESET_PASSWORD_ERROR, clientMessage });
   }
 }
 

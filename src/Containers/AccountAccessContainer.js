@@ -7,11 +7,10 @@ import AccountAccessPresentation from '../Presentations/AccountAccessPresentatio
 import allFormsValues from '../constants/allFormsValues';
 import {
   NEW_ACCOUNT_REQUEST,
-  CLEAR_AUTH_ERROR,
+  CLEAR_CLIENT_MESSAGE,
   LOGIN_REQUEST,
   RESET_PASSWORD_REQUEST,
 } from '../constants/actions';
-import userFriendlyErrors from '../constants/userFriendlyErrors';
 
 class AccountAccessContainer extends React.Component {
   actionParams = {
@@ -45,19 +44,18 @@ class AccountAccessContainer extends React.Component {
   }
 
   componentWillUpdate = (newProps) => {
-    const { authError, clearAuthError } = newProps;
+    const {
+      clearClientMessage,
+      isError,
+      user,
+      clientMessage,
+    } = newProps;
 
-    if (newProps.user) {
-      Actions.push('home');
-    }
+    if (user) Actions.push('home');
 
-    if (authError) {
-      const errorMessage = authError.code
-        ? userFriendlyErrors[authError.code]
-        : 'Something went wrong';
-
-      this.postSubheader(errorMessage, true);
-      clearAuthError();
+    if (clientMessage) {
+      this.postSubheader(clientMessage, isError);
+      clearClientMessage();
     }
   };
 
@@ -140,8 +138,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => (
   {
-    clearAuthError: () => dispatch({
-      type: CLEAR_AUTH_ERROR,
+    clearClientMessage: () => dispatch({
+      type: CLEAR_CLIENT_MESSAGE,
     }),
     onDispatchSubmit: (submitAction, fields) => dispatch({
       type: submitAction,

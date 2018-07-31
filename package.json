@@ -24,7 +24,8 @@
     "lint": "./node_modules/.bin/eslint \"src/**\"",
     "rename": "node ./bin/rename.js",
     "start": "react-native start",
-    "test": "jest"
+    "test": "jest",
+    "validate": "npm run lint && npm run test"
   },
   "jest": {
     "preset": "react-native"
