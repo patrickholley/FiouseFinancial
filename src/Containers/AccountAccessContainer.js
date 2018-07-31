@@ -46,16 +46,18 @@ class AccountAccessContainer extends React.Component {
   componentWillUpdate = (newProps) => {
     const {
       clearClientMessage,
-      isError,
-      user,
       clientMessage,
+      isError,
+      networkActionDone,
+      user,
     } = newProps;
 
     if (user) Actions.push('home');
 
-    if (clientMessage) {
+    if (networkActionDone) {
       this.postSubheader(clientMessage, isError);
       clearClientMessage();
+      this.setState({ networkActionInProgress: false });
     }
   };
 
@@ -76,7 +78,10 @@ class AccountAccessContainer extends React.Component {
     if (formType === 'createAccount'
       && fields.password.value !== fields.confirmPassword.value) {
       this.postSubheader('Passwords must match', true);
-    } else this.prepDispatchSubmit(fields);
+    } else {
+      this.setState({ networkActionInProgress: true },
+        () => { this.prepDispatchSubmit(fields); });
+    }
   }
 
   onFormTypeChange = (formType) => { Actions.push(formType, this.actionParams[formType]); }
@@ -126,14 +131,15 @@ class AccountAccessContainer extends React.Component {
         onFormSubmit={this.onFormSubmit}
         onFormTypeChange={this.onFormTypeChange}
         setContainerState={updatedState => { this.setState(updatedState); }}
+        networkActionInProgress={this.state.networkActionInProgress}
       />
     );
   }
 }
 
 const mapStateToProps = state => {
-  const { authError, user } = state.auth;
-  return { authError, user };
+  const { authError, isSubmitting, user } = state.auth;
+  return { authError, isSubmitting, user };
 };
 
 const mapDispatchToProps = dispatch => (

@@ -1,5 +1,11 @@
 import React from 'react';
-import { Animated, ScrollView, View } from 'react-native';
+import {
+  Animated,
+  Modal,
+  ScrollView,
+  Text,
+  View,
+} from 'react-native';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { FButton, FForm } from '../FiouseUI';
@@ -55,6 +61,11 @@ export default class AccountAccessPresentation extends React.PureComponent {
 
     return (
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+        <Modal>
+          <Text>
+            {'Loading . . .'}
+          </Text>
+        </Modal>
         <AccountAccessView>
           {isLoginForm
             ? <LargeLogoImage
