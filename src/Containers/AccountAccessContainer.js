@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Animated } from 'react-native';
+import { Animated, BackHandler } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import AccountAccessPresentation from '../Presentations/AccountAccessPresentation';
@@ -40,7 +40,12 @@ class AccountAccessContainer extends React.Component {
       fadeAnim: new Animated.Value(1),
       formType,
       formValues,
+      isNetworkActionInProgress: false,
     };
+  }
+
+  componentDidMount = () => {
+    BackHandler.addEventListener('hardwareBackPress', this.onBackButton);
   }
 
   componentWillUpdate = (newProps) => {
@@ -51,15 +56,25 @@ class AccountAccessContainer extends React.Component {
       networkActionDone,
       user,
     } = newProps;
-
+    // this.setState({ isNetworkActionInProgress: false });
     if (user) Actions.push('home');
 
     if (networkActionDone) {
       this.postSubheader(clientMessage, isError);
       clearClientMessage();
-      this.setState({ networkActionInProgress: false });
+      this.setState({ isNetworkActionInProgress: false });
     }
   };
+
+  componentWillUnmount = () => {
+    BackHandler.removeEventListener('hardwareBackPress', this.onBackButton);
+  }
+
+  // eslint-disable-next-line arrow-body-style
+  onBackButton = () => {
+    // cancel network action logic here
+    return true;
+  }
 
   onFieldChange = (fieldId, updatedValue) => {
     const { formValues } = this.state;
@@ -79,12 +94,15 @@ class AccountAccessContainer extends React.Component {
       && fields.password.value !== fields.confirmPassword.value) {
       this.postSubheader('Passwords must match', true);
     } else {
-      this.setState({ networkActionInProgress: true },
+      this.setState({ isNetworkActionInProgress: true },
         () => { this.prepDispatchSubmit(fields); });
     }
   }
 
-  onFormTypeChange = (formType) => { Actions.push(formType, this.actionParams[formType]); }
+  onFormTypeChange = (formType) => {
+    console.log(formType);
+    Actions.push('accountAccess', this.actionParams[formType]);
+  }
 
   postSubheader = (subheaderText, isError) => {
     const { formValues } = this.state;
@@ -130,8 +148,9 @@ class AccountAccessContainer extends React.Component {
         onFieldChange={this.onFieldChange}
         onFormSubmit={this.onFormSubmit}
         onFormTypeChange={this.onFormTypeChange}
+        onNetworkModalClose={() => {}}
         setContainerState={updatedState => { this.setState(updatedState); }}
-        networkActionInProgress={this.state.networkActionInProgress}
+        isNetworkActionInProgress={this.state.isNetworkActionInProgress}
       />
     );
   }

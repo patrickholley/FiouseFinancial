@@ -1,14 +1,11 @@
 import React from 'react';
 import {
   Animated,
-  Modal,
   ScrollView,
-  Text,
-  View,
 } from 'react-native';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { FButton, FForm } from '../FiouseUI';
+import { FButton, FForm, FLoader } from '../FiouseUI';
 import colors from '../constants/colors';
 import logoPath from '../../assets/fiouse_logo_clear.png';
 
@@ -61,11 +58,6 @@ export default class AccountAccessPresentation extends React.PureComponent {
 
     return (
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-        <Modal>
-          <Text>
-            {'Loading . . .'}
-          </Text>
-        </Modal>
         <AccountAccessView>
           {isLoginForm
             ? <LargeLogoImage
@@ -93,7 +85,7 @@ export default class AccountAccessPresentation extends React.PureComponent {
             submitText={formValues.submitText}
             submitButtonStyles={{ width: '60%' }}
           />
-          {isLoginForm ? [
+          {isLoginForm && [
             <FButton
               backgroundColor={colors[2]}
               key="resetPassword"
@@ -103,7 +95,7 @@ export default class AccountAccessPresentation extends React.PureComponent {
                 marginBottom: 10,
                 width: '60%',
               }}
-              onPress={this.props.onFormTypeChange('resetPassword')}
+              onPress={() => { this.props.onFormTypeChange('resetPassword'); }}
             />,
             <FButton
               backgroundColor={colors[0]}
@@ -113,14 +105,15 @@ export default class AccountAccessPresentation extends React.PureComponent {
               buttonStyles={{
                 width: '60%',
               }}
-              onPress={this.props.onFormTypeChange('createAccount')}
+              onPress={() => { this.props.onFormTypeChange('createAccount'); }}
             />,
-          ] : <View />}
+          ]}
           <FooterView />
           <CopyrightText>
             {`Copyright${'\u00A9'} 2018 Fiouse`}
           </CopyrightText>
         </AccountAccessView>
+        {this.props.isNetworkActionInProgress && <FLoader />}
       </ScrollView>
     );
   }
@@ -131,6 +124,7 @@ AccountAccessPresentation.propTypes = {
   fadeAnim: PropTypes.object.isRequired,
   formValues: PropTypes.object.isRequired,
   isLoginForm: PropTypes.bool.isRequired,
+  isNetworkActionInProgress: PropTypes.bool.isRequired,
   onFieldChange: PropTypes.func.isRequired,
   onFormSubmit: PropTypes.func.isRequired,
   onFormTypeChange: PropTypes.func.isRequired,
