@@ -38,7 +38,7 @@ describe('PlaceholderContainer', () => {
   it('redirects to login when AsyncStorage has no user', async () => {
     await instance.reroute();
     expect(Actions.push).toHaveBeenCalledTimes(1);
-    expect(Actions.push.mock.calls[0][0]).toBe('accountAccess');
+    expect(Actions.push.mock.calls[0][0]).toBe('login');
     expect(Actions.push.mock.calls[0][1]).toEqual({ formType: 'login' });
     expect(restoreUserSpy).toHaveBeenCalledTimes(0);
   });

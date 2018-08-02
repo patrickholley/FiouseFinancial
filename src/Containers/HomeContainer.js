@@ -8,7 +8,7 @@ import { LOGOUT_REQUEST } from '../constants/actions';
 class HomeContainer extends React.Component {
   componentWillUpdate = (newProps) => {
     if (newProps.user === null) {
-      Actions.push('accountAccess', { formType: 'login' });
+      Actions.push('login', { formType: 'login' });
     }
   };
 

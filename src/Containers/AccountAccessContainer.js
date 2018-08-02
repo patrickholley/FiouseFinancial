@@ -7,7 +7,7 @@ import AccountAccessPresentation from '../Presentations/AccountAccessPresentatio
 import allFormsValues from '../constants/allFormsValues';
 import {
   NEW_ACCOUNT_REQUEST,
-  CLEAR_CLIENT_MESSAGE,
+  CLEAR_CLIENT_ERROR,
   LOGIN_REQUEST,
   RESET_PASSWORD_REQUEST,
 } from '../constants/actions';
@@ -45,35 +45,38 @@ class AccountAccessContainer extends React.Component {
   }
 
   componentDidMount = () => {
-    BackHandler.addEventListener('hardwareBackPress', this.onBackButton);
+    BackHandler.addEventListener('hardwareBackPress', this.onHardwareBackPress);
   }
 
   componentWillUpdate = (newProps) => {
+    console.log(this);
     const {
-      clearClientMessage,
-      clientMessage,
-      isError,
+      clearClientError,
+      clientError,
       networkActionDone,
       user,
     } = newProps;
-    // this.setState({ isNetworkActionInProgress: false });
+
     if (user) Actions.push('home');
 
     if (networkActionDone) {
-      this.postSubheader(clientMessage, isError);
-      clearClientMessage();
+      this.postSubheader(clientError);
+      clearClientError();
       this.setState({ isNetworkActionInProgress: false });
     }
   };
 
   componentWillUnmount = () => {
-    BackHandler.removeEventListener('hardwareBackPress', this.onBackButton);
+    BackHandler.removeEventListener('hardwareBackPress', this.onHardwareBackPress);
   }
 
-  // eslint-disable-next-line arrow-body-style
-  onBackButton = () => {
-    // cancel network action logic here
-    return true;
+  onHardwareBackPress = () => {
+    if (Actions.currentParams.formType === 'login') {
+      BackHandler.exitApp();
+      return true;
+    }
+
+    return false;
   }
 
   onFieldChange = (fieldId, updatedValue) => {
@@ -92,7 +95,7 @@ class AccountAccessContainer extends React.Component {
 
     if (formType === 'createAccount'
       && fields.password.value !== fields.confirmPassword.value) {
-      this.postSubheader('Passwords must match', true);
+      this.postSubheader('Passwords must match');
     } else {
       this.setState({ isNetworkActionInProgress: true },
         () => { this.prepDispatchSubmit(fields); });
@@ -100,13 +103,12 @@ class AccountAccessContainer extends React.Component {
   }
 
   onFormTypeChange = (formType) => {
-    console.log(formType);
-    Actions.push('accountAccess', this.actionParams[formType]);
+    Actions.push(formType, this.actionParams[formType]);
   }
 
-  postSubheader = (subheaderText, isError) => {
+  postSubheader = (subheaderText) => {
     const { formValues } = this.state;
-    formValues.error = isError;
+    formValues.error = true;
     formValues.subheaderText = subheaderText;
     this.setState({ fadeAnim: new Animated.Value(0), formValues }, () => {
       Animated.timing(
@@ -157,14 +159,25 @@ class AccountAccessContainer extends React.Component {
 }
 
 const mapStateToProps = state => {
-  const { authError, isSubmitting, user } = state.auth;
-  return { authError, isSubmitting, user };
+  const {
+    clearClientError,
+    clientError,
+    networkActionDone,
+    user,
+  } = state.auth;
+
+  return {
+    clearClientError,
+    clientError,
+    networkActionDone,
+    user,
+  };
 };
 
 const mapDispatchToProps = dispatch => (
   {
-    clearClientMessage: () => dispatch({
-      type: CLEAR_CLIENT_MESSAGE,
+    clearClientError: () => dispatch({
+      type: CLEAR_CLIENT_ERROR,
     }),
     onDispatchSubmit: (submitAction, fields) => dispatch({
       type: submitAction,

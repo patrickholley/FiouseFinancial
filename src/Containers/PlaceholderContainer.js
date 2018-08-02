@@ -17,11 +17,11 @@ class PlaceholderContainer extends React.Component {
           this.props.restoreUser(JSON.parse(userData));
           Actions.push('home');
         } else {
-          Actions.push('accountAccess', { formType: 'login' });
+          Actions.push('login', { formType: 'login' });
         }
       }).catch(error => {
         console.log(error);
-        Actions.push('accountAccess', { formType: 'login' });
+        Actions.push('login', { formType: 'login' });
       });
   }
 

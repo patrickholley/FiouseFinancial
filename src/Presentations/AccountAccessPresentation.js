@@ -113,7 +113,9 @@ export default class AccountAccessPresentation extends React.PureComponent {
             {`Copyright${'\u00A9'} 2018 Fiouse`}
           </CopyrightText>
         </AccountAccessView>
-        {this.props.isNetworkActionInProgress && <FLoader />}
+        {this.props.isNetworkActionInProgress && <FLoader
+          text="Signing In"
+        />}
       </ScrollView>
     );
   }

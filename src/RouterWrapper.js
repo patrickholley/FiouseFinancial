@@ -18,10 +18,26 @@ export default class RouterWrapper extends React.Component {
 
           <Scene
             hideNavBar
-            key="accountAccess"
+            key="login"
             formType="login"
             component={AccountAccessContainer}
             title="Login"
+          />
+
+          <Scene
+            hideNavBar
+            key="createAccount"
+            formType="createAccount"
+            component={AccountAccessContainer}
+            title="Create Account"
+          />
+
+          <Scene
+            hideNavBar
+            key="resetPassword"
+            formType="resetPassword"
+            component={AccountAccessContainer}
+            title="Reset Password"
           />
 
           <Scene
