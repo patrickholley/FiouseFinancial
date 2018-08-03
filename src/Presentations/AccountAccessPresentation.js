@@ -8,6 +8,7 @@ import PropTypes from 'prop-types';
 import { FButton, FForm, FLoader } from '../FiouseUI';
 import colors from '../constants/colors';
 import logoPath from '../../assets/fiouse_logo_clear.png';
+import FOverlay from '../FiouseUI/FOverlay';
 
 const AccountAccessView = styled.View`
   alignItems: center;
@@ -33,6 +34,10 @@ const LargeLogoImage = styled.Image`
   borderRadius: 150;
   height: 150;
   margin: 10px;
+`;
+
+const ResetPasswordText = styled.Text`
+
 `;
 
 const SmallLogoImage = styled.Image`
@@ -113,9 +118,18 @@ export default class AccountAccessPresentation extends React.PureComponent {
             {`Copyright${'\u00A9'} 2018 Fiouse`}
           </CopyrightText>
         </AccountAccessView>
-        {this.props.isNetworkActionInProgress && <FLoader
-          text="Signing In"
-        />}
+        {this.props.isNetworkActionInProgress && <FLoader text="Signing In" />}
+        {/* this.props.showResetPasswordModal  */true && <FOverlay>
+          <ResetPasswordText>
+            {"Please check your email's inbox for instructions on resetting your password"}
+          </ResetPasswordText>
+          <FButton
+            backgroundColor={colors[0]}
+            text="Back to Login"
+            textColor="white"
+            onPress={() => { console.log('Kevin!'); }}
+          />
+        </FOverlay>}
       </ScrollView>
     );
   }
@@ -127,6 +141,7 @@ AccountAccessPresentation.propTypes = {
   formValues: PropTypes.object.isRequired,
   isLoginForm: PropTypes.bool.isRequired,
   isNetworkActionInProgress: PropTypes.bool.isRequired,
+  showResetPasswordModal: PropTypes.bool.isRequired,
   onFieldChange: PropTypes.func.isRequired,
   onFormSubmit: PropTypes.func.isRequired,
   onFormTypeChange: PropTypes.func.isRequired,

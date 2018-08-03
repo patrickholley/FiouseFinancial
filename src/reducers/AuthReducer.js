@@ -1,9 +1,10 @@
 import {
-  CLEAR_CLIENT_ERROR,
+  CLEAR_NETWORK_ACTION,
   RESTORE_USER,
   LOGOUT_RESPONSE,
   NETWORK_ERROR,
   USER_RESPONSE,
+  RESET_PASSWORD_RESPONSE,
 } from '../constants/actions';
 
 const INITIAL_STATE = { user: null };
@@ -12,7 +13,7 @@ export default(state = INITIAL_STATE, action) => {
   const { type, payload } = action;
 
   switch (type) {
-    case CLEAR_CLIENT_ERROR:
+    case CLEAR_NETWORK_ACTION:
       return { ...state, clientError: null, networkActionDone: false };
     case USER_RESPONSE:
       return { ...state, networkActionDone: true, user: payload.user };
@@ -20,6 +21,8 @@ export default(state = INITIAL_STATE, action) => {
       return { ...state, clientError: payload.clientError, networkActionDone: true };
     case LOGOUT_RESPONSE:
       return { ...state, user: null };
+    case RESET_PASSWORD_RESPONSE:
+      return { ...state, networkActionDone: true };
     case RESTORE_USER:
       return { ...state, user: payload.user };
     default:

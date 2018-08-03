@@ -7,7 +7,7 @@ import AccountAccessPresentation from '../Presentations/AccountAccessPresentatio
 import allFormsValues from '../constants/allFormsValues';
 import {
   NEW_ACCOUNT_REQUEST,
-  CLEAR_CLIENT_ERROR,
+  CLEAR_NETWORK_ACTION,
   LOGIN_REQUEST,
   RESET_PASSWORD_REQUEST,
 } from '../constants/actions';
@@ -50,19 +50,19 @@ class AccountAccessContainer extends React.Component {
 
   componentWillUpdate = (newProps) => {
     const {
-      clearClientError,
+      clearNetworkAction,
       clientError,
       networkActionDone,
       user,
     } = newProps;
 
-    if (user) Actions.push('home');
-
     if (this.state.formType === Actions.currentScene && networkActionDone) {
-      this.postSubheader(clientError);
-      clearClientError();
+      if (clientError) this.postSubheader(clientError);
+      clearNetworkAction();
       this.setState({ isNetworkActionInProgress: false });
     }
+
+    if (user) Actions.push('home');
   };
 
   componentWillUnmount = () => {
@@ -105,9 +105,9 @@ class AccountAccessContainer extends React.Component {
     Actions.push(formType, this.actionParams[formType]);
   }
 
-  postSubheader = (subheaderText) => {
+  postSubheader = (subheaderText, isError = true) => {
     const { formValues } = this.state;
-    formValues.error = true;
+    formValues.error = isError;
     formValues.subheaderText = subheaderText;
     this.setState({ fadeAnim: new Animated.Value(0), formValues }, () => {
       Animated.timing(
@@ -152,6 +152,7 @@ class AccountAccessContainer extends React.Component {
         onNetworkModalClose={() => {}}
         setContainerState={updatedState => { this.setState(updatedState); }}
         isNetworkActionInProgress={this.state.isNetworkActionInProgress}
+        showResetPassswordModal={this.state.showResetPassswordModal}
       />
     );
   }
@@ -175,8 +176,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => (
   {
-    clearClientError: () => dispatch({
-      type: CLEAR_CLIENT_ERROR,
+    clearNetworkAction: () => dispatch({
+      type: CLEAR_NETWORK_ACTION,
     }),
     onDispatchSubmit: (submitAction, fields) => dispatch({
       type: submitAction,
