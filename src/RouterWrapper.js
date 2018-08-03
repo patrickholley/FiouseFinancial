@@ -15,26 +15,22 @@ export default class RouterWrapper extends React.Component {
             key="placeholder"
             component={PlaceholderContainer}
           />
-
           <Scene
             hideNavBar
             key="login"
             component={AccountAccessContainer}
             title="Login"
           />
-
           <Scene
             key="createAccount"
             component={AccountAccessContainer}
             title="Create Account"
           />
-
           <Scene
             key="resetPassword"
             component={AccountAccessContainer}
             title="Reset Password"
           />
-
           <Scene
             hideNavBar
             key="home"

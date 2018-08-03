@@ -28,13 +28,14 @@ describe('AccountAccessContainer', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-    Actions.setCurrentParams({});
+    Actions.setCurrentScene(null);
   });
 
   describe('onFormSubmit', () => {
     const testOnFormSubmit = (formType, fields) => {
-      Actions.setCurrentParams({ formType });
+      Actions.setCurrentScene(formType);
       instance.setState({
+        formType,
         formValues: {
           fields,
         },
@@ -77,9 +78,11 @@ describe('AccountAccessContainer', () => {
   describe('prepDispatchSubmit', () => {
     const testPrepDispatchSubmit = (formType, actionType) => {
       onDispatchSubmitSpy.mockClear();
-      Actions.setCurrentParams({ formType });
-      instance.prepDispatchSubmit({});
-      expect(onDispatchSubmitSpy.mock.calls[0][0]).toBe(actionType);
+      Actions.setCurrentScene(formType);
+      instance.setState({ formType }, () => {
+        instance.prepDispatchSubmit({});
+        expect(onDispatchSubmitSpy.mock.calls[0][0]).toBe(actionType);
+      });
     };
 
     it('calls onDispatchSubmit with the proper submitAction', () => {

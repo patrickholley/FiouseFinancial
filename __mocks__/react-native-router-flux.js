@@ -1,14 +1,14 @@
 class MockActions {
-  constructor(params = {}) {
-    this.currentParams = params;
+  constructor(scene) {
+    this.currentScene = scene;
   }
 
   push = jest.fn();
 
   // not actual method in library - helper method
-  setCurrentParams = params => { this.currentParams = params; }
+  setCurrentScene = scene => { this.currentScene = scene; }
 }
 
 module.exports = {
-  Actions: new MockActions({ formType: 'login' }),
+  Actions: new MockActions('login'),
 };

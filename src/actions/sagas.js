@@ -55,10 +55,7 @@ function* resetPasswordSaga({ payload }) {
       payload.fields.email.value,
     );
 
-    yield put({
-      type: RESET_PASSWORD_RESPONSE,
-      payload: { clientError: 'Please check your email for a link to reset your password' },
-    });
+    yield put({ type: RESET_PASSWORD_RESPONSE });
   } catch (authError) {
     const clientError = userFriendlyErrors[authError.code] || 'Something went wrong';
     yield put({ type: NETWORK_ERROR, payload: { clientError } });

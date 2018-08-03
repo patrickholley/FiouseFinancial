@@ -58,7 +58,7 @@ class AccountAccessContainer extends React.Component {
 
     if (user) Actions.push('home');
 
-    if (networkActionDone) {
+    if (this.state.formType === Actions.currentScene && networkActionDone) {
       this.postSubheader(clientError);
       clearClientError();
       this.setState({ isNetworkActionInProgress: false });
@@ -70,7 +70,7 @@ class AccountAccessContainer extends React.Component {
   }
 
   onHardwareBackPress = () => {
-    if (Actions.currentScene === 'login') {
+    if (this.state.formType === 'login') {
       BackHandler.exitApp();
       return true;
     }
@@ -89,8 +89,8 @@ class AccountAccessContainer extends React.Component {
   }
 
   onFormSubmit = () => {
-    const { fields } = this.state.formValues;
-    const { formType } = Actions.currentScene;
+    const { formType, formValues } = this.state;
+    const { fields } = formValues;
 
     if (formType === 'createAccount'
       && fields.password.value !== fields.confirmPassword.value) {
@@ -120,7 +120,7 @@ class AccountAccessContainer extends React.Component {
   prepDispatchSubmit = fields => {
     let submitAction;
 
-    switch (Actions.currentScene) {
+    switch (this.state.formType) {
       case 'createAccount':
         submitAction = NEW_ACCOUNT_REQUEST;
         break;
