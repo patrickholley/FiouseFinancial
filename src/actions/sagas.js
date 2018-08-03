@@ -19,7 +19,7 @@ function* authUserSaga({ type, payload }) {
       ? 'signInAndRetrieveDataWithEmailAndPassword'
       : 'createUserWithEmailAndPassword';
 
-    const user = yield call(
+    const authResult = yield call(
       [
         firebase.auth(),
         firebaseAuthMethod,
@@ -27,6 +27,8 @@ function* authUserSaga({ type, payload }) {
       payload.fields.email.value,
       payload.fields.password.value,
     );
+
+    const user = type === LOGIN_REQUEST ? authResult.user : authResult;
 
     yield call([AsyncStorage, 'setItem'], 'user', JSON.stringify(user));
 

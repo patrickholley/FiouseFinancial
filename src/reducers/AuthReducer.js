@@ -21,7 +21,7 @@ export default(state = INITIAL_STATE, action) => {
     case LOGOUT_RESPONSE:
       return { ...state, user: null };
     case RESTORE_USER:
-      return { ...state, user: payload.payload.user };
+      return { ...state, user: payload.user };
     default:
       return state;
   }

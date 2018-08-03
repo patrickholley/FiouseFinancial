@@ -29,7 +29,7 @@ class AccountAccessContainer extends React.Component {
   constructor() {
     super();
 
-    const { formType } = Actions.currentParams;
+    const formType = Actions.currentScene;
     const formValues = Object.assign({}, allFormsValues[formType]);
     Object.keys(formValues.fields).forEach(fieldId => {
       formValues.fields[fieldId].value = '';
@@ -49,7 +49,6 @@ class AccountAccessContainer extends React.Component {
   }
 
   componentWillUpdate = (newProps) => {
-    console.log(this);
     const {
       clearClientError,
       clientError,
@@ -71,7 +70,7 @@ class AccountAccessContainer extends React.Component {
   }
 
   onHardwareBackPress = () => {
-    if (Actions.currentParams.formType === 'login') {
+    if (Actions.currentScene === 'login') {
       BackHandler.exitApp();
       return true;
     }
@@ -91,7 +90,7 @@ class AccountAccessContainer extends React.Component {
 
   onFormSubmit = () => {
     const { fields } = this.state.formValues;
-    const { formType } = Actions.currentParams;
+    const { formType } = Actions.currentScene;
 
     if (formType === 'createAccount'
       && fields.password.value !== fields.confirmPassword.value) {
@@ -121,7 +120,7 @@ class AccountAccessContainer extends React.Component {
   prepDispatchSubmit = fields => {
     let submitAction;
 
-    switch (Actions.currentParams.formType) {
+    switch (Actions.currentScene) {
       case 'createAccount':
         submitAction = NEW_ACCOUNT_REQUEST;
         break;
