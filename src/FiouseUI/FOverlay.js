@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 const LoaderOverlayView = styled.View`
   position: absolute;
@@ -21,8 +22,8 @@ const LoaderContainerView = styled.View`
   borderRadius: 5;
   display: flex;
   padding: 10px;
-  alignContent: space-around;
-  justifyContent: space-around;
+  alignContent: space-between;
+  justifyContent: space-between;
 `;
 
 /* eslint-disable react/prefer-stateless-function */
@@ -30,10 +31,18 @@ export default class FOverlay extends React.PureComponent {
   render() {
     return (
       <LoaderOverlayView>
-        <LoaderContainerView>
+        <LoaderContainerView style={this.props.containerStyles}>
           {this.props.children}
         </LoaderContainerView>
       </LoaderOverlayView>
     );
   }
 }
+
+FOverlay.propTypes = {
+  containerStyles: PropTypes.object,
+};
+
+FOverlay.defaultProps = {
+  containerStyles: {},
+};

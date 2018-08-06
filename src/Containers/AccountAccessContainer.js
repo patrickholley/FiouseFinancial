@@ -41,6 +41,7 @@ class AccountAccessContainer extends React.Component {
       formType,
       formValues,
       isNetworkActionInProgress: false,
+      showResetPasswordModal: false,
     };
   }
 
@@ -53,13 +54,19 @@ class AccountAccessContainer extends React.Component {
       clearNetworkAction,
       clientError,
       networkActionDone,
+      showResetPasswordModal,
       user,
     } = newProps;
 
     if (this.state.formType === Actions.currentScene && networkActionDone) {
       if (clientError) this.postSubheader(clientError);
+      const updatedState = {
+        isNetworkActionInProgress: false,
+        showResetPasswordModal: showResetPasswordModal || this.state.showResetPasswordModal,
+      };
+
       clearNetworkAction();
-      this.setState({ isNetworkActionInProgress: false });
+      this.setState(updatedState);
     }
 
     if (user) Actions.push('home');
@@ -149,10 +156,11 @@ class AccountAccessContainer extends React.Component {
         onFieldChange={this.onFieldChange}
         onFormSubmit={this.onFormSubmit}
         onFormTypeChange={this.onFormTypeChange}
+        onResetPasswordModalBack={this.onHardwareBackPress}
         onNetworkModalClose={() => {}}
         setContainerState={updatedState => { this.setState(updatedState); }}
         isNetworkActionInProgress={this.state.isNetworkActionInProgress}
-        showResetPassswordModal={this.state.showResetPassswordModal}
+        showResetPasswordModal={this.state.showResetPasswordModal}
       />
     );
   }
@@ -160,16 +168,16 @@ class AccountAccessContainer extends React.Component {
 
 const mapStateToProps = state => {
   const {
-    clearClientError,
     clientError,
     networkActionDone,
+    showResetPasswordModal,
     user,
   } = state.auth;
 
   return {
-    clearClientError,
     clientError,
     networkActionDone,
+    showResetPasswordModal,
     user,
   };
 };

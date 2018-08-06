@@ -18,7 +18,7 @@ const LoaderText = styled.Text`
 export default class FLoader extends React.PureComponent {
   render() {
     return (
-      <FOverlay>
+      <FOverlay containerStyles={this.props.containerStyles}>
         <LoaderActivityIndicator
           color={colors[0]}
           size={60}
@@ -32,9 +32,11 @@ export default class FLoader extends React.PureComponent {
 }
 
 FLoader.propTypes = {
+  containerStyles: PropTypes.object,
   text: PropTypes.string,
 };
 
 FLoader.defaultProps = {
+  containerStyles: {},
   text: 'Loading',
 };

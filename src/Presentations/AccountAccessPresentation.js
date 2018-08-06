@@ -37,7 +37,9 @@ const LargeLogoImage = styled.Image`
 `;
 
 const ResetPasswordText = styled.Text`
-
+  color: ${colors[2]};
+  fontSize: 16;
+  textAlign: center;
 `;
 
 const SmallLogoImage = styled.Image`
@@ -118,16 +120,22 @@ export default class AccountAccessPresentation extends React.PureComponent {
             {`Copyright${'\u00A9'} 2018 Fiouse`}
           </CopyrightText>
         </AccountAccessView>
-        {this.props.isNetworkActionInProgress && <FLoader text="Signing In" />}
-        {/* this.props.showResetPasswordModal  */true && <FOverlay>
+        {this.props.isNetworkActionInProgress && <FLoader
+          text="Signing In"
+        />}
+        {this.props.showResetPasswordModal && <FOverlay
+          containerStyles={{ height: 150, width: 225 }}
+        >
           <ResetPasswordText>
-            {"Please check your email's inbox for instructions on resetting your password"}
+            {'Please check your email for instructions on resetting your password.'}
           </ResetPasswordText>
           <FButton
             backgroundColor={colors[0]}
-            text="Back to Login"
+            buttonStyles={{ width: 205 }}
+            text="Close"
             textColor="white"
-            onPress={() => { console.log('Kevin!'); }}
+            textStyles={{ fontSize: 18 }}
+            onPress={this.props.onResetPasswordModalBack}
           />
         </FOverlay>}
       </ScrollView>
@@ -145,4 +153,5 @@ AccountAccessPresentation.propTypes = {
   onFieldChange: PropTypes.func.isRequired,
   onFormSubmit: PropTypes.func.isRequired,
   onFormTypeChange: PropTypes.func.isRequired,
+  onResetPasswordModalBack: PropTypes.func.isRequired,
 };
