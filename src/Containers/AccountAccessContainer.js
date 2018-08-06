@@ -77,6 +77,11 @@ class AccountAccessContainer extends React.Component {
   }
 
   onHardwareBackPress = () => {
+    if (this.state.showResetPasswordModal) {
+      this.setState({ showResetPasswordModal: false });
+      return true;
+    }
+
     if (this.state.formType === 'login') {
       BackHandler.exitApp();
       return true;
