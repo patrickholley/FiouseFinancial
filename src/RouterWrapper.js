@@ -1,7 +1,7 @@
 import React from 'react';
 import { Router, Scene, Stack } from 'react-native-router-flux';
 import AccountAccessContainer from './Containers/AccountAccessContainer';
-import HomeContainer from './Containers/HomeContainer';
+import ManageBudgetsContainer from './Containers/ManageBudgetsContainer';
 import PlaceholderContainer from './Containers/PlaceholderContainer';
 
 /* eslint-disable react/prefer-stateless-function */
@@ -33,9 +33,9 @@ export default class RouterWrapper extends React.Component {
           />
           <Scene
             hideNavBar
-            key="home"
-            component={HomeContainer}
-            title="Home"
+            key="manageBudgets"
+            component={ManageBudgetsContainer}
+            title="ManageBudgets"
           />
         </Stack>
       </Router>

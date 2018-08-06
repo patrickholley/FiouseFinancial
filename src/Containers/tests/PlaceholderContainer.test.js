@@ -30,7 +30,7 @@ describe('PlaceholderContainer', () => {
     await AsyncStorage.setItem('user', JSON.stringify(testUserData));
     await instance.reroute();
     expect(Actions.push).toHaveBeenCalledTimes(1);
-    expect(Actions.push.mock.calls[0][0]).toBe('home');
+    expect(Actions.push.mock.calls[0][0]).toBe('manageBudgets');
     expect(restoreUserSpy).toHaveBeenCalledTimes(1);
     expect(restoreUserSpy.mock.calls[0][0]).toEqual(testUserData);
   });

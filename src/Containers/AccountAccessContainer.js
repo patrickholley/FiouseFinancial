@@ -69,7 +69,7 @@ class AccountAccessContainer extends React.Component {
       this.setState(updatedState);
     }
 
-    if (user) Actions.push('home');
+    if (user) Actions.replace('manageBudgets');
   };
 
   componentWillUnmount = () => {
@@ -82,7 +82,7 @@ class AccountAccessContainer extends React.Component {
       return true;
     }
 
-    if (this.state.formType === 'login') {
+    if (Actions.currentScene === 'login') {
       BackHandler.exitApp();
       return true;
     }
@@ -162,7 +162,6 @@ class AccountAccessContainer extends React.Component {
         onFormSubmit={this.onFormSubmit}
         onFormTypeChange={this.onFormTypeChange}
         onResetPasswordModalBack={this.onHardwareBackPress}
-        onNetworkModalClose={() => {}}
         setContainerState={updatedState => { this.setState(updatedState); }}
         isNetworkActionInProgress={this.state.isNetworkActionInProgress}
         showResetPasswordModal={this.state.showResetPasswordModal}

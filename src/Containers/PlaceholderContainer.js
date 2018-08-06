@@ -15,13 +15,13 @@ class PlaceholderContainer extends React.Component {
       .then(userData => {
         if (userData) {
           this.props.restoreUser(JSON.parse(userData));
-          Actions.push('home');
+          Actions.replace('manageBudgets');
         } else {
-          Actions.push('login', { formType: 'login' });
+          Actions.replace('login', { formType: 'login' });
         }
       }).catch(error => {
         console.log(error);
-        Actions.push('login', { formType: 'login' });
+        Actions.replace('login', { formType: 'login' });
       });
   }
 

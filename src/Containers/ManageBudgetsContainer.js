@@ -2,10 +2,10 @@ import React from 'react';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import HomePresentation from '../Presentations/HomePresentation';
+import ManageBudgetsPresentation from '../Presentations/ManageBudgetsPresentation';
 import { LOGOUT_REQUEST } from '../constants/actions';
 
-class HomeContainer extends React.Component {
+class ManageBudgetsContainer extends React.Component {
   componentWillUpdate = (newProps) => {
     if (newProps.user === null) {
       Actions.push('login', { formType: 'login' });
@@ -14,9 +14,7 @@ class HomeContainer extends React.Component {
 
   render() {
     return (
-      <HomePresentation
-        user={this.props.user}
-        onLogout={this.props.onLogout}
+      <ManageBudgetsPresentation
       />
     );
   }
@@ -33,13 +31,13 @@ const mapStateToProps = state => {
   return { user };
 };
 
-HomeContainer.propTypes = {
+ManageBudgetsContainer.propTypes = {
   onLogout: PropTypes.func.isRequired,
   user: PropTypes.object,
 };
 
-HomeContainer.defaultProps = {
+ManageBudgetsContainer.defaultProps = {
   user: null,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(HomeContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(ManageBudgetsContainer);
