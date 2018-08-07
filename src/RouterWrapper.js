@@ -15,18 +15,19 @@ import colors from './constants/colors';
 const styles = {
   navDrawerLeftButton: {
     backgroundColor: colors[0],
-    display: 'flex',
-    justifyContent: 'center',
   },
   navDrawerLeftButtonText: {
     color: 'white',
     fontSize: 24,
+    fontWeight: 'bold',
   },
   navDrawerTitle: {
-    color: colors[2],
+    color: 'white',
+    fontSize: 24,
   },
   navDrawerNavigationBar: {
     paddingLeft: 15,
+    backgroundColor: colors[0],
   },
 };
 
@@ -63,7 +64,7 @@ export default class RouterWrapper extends React.Component {
 
           <Drawer
             hideNavBar
-            key="navigationDrawer"
+            key="navDrawer"
             leftButtonStyle={styles.navDrawerLeftButton}
             leftTitle="&#9776;"
             leftButtonTextStyle={styles.navDrawerLeftButtonText}
