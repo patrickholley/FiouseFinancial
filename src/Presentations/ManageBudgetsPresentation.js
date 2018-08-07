@@ -2,6 +2,7 @@ import React from 'react';
 import { Text, View } from 'react-native';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { Actions } from 'react-native-router-flux';
 import { FButton } from '../FiouseUI';
 import colors from '../constants/colors';
 
@@ -32,7 +33,7 @@ export default class ManageBudgetsPresentation extends React.Component {
             width: 2 * addBudgetButtonRadius,
             borderRadius: addBudgetButtonRadius,
           }}
-          onPress={() => {}}
+          onPress={() => { Actions.drawerOpen(); }}
           text="+"
           textColor="white"
           textStyles={{ lineHeight: 125, fontSize: 100 }}
