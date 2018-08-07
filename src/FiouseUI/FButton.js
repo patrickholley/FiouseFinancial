@@ -9,6 +9,7 @@ const ButtonTouchableOpacity = styled.TouchableOpacity`
   display: flex;
   justifyContent: center;
   alignItems: center;
+  flexFlow: row;
 `;
 
 const ButtonText = styled.Text`
@@ -30,8 +31,9 @@ export default class FButton extends React.PureComponent {
           color={this.props.textColor}
           style={this.props.textStyles}
         >
-          {this.props.text.toUpperCase()}
+          {this.props.preserveCasing ? this.props.text.toUpperCase() : this.props.text}
         </ButtonText>
+        {this.props.children}
       </ButtonTouchableOpacity>
     );
   }
@@ -42,6 +44,7 @@ FButton.propTypes = {
   onPress: PropTypes.func.isRequired,
   backgroundColor: PropTypes.string.isRequired,
   buttonStyles: PropTypes.object,
+  preserveCasing: PropTypes.bool,
   textColor: PropTypes.string.isRequired,
   textStyles: PropTypes.object,
   text: PropTypes.string.isRequired,
@@ -51,4 +54,5 @@ FButton.defaultProps = {
   buttonStyles: {},
   isDisabled: false,
   textStyles: {},
+  preserveCasing: false,
 };

@@ -72,6 +72,7 @@ export default class RouterWrapper extends React.Component {
             contentComponent={NavigationDrawerContainer}
             title="Navigation Drawer"
             titleStyle={styles.navDrawerTitle}
+            drawerWidth={250}
           >
             <Scene
               key="manageBudgets"
