@@ -22,67 +22,56 @@ const UserHeaderText = styled.Text`
 `;
 
 const LinkView = styled.View`
-  padding: 10px 10px 0px 10px;
+  padding: 5px 10px;
+  flex-flow: row;
+  justify-content: space-between;
 `;
 
 /* eslint-disable react/prefer-stateless-function */
 export default class NavigationDrawerPresentation extends React.Component {
-  generateLinks = (linkOptions) => linkOptions.map(link => (
-    <View key={link.key}>
-      <LinkView>
-        <FButton
-          backgroundColor="white"
-          buttonStyles={{
-            width: '100%',
-            justifyContent: 'space-between',
-          }}
-          onPress={() => {}}
-          textColor={colors[3]}
-          text={link.text}
-          textStyles={{
-            fontSize: 20,
-          }}
-        >
-          {link.subMenu && <MCIcon
+  generateLinks = (linkAttributes) => Object.keys(linkAttributes).map(key => {
+    const {
+      subMenuItems,
+      isSubMenuOpen,
+      text,
+    } = linkAttributes[key];
+
+    return (
+      <View key={key}>
+        <LinkView>
+          <FButton
+            backgroundColor="white"
+            onPress={() => { this.props.onLinkPress(key); }}
+            textColor={colors[3]}
+            text={text}
+            textStyles={{
+              fontSize: 20,
+            }}
+          />
+          {subMenuItems && <MCIcon
             name="chevron-right"
             size={36}
             color={colors[3]}
+            style={{
+              transform: [{ rotate: isSubMenuOpen ? '90deg' : '0deg' }],
+            }}
           />}
-        </FButton>
-      </LinkView>
-      {link.subMenu && link.subMenu.map(subItem => (
-        <FButton
-          key={subItem.key}
-          buttonStyles={{ justifyContent: 'flex-start', paddingLeft: 20 }}
-          backgroundColor="white"
-          onPress={() => {}}
-          textColor={colors[3]}
-          text={subItem.value}
-        />
-      ))}
-    </View>
-  ));
+        </LinkView>
+        {isSubMenuOpen && Object.keys(subMenuItems).map(subKey => (
+          <FButton
+            key={subKey}
+            buttonStyles={{ justifyContent: 'flex-start', paddingLeft: 20 }}
+            backgroundColor="white"
+            onPress={this.props.onLogout}
+            textColor={colors[3]}
+            text={subMenuItems[subKey].text}
+          />
+        ))}
+      </View>
+    );
+  });
 
   render() {
-    const linkTexts = [
-      {
-        key: 'manageBudgets',
-        text: 'Manage Budgets',
-        subMenu: [
-          { key: 'familyMonthly', value: 'Family Monthly' },
-          { key: 'personalWeekly', value: 'Personal Weekly' },
-        ],
-      },
-      {
-        key: 'settings',
-        text: 'Settings',
-      },
-      {
-        key: 'signOut',
-        text: 'Sign Out',
-      },
-    ];
-
     return (
       <View style={{ flex: 1 }}>
         <UserHeaderView>
@@ -92,17 +81,21 @@ export default class NavigationDrawerPresentation extends React.Component {
             color="white"
           />
           <UserHeaderText>
-            {'test@test.com'}
+            {this.props.user ? this.props.user.email : 'null@null.com' }
           </UserHeaderText>
         </UserHeaderView>
-        {this.generateLinks(linkTexts)}
+        {this.generateLinks(this.props.linkAttributes)}
       </View>
     );
   }
 }
 
 NavigationDrawerPresentation.propTypes = {
+  linkAttributes: PropTypes.object.isRequired,
+  onLinkPress: PropTypes.func.isRequired,
+  user: PropTypes.object,
 };
 
 NavigationDrawerPresentation.defaultProps = {
+  user: { email: 'null@null.com' },
 };
