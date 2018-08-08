@@ -1,5 +1,5 @@
 import React from 'react';
-import { View } from 'react-native';
+import { Animated, TouchableWithoutFeedback, View } from 'react-native';
 import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
@@ -22,7 +22,9 @@ const UserHeaderText = styled.Text`
 `;
 
 const LinkView = styled.View`
-  padding: 5px 10px;
+  align-items: center;
+  height: 40;
+  padding-left: 10px;
   flex-flow: row;
   justify-content: space-between;
 `;
@@ -31,10 +33,25 @@ const LinkView = styled.View`
 export default class NavigationDrawerPresentation extends React.Component {
   generateLinks = (linkAttributes) => Object.keys(linkAttributes).map(key => {
     const {
+      subMenuAnim,
       subMenuItems,
-      isSubMenuOpen,
       text,
     } = linkAttributes[key];
+
+    let arrowSubMenuAnim;
+    let subMenuItemsAnim;
+
+    if (subMenuAnim) {
+      arrowSubMenuAnim = subMenuAnim.interpolate({
+        inputRange: [0, 1],
+        outputRange: ['0deg', '90deg'],
+      });
+
+      subMenuItemsAnim = subMenuAnim.interpolate({
+        inputRange: [0, 1],
+        outputRange: [0, Object.keys(subMenuItems).length * 30],
+      });
+    }
 
     return (
       <View key={key}>
@@ -48,25 +65,42 @@ export default class NavigationDrawerPresentation extends React.Component {
               fontSize: 20,
             }}
           />
-          {subMenuItems && <MCIcon
-            name="chevron-right"
-            size={36}
-            color={colors[3]}
-            style={{
-              transform: [{ rotate: isSubMenuOpen ? '90deg' : '0deg' }],
-            }}
-          />}
+          {subMenuItems && <Animated.View
+            style={{ transform: [{ rotate: arrowSubMenuAnim }] }}
+          >
+            <TouchableWithoutFeedback
+              onPress={() => { this.props.onSubMenuPress(key); }}
+            >
+              <MCIcon
+                name="chevron-right"
+                size={36}
+                color={colors[3]}
+              />
+            </TouchableWithoutFeedback>
+          </Animated.View>}
         </LinkView>
-        {isSubMenuOpen && Object.keys(subMenuItems).map(subKey => (
-          <FButton
-            key={subKey}
-            buttonStyles={{ justifyContent: 'flex-start', paddingLeft: 20 }}
-            backgroundColor="white"
-            onPress={this.props.onLogout}
-            textColor={colors[3]}
-            text={subMenuItems[subKey].text}
-          />
-        ))}
+        {subMenuItems && <Animated.View
+          style={{
+            height: subMenuItemsAnim,
+            opacity: subMenuAnim,
+          }}
+        >
+          {Object.keys(subMenuItems).map(subKey => (
+            <FButton
+              key={subKey}
+              buttonStyles={{
+                alignItems: 'center',
+                height: 30,
+                justifyContent: 'flex-start',
+                paddingLeft: 20,
+              }}
+              backgroundColor="white"
+              onPress={() => {}}
+              textColor={colors[3]}
+              text={subMenuItems[subKey].text}
+            />
+          ))}
+        </Animated.View>}
       </View>
     );
   });
@@ -93,6 +127,7 @@ export default class NavigationDrawerPresentation extends React.Component {
 NavigationDrawerPresentation.propTypes = {
   linkAttributes: PropTypes.object.isRequired,
   onLinkPress: PropTypes.func.isRequired,
+  onSubMenuPress: PropTypes.func.isRequired,
   user: PropTypes.object,
 };
 

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Animated } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -9,19 +10,22 @@ class NavigationDrawerContainer extends React.Component {
   constructor() {
     super();
 
-    this.state = {
-      linkAttributes: {
-        manageBugets: {
-          text: 'Manage Budgets',
-          isSubMenuOpen: false,
-          subMenuItems: {
-            familyMonthly: { text: 'Family Monthly' },
-            personalWeekly: { text: 'Personal Weekly' },
-          },
+    const baseLinkAttributes = {
+      manageBugets: {
+        text: 'Manage Budgets',
+        isSubMenuOpen: false,
+        subMenuItems: {
+          familyMonthly: { text: 'Family Monthly' },
+          personalWeekly: { text: 'Personal Weekly' },
         },
-        settings: { text: 'Settings' },
-        signOut: { text: 'Sign Out' },
+        subMenuAnim: new Animated.Value(0),
       },
+      settings: { text: 'Settings' },
+      signOut: { text: 'Sign Out' },
+    };
+
+    this.state = {
+      linkAttributes: baseLinkAttributes,
     };
   }
 
@@ -35,10 +39,19 @@ class NavigationDrawerContainer extends React.Component {
     if (linkKey === 'signOut') {
       this.props.onLogout();
     } else {
-      const { linkAttributes } = this.state;
-      linkAttributes[linkKey].isSubMenuOpen = !linkAttributes[linkKey].isSubMenuOpen;
-      this.setState({ linkAttributes });
+
     }
+  };
+
+  onSubMenuPress = (linkKey) => {
+    const { linkAttributes } = this.state;
+    const willSubMenuOpen = !linkAttributes[linkKey].isSubMenuOpen;
+    linkAttributes[linkKey].isSubMenuOpen = willSubMenuOpen;
+    Animated.timing(
+      this.state.linkAttributes[linkKey].subMenuAnim,
+      { toValue: willSubMenuOpen, duration: 250 },
+    ).start();
+    this.setState({ linkAttributes });
   };
 
   render() {
@@ -46,6 +59,7 @@ class NavigationDrawerContainer extends React.Component {
       <NavigationDrawerPresentation
         linkAttributes={this.state.linkAttributes}
         onLinkPress={this.onLinkPress}
+        onSubMenuPress={this.onSubMenuPress}
         user={this.props.user}
       />
     );
