@@ -69,7 +69,7 @@ class AccountAccessContainer extends React.Component {
       this.setState(updatedState);
     }
 
-    if (user) Actions.replace('manageBudgets');
+    if (user) Actions.replace('budgetList');
   };
 
   componentWillUnmount = () => {

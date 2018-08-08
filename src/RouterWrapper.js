@@ -6,10 +6,11 @@ import {
   Drawer,
 } from 'react-native-router-flux';
 import AccountAccessContainer from './Containers/AccountAccessContainer';
-import ManageBudgetsContainer from './Containers/ManageBudgetsContainer';
+import BudgetListContainer from './Containers/BudgetListContainer';
 import PlaceholderContainer from './Containers/PlaceholderContainer';
 import SettingsContainer from './Containers/SettingsContainer';
 import NavigationDrawerContainer from './Containers/NavigationDrawerContainer';
+import BudgetContainer from './Containers/BudgetContainer';
 import colors from './constants/colors';
 
 const styles = {
@@ -75,10 +76,17 @@ export default class RouterWrapper extends React.Component {
             drawerWidth={250}
           >
             <Scene
-              key="manageBudgets"
-              component={ManageBudgetsContainer}
-              title="Manage Budgets"
-            />
+              key="budgetList"
+              component={BudgetListContainer}
+              title="Budgets"
+            >
+
+            </Scene>
+            <Scene
+                key="budget"
+                component={BudgetContainer}
+                title="Budget"
+              />
             <Scene
               key="settings"
               component={SettingsContainer}

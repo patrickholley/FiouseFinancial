@@ -11,8 +11,8 @@ class NavigationDrawerContainer extends React.Component {
     super();
 
     const baseLinkAttributes = {
-      manageBugets: {
-        text: 'Manage Budgets',
+      budgetList: {
+        text: 'Budgets',
         isSubMenuOpen: false,
         subMenuItems: {
           familyMonthly: { text: 'Family Monthly' },
@@ -35,12 +35,12 @@ class NavigationDrawerContainer extends React.Component {
     }
   };
 
-  onLinkPress = (linkKey) => {
+  onLinkPress = (linkKey, subKey) => {
     if (linkKey === 'signOut') {
       this.props.onLogout();
-    } else {
-
-    }
+    } else if (subKey) {
+      Actions.push('budget');
+    } else Actions.push(linkKey);
   };
 
   onSubMenuPress = (linkKey) => {

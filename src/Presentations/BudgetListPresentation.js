@@ -16,7 +16,7 @@ const InstructionText = styled.Text`
 `;
 
 /* eslint-disable react/prefer-stateless-function */
-export default class ManageBudgetsPresentation extends React.Component {
+export default class BudgetListPresentation extends React.Component {
   render() {
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
@@ -43,8 +43,8 @@ export default class ManageBudgetsPresentation extends React.Component {
   }
 }
 
-ManageBudgetsPresentation.propTypes = {
+BudgetListPresentation.propTypes = {
 };
 
-ManageBudgetsPresentation.defaultProps = {
+BudgetListPresentation.defaultProps = {
 };

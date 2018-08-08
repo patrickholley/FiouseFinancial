@@ -95,7 +95,7 @@ export default class NavigationDrawerPresentation extends React.Component {
                 paddingLeft: 20,
               }}
               backgroundColor="white"
-              onPress={() => {}}
+              onPress={() => { this.props.onLinkPress(key, subKey); }}
               textColor={colors[3]}
               text={subMenuItems[subKey].text}
             />

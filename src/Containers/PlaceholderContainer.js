@@ -15,7 +15,7 @@ class PlaceholderContainer extends React.Component {
       .then(userData => {
         if (userData) {
           this.props.restoreUser(JSON.parse(userData));
-          Actions.replace('manageBudgets');
+          Actions.replace('budgetList');
         } else {
           Actions.replace('login', { formType: 'login' });
         }
