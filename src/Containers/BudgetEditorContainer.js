@@ -6,15 +6,40 @@ import BudgetEditorPresentation from '../Presentations/BudgetEditorPresentation'
 import { LOGOUT_REQUEST } from '../constants/actions';
 
 class BudgetEditorContainer extends React.Component {
-  componentWillUpdate = (newProps) => {
+  lengthTypes = [
+    { Name: 'Weekly', Id: 1 },
+    { Name: 'Biweekly', Id: 2 },
+    { Name: 'Semimonthly', Id: 3 },
+    { Name: 'Monthly', Id: 4 },
+    { Name: 'Quarterly', Id: 5 },
+    { Name: 'Semiannually', Id: 6 },
+    { Name: 'Annually', Id: 7 },
+  ];
+
+  constructor() {
+    super();
+
+    this.state = {
+      currentLengthType: 0,
+    };
+  }
+
+  componentWillUpdate = newProps => {
     if (newProps.user === null) {
       Actions.push('login', { formType: 'login' });
     }
   };
 
+  onValueChange = newLengthType => {
+    this.setState({ currentLengthType: newLengthType });
+  };
+
   render() {
     return (
       <BudgetEditorPresentation
+        currentLengthType={this.state.currentLengthType}
+        lengthTypes={this.lengthTypes}
+        onValueChange={this.onValueChange}
       />
     );
   }

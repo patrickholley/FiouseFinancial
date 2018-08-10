@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { Actions } from 'react-native-router-flux';
 import { FButton } from '../FiouseUI';
 import colors from '../constants/colors';
+import BudgetEditorContainer from '../Containers/BudgetEditorContainer';
 
 const addBudgetButtonRadius = 50;
 
@@ -19,26 +20,27 @@ const InstructionText = styled.Text`
 export default class BudgetListPresentation extends React.Component {
   render() {
     return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <InstructionText>
-          {'You have no budgets yet!'}
-        </InstructionText>
-        <InstructionText>
-          {'Tap below to make a new budget:'}
-        </InstructionText>
-        <FButton
-          backgroundColor={colors[0]}
-          buttonStyles={{
-            height: 2 * addBudgetButtonRadius,
-            width: 2 * addBudgetButtonRadius,
-            borderRadius: addBudgetButtonRadius,
-          }}
-          onPress={() => { Actions.drawerOpen(); }}
-          text="+"
-          textColor="white"
-          textStyles={{ lineHeight: 125, fontSize: 100 }}
-        />
-      </View>
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+          <InstructionText>
+            {'You have no budgets yet!'}
+          </InstructionText>
+          <InstructionText>
+            {'Tap below to make a new budget:'}
+          </InstructionText>
+          <FButton
+            backgroundColor={colors[0]}
+            buttonStyles={{
+              height: 2 * addBudgetButtonRadius,
+              width: 2 * addBudgetButtonRadius,
+              borderRadius: addBudgetButtonRadius,
+            }}
+            onPress={this.props.onOpenEditor}
+            text="+"
+            textColor="white"
+            textStyles={{ lineHeight: 125, fontSize: 100 }}
+          />
+          <BudgetEditorContainer />
+        </View>
     );
   }
 }
