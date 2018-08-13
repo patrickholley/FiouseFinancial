@@ -10,13 +10,15 @@ const FiouseInput = styled.TextInput`
 
 export default class FInput extends React.PureComponent {
   render() {
+    console.log(this.props.keyboardType);
+
     return (
       <FiouseInput
         autoCapitalize={this.props.autoCapitalize}
-        keyboardType={this.props.type === 'email' ? 'email-address' : 'default'}
+        keyboardType={this.props.keyboardType}
         onChangeText={this.props.onChangeText}
         placeholder={this.props.placeholder}
-        secureTextEntry={this.props.type === 'password'}
+        secureTextEntry={this.props.secureTextEntry}
         selectionColor={colors[2]}
         underlineColorAndroid={colors[2]}
       />
@@ -26,12 +28,15 @@ export default class FInput extends React.PureComponent {
 
 FInput.propTypes = {
   autoCapitalize: PropTypes.string,
-  type: PropTypes.string.isRequired,
+  keyboardType: PropTypes.string,
   onChangeText: PropTypes.func.isRequired,
   placeholder: PropTypes.string,
+  secureTextEntry: PropTypes.bool,
 };
 
 FInput.defaultProps = {
   autoCapitalize: 'none',
+  keyboardType: 'default',
   placeholder: '',
+  secureTextEntry: false,
 };

@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import FButton from './FButton';
 import FInput from './FInput';
+import FPicker from './FPicker';
 import FWrapper from './FWrapper';
 import colors from '../constants/colors';
 
@@ -24,17 +25,27 @@ export default class FForm extends React.PureComponent {
       keyboardType={field.keyboardType}
       onChangeText={updatedValue => { this.props.onFieldChange(fieldId, updatedValue); }}
       placeholder={field.placeholder}
-      type={field.type}
+      secureTextEntry={field.secureTextEntry}
     />
   )
 
-  generateFields() {
+  generateFieldPicker = (field, fieldId) => (
+    <FPicker
+      selectedValue={field.value}
+      onValueChange={updatedValue => { this.props.onFieldChange(fieldId, updatedValue); }}
+    >
+      {field.items}
+    </FPicker>
+  )
+
+  generateFields = () => {
     const FInputs = [];
     Object.keys(this.props.fields).forEach(fieldId => {
       const field = this.props.fields[fieldId];
-
       FInputs.push(
-        this.generateFieldTextInput(field, fieldId),
+        field.picker
+          ? this.generateFieldPicker(field, fieldId)
+          : this.generateFieldTextInput(field, fieldId),
       );
     });
     return FInputs;
@@ -67,6 +78,7 @@ FForm.propTypes = {
   onFieldChange: PropTypes.func.isRequired,
   canSubmit: PropTypes.bool,
   onFormSubmit: PropTypes.func.isRequired,
+  pickers: PropTypes.object,
   submitText: PropTypes.string.isRequired,
   submitButtonStyles: PropTypes.object,
   submitTextStyles: PropTypes.object,
@@ -74,6 +86,7 @@ FForm.propTypes = {
 
 FForm.defaultProps = {
   canSubmit: true,
+  pickers: {},
   submitButtonStyles: {},
   submitTextStyles: {},
 };

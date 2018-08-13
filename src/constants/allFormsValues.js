@@ -1,8 +1,8 @@
 export default {
   login: {
     fields: {
-      email: { placeholder: 'Email', type: 'email' },
-      password: { placeholder: 'Password', type: 'password' },
+      email: { placeholder: 'Email', keyboardType: 'email-address' },
+      password: { placeholder: 'Password', secureTextEntry: true },
     },
     headerText: 'Financial Assistant',
     subheaderText: '',
@@ -10,7 +10,7 @@ export default {
   },
   resetPassword: {
     fields: {
-      email: { placeholder: 'Email', type: 'email' },
+      email: { placeholder: 'Email', keyboardType: 'email-address' },
     },
     headerText: 'Reset Password',
     subheaderText: 'Please enter the email address associated with your account below',
@@ -18,12 +18,20 @@ export default {
   },
   createAccount: {
     fields: {
-      email: { placeholder: 'Email', type: 'email' },
-      password: { placeholder: 'Password', type: 'password' },
-      confirmPassword: { placeholder: 'Confirm Password', type: 'password' },
+      email: { placeholder: 'Email', keyboardType: 'email-address' },
+      password: { placeholder: 'Password', secureTextEntry: true },
+      confirmPassword: { placeholder: 'Confirm Password', secureTextEntry: true },
     },
     headerText: 'Create New Account',
     subheaderText: 'Your email address will be used for authentication, technical support, and password recovery only',
     submitText: 'Submit',
+  },
+  budgetEdit: {
+    fields: {
+      name: { placeholder: 'Name' },
+      lengthType: { picker: true },
+      balance: { placeholder: 'Balance Amount', keyboardType: 'numeric' },
+    },
+    submitText: 'Create Budget',
   },
 };

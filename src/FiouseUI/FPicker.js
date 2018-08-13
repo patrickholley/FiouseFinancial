@@ -13,7 +13,7 @@ export default class FPicker extends React.PureComponent {
     return (
       <FiousePicker
         selectedValue={this.props.selectedValue}
-        onValueChange={itemValue => { this.props.onValueChange(itemValue); }}
+        onValueChange={this.props.onValueChange}
       >
         {this.props.children}
       </FiousePicker>
@@ -22,13 +22,7 @@ export default class FPicker extends React.PureComponent {
 }
 
 FPicker.propTypes = {
-  autoCapitalize: PropTypes.string,
-  type: PropTypes.string.isRequired,
-  onChangeText: PropTypes.func.isRequired,
-  placeholder: PropTypes.string,
 };
 
 FPicker.defaultProps = {
-  autoCapitalize: 'none',
-  placeholder: '',
 };
