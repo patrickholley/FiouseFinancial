@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import colors from '../constants/colors';
 import FOverlay from '../FiouseUI/FOverlay';
+import FPicker from '../FiouseUI/FPicker';
 
 /* eslint-disable react/prefer-stateless-function */
 export default class BudgetEditorPresentation extends React.Component {
@@ -25,13 +26,12 @@ export default class BudgetEditorPresentation extends React.Component {
           width: '90%',
         }}
       >
-        <Picker
-          selectedValue={this.props.currentLengthType}
-          style={{ height: 50, width: 100 }}
-          onValueChange={itemValue => { this.props.onValueChange(itemValue); }}
+        <FPicker
+          selectedValue={this.props.selectedLengthType}
+          onValueChange={this.props.onValueChange}
         >
           {this.generateLengthTypeItems()}
-        </Picker>
+        </FPicker>
       </FOverlay>
     );
   }

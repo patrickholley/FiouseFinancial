@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import FButton from './FButton';
-import FFormField from './FFormField';
+import FInput from './FInput';
 import FWrapper from './FWrapper';
 import colors from '../constants/colors';
 
@@ -17,23 +17,27 @@ const defaultStyles = {
 };
 
 export default class FForm extends React.PureComponent {
+  generateFieldTextInput = (field, fieldId) => (
+    <FInput
+      key={fieldId}
+      autoCapitalize={field.autoCapitalize}
+      keyboardType={field.keyboardType}
+      onChangeText={updatedValue => { this.props.onFieldChange(fieldId, updatedValue); }}
+      placeholder={field.placeholder}
+      type={field.type}
+    />
+  )
+
   generateFields() {
-    const FFormFields = [];
+    const FInputs = [];
     Object.keys(this.props.fields).forEach(fieldId => {
       const field = this.props.fields[fieldId];
 
-      FFormFields.push(
-        <FFormField
-          key={fieldId}
-          autoCapitalize={field.autoCapitalize}
-          keyboardType={field.keyboardType}
-          onChangeText={(updatedValue) => { this.props.onFieldChange(fieldId, updatedValue); }}
-          placeholder={field.placeholder}
-          type={field.type}
-        />,
+      FInputs.push(
+        this.generateFieldTextInput(field, fieldId),
       );
     });
-    return FFormFields;
+    return FInputs;
   }
 
   render() {

@@ -20,7 +20,7 @@ class BudgetEditorContainer extends React.Component {
     super();
 
     this.state = {
-      currentLengthType: 0,
+      selectedLengthType: 0,
     };
   }
 
@@ -31,13 +31,13 @@ class BudgetEditorContainer extends React.Component {
   };
 
   onValueChange = newLengthType => {
-    this.setState({ currentLengthType: newLengthType });
+    this.setState({ selectedLengthType: newLengthType });
   };
 
   render() {
     return (
       <BudgetEditorPresentation
-        currentLengthType={this.state.currentLengthType}
+        selectedLengthType={this.state.selectedLengthType}
         lengthTypes={this.lengthTypes}
         onValueChange={this.onValueChange}
       />
