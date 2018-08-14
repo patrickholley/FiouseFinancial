@@ -10,8 +10,6 @@ const FiouseInput = styled.TextInput`
 
 export default class FInput extends React.PureComponent {
   render() {
-    console.log(this.props.keyboardType);
-
     return (
       <FiouseInput
         autoCapitalize={this.props.autoCapitalize}

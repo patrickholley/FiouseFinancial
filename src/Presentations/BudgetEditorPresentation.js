@@ -19,17 +19,18 @@ export default class BudgetEditorPresentation extends React.Component {
     return (
       <FOverlay
         containerStyles={{
-          height: '90%',
-          width: '90%',
+          height: 300,
+          width: 300,
         }}
       >
         <FForm
+          submitButtonStyles={{ width: '90%' }}
           fields={formValues.fields}
           canSubmit={canSubmit}
           onFieldChange={onFieldChange}
           onFormSubmit={onFormSubmit}
           submitText={formValues.submitText}
-          submitButtonStyles={{ width: '60%' }}
+          wrapperStyles={{ height: '100%', justifyContent: 'space-between' }}
         />
       </FOverlay>
     );

@@ -39,7 +39,7 @@ export default class BudgetListPresentation extends React.Component {
             textColor="white"
             textStyles={{ lineHeight: 125, fontSize: 100 }}
           />
-          <BudgetEditorContainer />
+          {this.props.isEditorOpen && <BudgetEditorContainer />}
         </View>
     );
   }

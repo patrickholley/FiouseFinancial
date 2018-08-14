@@ -4,8 +4,7 @@ import PropTypes from 'prop-types';
 import colors from '../constants/colors';
 
 const FiousePicker = styled.Picker`
-  height: 50;
-  width: 200;
+  width: 90%;
 `;
 
 export default class FPicker extends React.PureComponent {

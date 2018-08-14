@@ -22,16 +22,12 @@ class BudgetEditorContainer extends React.Component {
     super();
 
     const formValues = Object.assign({}, allFormsValues.budgetEdit);
-    Object.keys(formValues.fields).forEach(fieldId => {
-      formValues.fields[fieldId].value = '';
-    });
 
     formValues.fields.lengthType.items = this.generateLengthTypeItems();
 
     this.state = {
       canSubmit: false,
       formValues,
-      selectedLengthType: 0,
     };
   }
 
@@ -51,11 +47,21 @@ class BudgetEditorContainer extends React.Component {
     });
   }
 
+  onFormSubmit = () => {
+    console.log(this.state.formValues);
+  }
+
   generateLengthTypeItems = () => {
     const lengthTypeItems = [];
 
     this.lengthTypes.forEach(lengthType => {
-      lengthTypeItems.push(<Picker.Item label={lengthType.Name} value={lengthType.Id} />);
+      lengthTypeItems.push(
+        <Picker.Item
+          key={lengthType.Id}
+          label={lengthType.Name}
+          value={lengthType.Id}
+        />,
+      );
     });
 
     return lengthTypeItems;
@@ -66,10 +72,9 @@ class BudgetEditorContainer extends React.Component {
       <BudgetEditorPresentation
         canSubmit={this.state.canSubmit}
         formValues={this.state.formValues}
-        selectedLengthType={this.state.selectedLengthType}
         lengthTypes={this.lengthTypes}
         onFieldChange={this.onFieldChange}
-        onFormSubmit={() => {}}
+        onFormSubmit={this.onFormSubmit}
       />
     );
   }

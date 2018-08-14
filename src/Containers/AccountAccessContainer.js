@@ -95,7 +95,7 @@ class AccountAccessContainer extends React.Component {
     const { fields } = formValues;
     fields[fieldId].value = updatedValue;
     this.setState({
-      canSubmit: Object.keys(fields).every(fId => fields[fId].value !== ''),
+      canSubmit: Object.keys(fields).every(fId => fields[fId].value),
       formValues,
     });
   }

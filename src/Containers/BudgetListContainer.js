@@ -6,15 +6,27 @@ import BudgetListPresentation from '../Presentations/BudgetListPresentation';
 import { LOGOUT_REQUEST } from '../constants/actions';
 
 class BudgetListContainer extends React.Component {
+  constructor() {
+    super();
+
+    this.state = { isEditorOpen: false };
+  }
+
   componentWillUpdate = (newProps) => {
     if (newProps.user === null) {
       Actions.push('login', { formType: 'login' });
     }
   };
 
+  onOpenEditor = () => {
+    this.setState({ isEditorOpen: true });
+  }
+
   render() {
     return (
       <BudgetListPresentation
+        isEditorOpen={this.state.isEditorOpen}
+        onOpenEditor={this.onOpenEditor}
       />
     );
   }

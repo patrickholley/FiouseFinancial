@@ -31,6 +31,7 @@ export default class FForm extends React.PureComponent {
 
   generateFieldPicker = (field, fieldId) => (
     <FPicker
+      key={fieldId}
       selectedValue={field.value}
       onValueChange={updatedValue => { this.props.onFieldChange(fieldId, updatedValue); }}
     >
@@ -53,7 +54,7 @@ export default class FForm extends React.PureComponent {
 
   render() {
     return (
-      <FWrapper>
+      <FWrapper wrapperStyles={this.props.wrapperStyles}>
         {this.generateFields()}
         <FButton
           backgroundColor={this.props.canSubmit ? colors[3] : 'lightgrey'}
@@ -78,15 +79,15 @@ FForm.propTypes = {
   onFieldChange: PropTypes.func.isRequired,
   canSubmit: PropTypes.bool,
   onFormSubmit: PropTypes.func.isRequired,
-  pickers: PropTypes.object,
   submitText: PropTypes.string.isRequired,
   submitButtonStyles: PropTypes.object,
   submitTextStyles: PropTypes.object,
+  wrapperStyles: PropTypes.object,
 };
 
 FForm.defaultProps = {
   canSubmit: true,
-  pickers: {},
   submitButtonStyles: {},
   submitTextStyles: {},
+  wrapperStyles: {},
 };
