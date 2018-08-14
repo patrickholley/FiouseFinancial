@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
-const LoaderOverlayView = styled.View`
+const LoaderOverlayTouchableOpacity = styled.TouchableOpacity`
   position: absolute;
   top: 0;
   bottom: 0;
@@ -30,19 +30,26 @@ const LoaderContainerView = styled.View`
 export default class FOverlay extends React.PureComponent {
   render() {
     return (
-      <LoaderOverlayView>
+      <LoaderOverlayTouchableOpacity
+        disabled={!this.props.enableFeedback}
+        onPress={this.props.onOverlayPress}
+      >
         <LoaderContainerView style={this.props.containerStyles}>
           {this.props.children}
         </LoaderContainerView>
-      </LoaderOverlayView>
+      </LoaderOverlayTouchableOpacity>
     );
   }
 }
 
 FOverlay.propTypes = {
   containerStyles: PropTypes.object,
+  enableFeedback: PropTypes.bool,
+  onOverlayPress: PropTypes.func,
 };
 
 FOverlay.defaultProps = {
   containerStyles: {},
+  enableFeedback: false,
+  onOverlayPress: () => {},
 };

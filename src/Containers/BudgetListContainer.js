@@ -18,15 +18,16 @@ class BudgetListContainer extends React.Component {
     }
   };
 
-  onOpenEditor = () => {
-    this.setState({ isEditorOpen: true });
+  toggleEditor = () => {
+    const { isEditorOpen } = this.state;
+    this.setState({ isEditorOpen: !isEditorOpen });
   }
 
   render() {
     return (
       <BudgetListPresentation
         isEditorOpen={this.state.isEditorOpen}
-        onOpenEditor={this.onOpenEditor}
+        toggleEditor={this.toggleEditor}
       />
     );
   }

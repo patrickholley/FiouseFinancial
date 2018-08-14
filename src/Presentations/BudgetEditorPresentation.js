@@ -22,6 +22,8 @@ export default class BudgetEditorPresentation extends React.Component {
           height: 300,
           width: 300,
         }}
+        enableFeedback
+        onOverlayPress={this.props.toggleEditor}
       >
         <FForm
           submitButtonStyles={{ width: '90%' }}

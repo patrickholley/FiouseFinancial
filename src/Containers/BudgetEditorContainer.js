@@ -75,6 +75,7 @@ class BudgetEditorContainer extends React.Component {
         lengthTypes={this.lengthTypes}
         onFieldChange={this.onFieldChange}
         onFormSubmit={this.onFormSubmit}
+        toggleEditor={this.props.toggleEditor}
       />
     );
   }
