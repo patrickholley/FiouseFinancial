@@ -45,7 +45,7 @@ FButton.propTypes = {
   backgroundColor: PropTypes.string.isRequired,
   buttonStyles: PropTypes.object,
   preserveCasing: PropTypes.bool,
-  textColor: PropTypes.string.isRequired,
+  textColor: PropTypes.string,
   textStyles: PropTypes.object,
   text: PropTypes.string.isRequired,
 };
@@ -53,6 +53,7 @@ FButton.propTypes = {
 FButton.defaultProps = {
   buttonStyles: {},
   isDisabled: false,
+  textColor: 'white',
   textStyles: {},
   preserveCasing: false,
 };

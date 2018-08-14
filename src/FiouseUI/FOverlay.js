@@ -1,4 +1,5 @@
 import React from 'react';
+import { TouchableWithoutFeedback } from 'react-native';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
@@ -34,9 +35,11 @@ export default class FOverlay extends React.PureComponent {
         disabled={!this.props.enableFeedback}
         onPress={this.props.onOverlayPress}
       >
-        <LoaderContainerView style={this.props.containerStyles}>
-          {this.props.children}
-        </LoaderContainerView>
+        <TouchableWithoutFeedback>
+          <LoaderContainerView disabled style={this.props.containerStyles}>
+            {this.props.children}
+          </LoaderContainerView>
+        </TouchableWithoutFeedback>
       </LoaderOverlayTouchableOpacity>
     );
   }

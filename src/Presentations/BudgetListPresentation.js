@@ -35,7 +35,6 @@ export default class BudgetListPresentation extends React.Component {
           }}
           onPress={this.props.toggleEditor}
           text="+"
-          textColor="white"
           textStyles={{ lineHeight: 125, fontSize: 100 }}
         />
         {this.props.isEditorOpen && <BudgetEditorContainer

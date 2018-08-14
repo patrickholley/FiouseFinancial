@@ -96,7 +96,6 @@ export default class AccountAccessPresentation extends React.PureComponent {
             <FButton
               backgroundColor={colors[2]}
               key="resetPassword"
-              textColor="white"
               text="Forgot your password?"
               buttonStyles={{
                 marginBottom: 10,
@@ -107,7 +106,6 @@ export default class AccountAccessPresentation extends React.PureComponent {
             <FButton
               backgroundColor={colors[0]}
               key="createAccount"
-              textColor="white"
               text="Need an account?"
               buttonStyles={{
                 width: '60%',
@@ -133,7 +131,6 @@ export default class AccountAccessPresentation extends React.PureComponent {
             backgroundColor={colors[0]}
             buttonStyles={{ width: 205 }}
             text="Close"
-            textColor="white"
             textStyles={{ fontSize: 18 }}
             onPress={this.props.onResetPasswordModalBack}
           />

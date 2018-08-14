@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import colors from '../constants/colors';
 import FOverlay from '../FiouseUI/FOverlay';
-import { FForm } from '../FiouseUI';
+import { FButton, FForm } from '../FiouseUI';
 
 /* eslint-disable react/prefer-stateless-function */
 export default class BudgetEditorPresentation extends React.Component {
@@ -32,7 +32,12 @@ export default class BudgetEditorPresentation extends React.Component {
           onFieldChange={onFieldChange}
           onFormSubmit={onFormSubmit}
           submitText={formValues.submitText}
-          wrapperStyles={{ height: '100%', justifyContent: 'space-between' }}
+        />
+        <FButton
+          onPress={this.props.toggleEditor}
+          backgroundColor={colors[1]}
+          text="Cancel"
+          buttonStyles={{ width: '90%', marginLeft: '5%' }}
         />
       </FOverlay>
     );
