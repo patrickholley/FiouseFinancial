@@ -1,9 +1,5 @@
 import React from 'react';
 import { Text, View } from 'react-native';
-import PropTypes from 'prop-types';
-import styled from 'styled-components';
-import { FButton } from '../FiouseUI';
-import colors from '../constants/colors';
 
 /* eslint-disable react/prefer-stateless-function */
 export default class SettingsPresentation extends React.Component {
@@ -17,9 +13,3 @@ export default class SettingsPresentation extends React.Component {
     );
   }
 }
-
-SettingsPresentation.propTypes = {
-};
-
-SettingsPresentation.defaultProps = {
-};

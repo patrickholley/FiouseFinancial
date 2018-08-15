@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import colors from '../constants/colors';
 
 const FiousePicker = styled.Picker`
   width: 90%;
@@ -21,7 +20,10 @@ export default class FPicker extends React.PureComponent {
 }
 
 FPicker.propTypes = {
+  selectedValue: PropTypes.any,
+  onValueChange: PropTypes.func.isRequired,
 };
 
 FPicker.defaultProps = {
+  selectedValue: null,
 };

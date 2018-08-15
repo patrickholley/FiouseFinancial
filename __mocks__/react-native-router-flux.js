@@ -5,6 +5,8 @@ class MockActions {
 
   push = jest.fn();
 
+  replace = jest.fn();
+
   // not actual method in library - helper method
   setCurrentScene = scene => { this.currentScene = scene; }
 }

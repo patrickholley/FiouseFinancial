@@ -1,7 +1,5 @@
 import React from 'react';
-import { Picker } from 'react-native';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
 import colors from '../constants/colors';
 import FOverlay from '../FiouseUI/FOverlay';
 import { FButton, FForm } from '../FiouseUI';
@@ -38,6 +36,7 @@ export default class BudgetEditorPresentation extends React.Component {
           backgroundColor={colors[1]}
           text="Cancel"
           buttonStyles={{ width: '90%', marginLeft: '5%' }}
+          textStyles={{ fontSize: 20 }}
         />
       </FOverlay>
     );
@@ -49,6 +48,7 @@ BudgetEditorPresentation.propTypes = {
   formValues: PropTypes.object.isRequired,
   onFieldChange: PropTypes.func.isRequired,
   onFormSubmit: PropTypes.func.isRequired,
+  toggleEditor: PropTypes.func.isRequired,
 };
 
 BudgetEditorPresentation.defaultProps = {

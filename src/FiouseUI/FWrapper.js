@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 const WrapperView = styled.View`
   align-items: center;
@@ -17,3 +18,11 @@ export default class FWrapper extends React.PureComponent {
     );
   }
 }
+
+FWrapper.propTypes = {
+  wrapperStyles: PropTypes.object,
+};
+
+FWrapper.defaultProps = {
+  wrapperStyles: {},
+};

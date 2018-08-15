@@ -145,10 +145,15 @@ AccountAccessPresentation.propTypes = {
   fadeAnim: PropTypes.object.isRequired,
   formValues: PropTypes.object.isRequired,
   isLoginForm: PropTypes.bool.isRequired,
-  isNetworkActionInProgress: PropTypes.bool.isRequired,
-  showResetPasswordModal: PropTypes.bool.isRequired,
+  isNetworkActionInProgress: PropTypes.bool,
+  showResetPasswordModal: PropTypes.bool,
   onFieldChange: PropTypes.func.isRequired,
   onFormSubmit: PropTypes.func.isRequired,
   onFormTypeChange: PropTypes.func.isRequired,
   onResetPasswordModalBack: PropTypes.func.isRequired,
+};
+
+AccountAccessPresentation.defaultProps = {
+  isNetworkActionInProgress: false,
+  showResetPasswordModal: false,
 };

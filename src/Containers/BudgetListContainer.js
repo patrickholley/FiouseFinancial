@@ -1,7 +1,6 @@
 import React from 'react';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
 import BudgetListPresentation from '../Presentations/BudgetListPresentation';
 import { LOGOUT_REQUEST } from '../constants/actions';
 
@@ -42,15 +41,6 @@ const mapDispatchToProps = dispatch => ({
 const mapStateToProps = state => {
   const { user } = state.auth;
   return { user };
-};
-
-BudgetListContainer.propTypes = {
-  onLogout: PropTypes.func.isRequired,
-  user: PropTypes.object,
-};
-
-BudgetListContainer.defaultProps = {
-  user: null,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(BudgetListContainer);

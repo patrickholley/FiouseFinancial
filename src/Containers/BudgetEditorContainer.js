@@ -93,12 +93,7 @@ const mapStateToProps = state => {
 };
 
 BudgetEditorContainer.propTypes = {
-  onLogout: PropTypes.func.isRequired,
-  user: PropTypes.object,
-};
-
-BudgetEditorContainer.defaultProps = {
-  user: null,
+  toggleEditor: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(BudgetEditorContainer);

@@ -1,7 +1,6 @@
 import React from 'react';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
 import SettingsPresentation from '../Presentations/SettingsPresentation';
 import { LOGOUT_REQUEST } from '../constants/actions';
 
@@ -14,8 +13,7 @@ class SettingsContainer extends React.Component {
 
   render() {
     return (
-      <SettingsPresentation
-      />
+      <SettingsPresentation />
     );
   }
 }
@@ -29,15 +27,6 @@ const mapDispatchToProps = dispatch => ({
 const mapStateToProps = state => {
   const { user } = state.auth;
   return { user };
-};
-
-SettingsContainer.propTypes = {
-  onLogout: PropTypes.func.isRequired,
-  user: PropTypes.object,
-};
-
-SettingsContainer.defaultProps = {
-  user: null,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SettingsContainer);

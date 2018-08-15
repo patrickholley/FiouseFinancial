@@ -79,14 +79,14 @@ export default class RouterWrapper extends React.Component {
               key="budgetList"
               component={BudgetListContainer}
               title="Budgets"
-            >
+            />
 
-            </Scene>
             <Scene
-                key="budget"
-                component={BudgetContainer}
-                title="Budget"
-              />
+              key="budget"
+              component={BudgetContainer}
+              title="Budget"
+            />
+
             <Scene
               key="settings"
               component={SettingsContainer}

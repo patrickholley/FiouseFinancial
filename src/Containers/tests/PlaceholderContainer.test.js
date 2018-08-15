@@ -29,17 +29,17 @@ describe('PlaceholderContainer', () => {
   it('redirects to home properly when AsyncStorage has a user', async () => {
     await AsyncStorage.setItem('user', JSON.stringify(testUserData));
     await instance.reroute();
-    expect(Actions.push).toHaveBeenCalledTimes(1);
-    expect(Actions.push.mock.calls[0][0]).toBe('budgetList');
+    expect(Actions.replace).toHaveBeenCalledTimes(1);
+    expect(Actions.replace.mock.calls[0][0]).toBe('budgetList');
     expect(restoreUserSpy).toHaveBeenCalledTimes(1);
     expect(restoreUserSpy.mock.calls[0][0]).toEqual(testUserData);
   });
 
   it('redirects to login when AsyncStorage has no user', async () => {
     await instance.reroute();
-    expect(Actions.push).toHaveBeenCalledTimes(1);
-    expect(Actions.push.mock.calls[0][0]).toBe('login');
-    expect(Actions.push.mock.calls[0][1]).toEqual({ formType: 'login' });
+    expect(Actions.replace).toHaveBeenCalledTimes(1);
+    expect(Actions.replace.mock.calls[0][0]).toBe('login');
+    expect(Actions.replace.mock.calls[0][1]).toEqual({ formType: 'login' });
     expect(restoreUserSpy).toHaveBeenCalledTimes(0);
   });
 });
