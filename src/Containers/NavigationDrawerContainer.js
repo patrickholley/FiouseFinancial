@@ -31,7 +31,7 @@ class NavigationDrawerContainer extends React.Component {
 
   componentWillUpdate = (newProps) => {
     if (newProps.user === null) {
-      Actions.push('login', { formType: 'login' });
+      Actions.replace('login');
     }
   };
 

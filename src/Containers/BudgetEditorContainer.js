@@ -4,29 +4,21 @@ import { connect } from 'react-redux';
 import { Picker } from 'react-native';
 import PropTypes from 'prop-types';
 import BudgetEditorPresentation from '../Presentations/BudgetEditorPresentation';
-import { LOGOUT_REQUEST } from '../constants/actions';
+import { SAVE_BUDGET_REQUEST } from '../constants/actions';
 import allFormsValues from '../constants/allFormsValues';
+import lengthTypes from '../constants/lengthTypes';
 import Budget from '../classes/Budget';
 
 class BudgetEditorContainer extends React.Component {
-  lengthTypes = [
-    { Name: 'Weekly', Id: 1 },
-    { Name: 'Biweekly', Id: 2 },
-    { Name: 'Semimonthly', Id: 3 },
-    { Name: 'Monthly', Id: 4 },
-    { Name: 'Quarterly', Id: 5 },
-    { Name: 'Semiannually', Id: 6 },
-    { Name: 'Annually', Id: 7 },
-  ];
-
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     const formValues = Object.assign({}, allFormsValues.budgetEdit);
 
-    formValues.fields.lengthType.items = this.generateLengthTypeItems();
+    formValues.fields.lengthType.items = this.generateLengthTypePickerItems();
 
     this.state = {
+      budgetId: Actions.currentParams.budgetId || 'new',
       canSubmit: false,
       formValues,
     };
@@ -34,7 +26,7 @@ class BudgetEditorContainer extends React.Component {
 
   componentWillUpdate = newProps => {
     if (newProps.user === null) {
-      Actions.push('login', { formType: 'login' });
+      Actions.replace('login');
     }
   };
 
@@ -52,7 +44,8 @@ class BudgetEditorContainer extends React.Component {
     const { fields } = this.state.formValues;
     const balance = fields.balance.value;
 
-    if (isNaN(balance)) { // eslint-disable-line no-restricted-globals
+    // eslint-disable-next-line no-restricted-globals
+    if (isNaN(balance)) {
       // error handling here
       console.log('Not a number!');
     } else if (balance > 999999999) {
@@ -61,23 +54,23 @@ class BudgetEditorContainer extends React.Component {
     } else {
       const reformattedBalance = parseFloat(balance).toFixed(2);
 
-      const myBudget = new Budget(
-        'new',
-        'test@test.com',
+      const submittedBudget = new Budget(
+        this.state.budgetId,
+        this.props.user.uid,
         fields.name.value,
         fields.lengthType.value,
         reformattedBalance,
       );
 
-      console.log(myBudget);
+      console.log(submittedBudget);
     }
   }
 
-  generateLengthTypeItems = () => {
-    const lengthTypeItems = [];
+  generateLengthTypePickerItems = () => {
+    const lengthTypePickerItems = [];
 
-    this.lengthTypes.forEach(lengthType => {
-      lengthTypeItems.push(
+    lengthTypes.forEach(lengthType => {
+      lengthTypePickerItems.push(
         <Picker.Item
           key={lengthType.Id}
           label={lengthType.Name}
@@ -86,12 +79,13 @@ class BudgetEditorContainer extends React.Component {
       );
     });
 
-    return lengthTypeItems;
+    return lengthTypePickerItems;
   };
 
   render() {
     return (
       <BudgetEditorPresentation
+        budgetId={this.state.budgetId}
         canSubmit={this.state.canSubmit}
         formValues={this.state.formValues}
         lengthTypes={this.lengthTypes}
@@ -104,8 +98,8 @@ class BudgetEditorContainer extends React.Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  onLogout: () => dispatch({
-    type: LOGOUT_REQUEST,
+  onBudgetSubmit: () => dispatch({
+    type: SAVE_BUDGET_REQUEST,
   }),
 });
 
@@ -116,6 +110,7 @@ const mapStateToProps = state => {
 
 BudgetEditorContainer.propTypes = {
   toggleEditor: PropTypes.func.isRequired,
+  user: PropTypes.object.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(BudgetEditorContainer);

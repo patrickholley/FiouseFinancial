@@ -29,7 +29,7 @@ export default class BudgetEditorPresentation extends React.Component {
           canSubmit={canSubmit}
           onFieldChange={onFieldChange}
           onFormSubmit={onFormSubmit}
-          submitText={formValues.submitText}
+          submitText={`${this.props.budget.id === 'new' ? 'Create' : 'Update'} Budget`}
         />
         <FButton
           onPress={this.props.toggleEditor}
@@ -44,12 +44,10 @@ export default class BudgetEditorPresentation extends React.Component {
 }
 
 BudgetEditorPresentation.propTypes = {
+  budget: PropTypes.object.isRequired,
   canSubmit: PropTypes.bool.isRequired,
   formValues: PropTypes.object.isRequired,
   onFieldChange: PropTypes.func.isRequired,
   onFormSubmit: PropTypes.func.isRequired,
   toggleEditor: PropTypes.func.isRequired,
-};
-
-BudgetEditorPresentation.defaultProps = {
 };

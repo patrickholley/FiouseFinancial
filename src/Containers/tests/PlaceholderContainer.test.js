@@ -18,6 +18,7 @@ describe('PlaceholderContainer', () => {
   const instance = shallow(
     <PlaceholderContainer.WrappedComponent
       restoreUser={restoreUserSpy}
+      restoreBudgets={() => {}}
     />,
   ).instance();
 
@@ -39,7 +40,6 @@ describe('PlaceholderContainer', () => {
     await instance.reroute();
     expect(Actions.replace).toHaveBeenCalledTimes(1);
     expect(Actions.replace.mock.calls[0][0]).toBe('login');
-    expect(Actions.replace.mock.calls[0][1]).toEqual({ formType: 'login' });
     expect(restoreUserSpy).toHaveBeenCalledTimes(0);
   });
 });

@@ -1,19 +1,16 @@
-import { call, takeLatest, put } from 'redux-saga/effects';
+import { call, put } from 'redux-saga/effects';
 import { AsyncStorage } from 'react-native';
 import firebase from 'react-native-firebase';
 import {
   LOGIN_REQUEST,
-  NEW_ACCOUNT_REQUEST,
-  RESET_PASSWORD_REQUEST,
   RESET_PASSWORD_RESPONSE,
   LOGOUT_RESPONSE,
-  LOGOUT_REQUEST,
   NETWORK_ERROR,
   USER_RESPONSE,
 } from '../constants/actions';
 import userFriendlyErrors from '../constants/userFriendlyErrors';
 
-function* authUserSaga({ type, payload }) {
+export function* authUserSaga({ type, payload }) {
   try {
     const firebaseAuthMethod = type === LOGIN_REQUEST
       ? 'signInAndRetrieveDataWithEmailAndPassword'
@@ -39,13 +36,13 @@ function* authUserSaga({ type, payload }) {
   }
 }
 
-function* logoutSaga() {
+export function* logoutSaga() {
   yield call([firebase.auth(), 'signOut']);
   yield call([AsyncStorage, 'removeItem'], 'user');
   yield put({ type: LOGOUT_RESPONSE });
 }
 
-function* resetPasswordSaga({ payload }) {
+export function* resetPasswordSaga({ payload }) {
   try {
     yield call(
       [
@@ -60,11 +57,4 @@ function* resetPasswordSaga({ payload }) {
     const clientError = userFriendlyErrors[authError.code] || 'Something went wrong';
     yield put({ type: NETWORK_ERROR, payload: { clientError } });
   }
-}
-
-export default function* watcherSaga() {
-  yield takeLatest(LOGIN_REQUEST, authUserSaga);
-  yield takeLatest(LOGOUT_REQUEST, logoutSaga);
-  yield takeLatest(NEW_ACCOUNT_REQUEST, authUserSaga);
-  yield takeLatest(RESET_PASSWORD_REQUEST, resetPasswordSaga);
 }

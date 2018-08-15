@@ -7,7 +7,7 @@ import { LOGOUT_REQUEST } from '../constants/actions';
 class SettingsContainer extends React.Component {
   componentWillUpdate = (newProps) => {
     if (newProps.user === null) {
-      Actions.push('login', { formType: 'login' });
+      Actions.replace('login');
     }
   };
 

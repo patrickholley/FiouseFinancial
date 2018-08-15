@@ -32,6 +32,5 @@ export default {
       lengthType: { picker: true, value: 1 },
       balance: { placeholder: 'Balance Amount', keyboardType: 'numeric', value: '' },
     },
-    submitText: 'Create Budget',
   },
 };
