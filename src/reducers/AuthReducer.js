@@ -29,7 +29,7 @@ export default(state = INITIAL_STATE, action) => {
     case RESET_PASSWORD_RESPONSE:
       return { ...state, networkActionDone: true, showResetPasswordModal: true };
     case RESTORE_USER:
-      return { ...state, user: payload.user, budgets: payload.budgets };
+      return { ...state, user: payload.user };
     default:
       return state;
   }

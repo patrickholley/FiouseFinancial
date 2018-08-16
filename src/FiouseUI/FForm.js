@@ -23,9 +23,11 @@ export default class FForm extends React.PureComponent {
       key={fieldId}
       autoCapitalize={field.autoCapitalize}
       keyboardType={field.keyboardType}
+      maxLength={field.maxLength}
       onChangeText={updatedValue => { this.props.onFieldChange(fieldId, updatedValue); }}
       placeholder={field.placeholder}
       secureTextEntry={field.secureTextEntry}
+      value={field.value}
     />
   )
 

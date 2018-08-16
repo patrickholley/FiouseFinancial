@@ -1,9 +1,19 @@
 export default class Budget {
-  constructor(id, userId, name, lengthTypeId, balance) {
+  constructor(id, userId, name, lengthType, balance) {
     this.id = id;
     this.userId = userId;
     this.name = name;
-    this.lengthTypeId = lengthTypeId;
+    this.lengthType = lengthType;
     this.balance = balance;
+  }
+
+  toJSON() {
+    return {
+      id: this.id,
+      userId: this.userId,
+      name: this.name,
+      lengthType: this.lengthType,
+      balance: this.balance,
+    };
   }
 }
