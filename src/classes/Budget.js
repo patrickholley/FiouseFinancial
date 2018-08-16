@@ -16,4 +16,8 @@ export default class Budget {
       balance: this.balance,
     };
   }
+
+  static fromJSON(obj) {
+    return new this(obj);
+  }
 }
