@@ -14,8 +14,8 @@ export function* saveBudgetSaga({ payload }) {
           ? Number(budgetIds[budgetIds.length - 1].replace('local', '')) + 1
           : 1
       }`;
-    }
-    budgets[budget.id] = budget;
+      budgets.push(budget);
+    } else budgets[budgets.findIndex(b => b.id === budget.id)] = budget;
 
     yield call([AsyncStorage, 'setItem'], 'budgets', JSON.stringify(budgets));
 

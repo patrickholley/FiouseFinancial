@@ -14,11 +14,12 @@ class PlaceholderContainer extends React.Component {
     AsyncStorage.getItem('user')
       .then(userData => {
         if (userData) {
-          this.props.restoreUser(JSON.parse(userData));
+          const user = JSON.parse(userData);
+          this.props.restoreUser(user);
           // AsyncStorage.removeItem('budgets') // for debugging
           AsyncStorage.getItem('budgets')
             .then(budgetsData => {
-              if (budgetsData) this.props.restoreBudgets(JSON.parse(budgetsData));
+              if (budgetsData) this.props.restoreBudgets(JSON.parse(budgetsData), user);
               Actions.replace('budgetList');
             }).catch(budgetsError => {
               console.error(budgetsError);
@@ -41,9 +42,9 @@ const mapDispatchToProps = dispatch => ({
     type: RESTORE_USER,
     payload: { user },
   }),
-  restoreBudgets: budgets => dispatch({
+  restoreBudgets: (budgets, user) => dispatch({
     type: RESTORE_BUDGETS,
-    payload: { budgets },
+    payload: { budgets, user },
   }),
 });
 

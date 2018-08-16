@@ -65,7 +65,7 @@ export default class NavigationDrawerPresentation extends React.Component {
               fontSize: 20,
             }}
           />
-          {subMenuItems && <Animated.View
+          {subMenuItems && subMenuItems.length > 0 && <Animated.View
             style={{ transform: [{ rotate: arrowSubMenuAnim }] }}
           >
             <TouchableWithoutFeedback
@@ -85,9 +85,9 @@ export default class NavigationDrawerPresentation extends React.Component {
             opacity: subMenuAnim,
           }}
         >
-          {Object.keys(subMenuItems).map(subKey => (
+          {subMenuItems.map(subItem => (
             <FButton
-              key={subKey}
+              key={subItem.id}
               buttonStyles={{
                 alignItems: 'center',
                 height: 30,
@@ -95,9 +95,9 @@ export default class NavigationDrawerPresentation extends React.Component {
                 paddingLeft: 20,
               }}
               backgroundColor="white"
-              onPress={() => { this.props.onLinkPress(key, subKey); }}
+              onPress={() => { this.props.onLinkPress(key, subItem.id); }}
               textColor={colors[3]}
-              text={subMenuItems[subKey].text}
+              text={subItem.name}
             />
           ))}
         </Animated.View>}

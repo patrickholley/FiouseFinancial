@@ -24,8 +24,6 @@ class BudgetEditorContainer extends React.Component {
         fields.balance.defaultValue,
       );
 
-    console.log(budget);
-
     fields.lengthType.items = this.generateLengthTypePickerItems();
 
     Object.keys(fields).forEach(fieldId => {
@@ -109,12 +107,10 @@ class BudgetEditorContainer extends React.Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  onBudgetSubmit: (budget, budgets) => {
-    return dispatch({
-      type: SAVE_BUDGET_REQUEST,
-      payload: { budget, budgets },
-    });
-  },
+  onBudgetSubmit: (budget, budgets) => dispatch({
+    type: SAVE_BUDGET_REQUEST,
+    payload: { budget, budgets },
+  }),
 });
 
 const mapStateToProps = state => {
@@ -124,14 +120,10 @@ const mapStateToProps = state => {
 };
 
 BudgetEditorContainer.propTypes = {
-  budgets: PropTypes.object,
+  budgets: PropTypes.array.isRequired,
   toggleEditor: PropTypes.func.isRequired,
   onBudgetSubmit: PropTypes.func.isRequired,
   user: PropTypes.object.isRequired,
-};
-
-BudgetEditorContainer.defaultProps = {
-  budgets: {},
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(BudgetEditorContainer);

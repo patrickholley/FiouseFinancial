@@ -7,17 +7,14 @@ import NavigationDrawerPresentation from '../Presentations/NavigationDrawerPrese
 import { LOGOUT_REQUEST } from '../constants/actions';
 
 class NavigationDrawerContainer extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     const baseLinkAttributes = {
       budgetList: {
         text: 'Budgets',
         isSubMenuOpen: false,
-        subMenuItems: {
-          familyMonthly: { text: 'Family Monthly' },
-          personalWeekly: { text: 'Personal Weekly' },
-        },
+        subMenuItems: props.budgets,
         subMenuAnim: new Animated.Value(0),
       },
       settings: { text: 'Settings' },
@@ -36,6 +33,7 @@ class NavigationDrawerContainer extends React.Component {
   };
 
   onLinkPress = (linkKey, subKey) => {
+    console.log(this.props.budgets);
     if (linkKey === 'signOut') {
       this.props.onLogout();
     } else if (subKey) {
@@ -74,10 +72,12 @@ const mapDispatchToProps = dispatch => ({
 
 const mapStateToProps = state => {
   const { user } = state.auth;
-  return { user };
+  const { budgets } = state.budget;
+  return { user, budgets };
 };
 
 NavigationDrawerContainer.propTypes = {
+  budgets: PropTypes.array.isRequired,
   onLogout: PropTypes.func.isRequired,
   user: PropTypes.object,
 };
