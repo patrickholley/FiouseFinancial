@@ -40,6 +40,7 @@ export default class NavigationDrawerPresentation extends React.Component {
 
     let arrowSubMenuAnim;
     let subMenuItemsAnim;
+    const subMenuItemKeys = subMenuItems ? Object.keys(subMenuItems) : [];
 
     if (subMenuAnim) {
       arrowSubMenuAnim = subMenuAnim.interpolate({
@@ -65,7 +66,7 @@ export default class NavigationDrawerPresentation extends React.Component {
               fontSize: 20,
             }}
           />
-          {subMenuItems && subMenuItems.length > 0 && <Animated.View
+          {subMenuItems && <Animated.View
             style={{ transform: [{ rotate: arrowSubMenuAnim }] }}
           >
             <TouchableWithoutFeedback
@@ -79,15 +80,15 @@ export default class NavigationDrawerPresentation extends React.Component {
             </TouchableWithoutFeedback>
           </Animated.View>}
         </LinkView>
-        {subMenuItems && <Animated.View
+        <Animated.View
           style={{
             height: subMenuItemsAnim,
             opacity: subMenuAnim,
           }}
         >
-          {subMenuItems.map(subItem => (
+          {subMenuItemKeys.map(subKey => (
             <FButton
-              key={subItem.id}
+              key={subKey}
               buttonStyles={{
                 alignItems: 'center',
                 height: 30,
@@ -95,12 +96,12 @@ export default class NavigationDrawerPresentation extends React.Component {
                 paddingLeft: 20,
               }}
               backgroundColor="white"
-              onPress={() => { this.props.onLinkPress(key, subItem.id); }}
+              onPress={() => { this.props.onLinkPress(key, subKey); }}
               textColor={colors[3]}
-              text={subItem.name}
+              text={subMenuItems[subKey].name}
             />
           ))}
-        </Animated.View>}
+        </Animated.View>
       </View>
     );
   });

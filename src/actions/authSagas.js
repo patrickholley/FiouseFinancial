@@ -7,6 +7,7 @@ import {
   LOGOUT_RESPONSE,
   NETWORK_ERROR,
   USER_RESPONSE,
+  RESTORE_BUDGETS,
 } from '../constants/actions';
 import userFriendlyErrors from '../constants/userFriendlyErrors';
 
@@ -38,8 +39,9 @@ export function* authUserSaga({ type, payload }) {
 
 export function* logoutSaga() {
   yield call([firebase.auth(), 'signOut']);
-  yield call([AsyncStorage, 'removeItem'], 'user');
+  yield call([AsyncStorage, 'multiRemove'], ['user', 'budgets']);
   yield put({ type: LOGOUT_RESPONSE });
+  yield put({ type: RESTORE_BUDGETS, payload: { budgets: {} } });
 }
 
 export function* resetPasswordSaga({ payload }) {

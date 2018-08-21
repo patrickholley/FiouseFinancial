@@ -120,7 +120,7 @@ const mapStateToProps = state => {
 };
 
 BudgetEditorContainer.propTypes = {
-  budgets: PropTypes.array.isRequired,
+  budgets: PropTypes.object.isRequired,
   toggleEditor: PropTypes.func.isRequired,
   onBudgetSubmit: PropTypes.func.isRequired,
   user: PropTypes.object.isRequired,

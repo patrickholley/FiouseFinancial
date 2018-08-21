@@ -33,7 +33,6 @@ class NavigationDrawerContainer extends React.Component {
   };
 
   onLinkPress = (linkKey, subKey) => {
-    console.log(this.props.budgets);
     if (linkKey === 'signOut') {
       this.props.onLogout();
     } else if (subKey) {
@@ -77,7 +76,7 @@ const mapStateToProps = state => {
 };
 
 NavigationDrawerContainer.propTypes = {
-  budgets: PropTypes.array.isRequired,
+  budgets: PropTypes.object.isRequired,
   onLogout: PropTypes.func.isRequired,
   user: PropTypes.object,
 };

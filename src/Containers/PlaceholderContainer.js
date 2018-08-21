@@ -16,7 +16,6 @@ class PlaceholderContainer extends React.Component {
         if (userData) {
           const user = JSON.parse(userData);
           this.props.restoreUser(user);
-          // AsyncStorage.removeItem('budgets') // for debugging
           AsyncStorage.getItem('budgets')
             .then(budgetsData => {
               if (budgetsData) this.props.restoreBudgets(JSON.parse(budgetsData), user);
