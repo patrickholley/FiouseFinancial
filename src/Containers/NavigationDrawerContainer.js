@@ -6,6 +6,13 @@ import PropTypes from 'prop-types';
 import NavigationDrawerPresentation from '../Presentations/NavigationDrawerPresentation';
 import { LOGOUT_REQUEST } from '../constants/actions';
 
+const budgetListOptions = {
+  addBudget: {
+    index: 0,
+    name: '+ Add a Budget',
+  },
+};
+
 class NavigationDrawerContainer extends React.Component {
   constructor(props) {
     super(props);
@@ -14,7 +21,7 @@ class NavigationDrawerContainer extends React.Component {
       budgetList: {
         text: 'Budgets',
         isSubMenuOpen: false,
-        subMenuItems: props.budgets,
+        subMenuItems: Object.assign({}, props.budgets, budgetListOptions),
         subMenuAnim: new Animated.Value(0),
       },
       settings: { text: 'Settings' },

@@ -31,6 +31,31 @@ const LinkView = styled.View`
 
 /* eslint-disable react/prefer-stateless-function */
 export default class NavigationDrawerPresentation extends React.Component {
+  generateSubLinks = (subMenuItems, key) => Object.keys(subMenuItems).sort((a, b) => {
+    const subA = subMenuItems[a];
+    const subB = subMenuItems[b];
+    console.log(subA.index, subB.index);
+
+    if (subA.index) return subB.index ? subA.index < subB.index : 1;
+
+    return subB.index ? -1 : subA.name < subB.name;
+  }).map(subKey => (
+    <FButton
+      key={subKey}
+      buttonStyles={{
+        alignItems: 'center',
+        height: 30,
+        justifyContent: 'flex-start',
+        paddingLeft: 20,
+      }}
+      backgroundColor="white"
+      onPress={() => { this.props.onLinkPress(key, subKey); }}
+      // eslint-disable-next-line no-restricted-globals
+      textColor={isNaN(subMenuItems[subKey].index) ? colors[0] : colors[3]}
+      text={subMenuItems[subKey].name}
+    />
+  ))
+
   generateLinks = (linkAttributes) => Object.keys(linkAttributes).map(key => {
     const {
       subMenuAnim,
@@ -40,7 +65,6 @@ export default class NavigationDrawerPresentation extends React.Component {
 
     let arrowSubMenuAnim;
     let subMenuItemsAnim;
-    const subMenuItemKeys = subMenuItems ? Object.keys(subMenuItems) : [];
 
     if (subMenuAnim) {
       arrowSubMenuAnim = subMenuAnim.interpolate({
@@ -80,28 +104,14 @@ export default class NavigationDrawerPresentation extends React.Component {
             </TouchableWithoutFeedback>
           </Animated.View>}
         </LinkView>
-        <Animated.View
+        {subMenuItems && <Animated.View
           style={{
             height: subMenuItemsAnim,
             opacity: subMenuAnim,
           }}
         >
-          {subMenuItemKeys.map(subKey => (
-            <FButton
-              key={subKey}
-              buttonStyles={{
-                alignItems: 'center',
-                height: 30,
-                justifyContent: 'flex-start',
-                paddingLeft: 20,
-              }}
-              backgroundColor="white"
-              onPress={() => { this.props.onLinkPress(key, subKey); }}
-              textColor={colors[3]}
-              text={subMenuItems[subKey].name}
-            />
-          ))}
-        </Animated.View>
+          {this.generateSubLinks(subMenuItems, key)}
+        </Animated.View>}
       </View>
     );
   });
