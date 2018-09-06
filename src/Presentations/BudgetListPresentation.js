@@ -1,5 +1,5 @@
 import React from 'react';
-import { View } from 'react-native';
+import { Text, View } from 'react-native';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { FButton } from '../FiouseUI';
@@ -19,27 +19,34 @@ const InstructionText = styled.Text`
 export default class BudgetListPresentation extends React.Component {
   render() {
     return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <InstructionText>
-          {'You have no budgets yet!'}
-        </InstructionText>
-        <InstructionText>
-          {'Tap below to make a new budget:'}
-        </InstructionText>
-        <FButton
-          backgroundColor={colors[0]}
-          buttonStyles={{
-            height: 2 * addBudgetButtonRadius,
-            width: 2 * addBudgetButtonRadius,
-            borderRadius: addBudgetButtonRadius,
-          }}
-          onPress={this.props.toggleEditor}
-          text="+"
-          textStyles={{ lineHeight: 125, fontSize: 100 }}
-        />
-        {this.props.isEditorOpen && <BudgetEditorContainer
-          toggleEditor={this.props.toggleEditor}
-        />}
+      <View style={{ flex: 1 }}>
+        {this.props.budgets.keySeq().toArray().length === 0
+          ? <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+            <InstructionText>
+              {'You have no budgets yet!'}
+            </InstructionText>
+            <InstructionText>
+              {'Tap below to make a new budget:'}
+            </InstructionText>
+            <FButton
+              backgroundColor={colors[0]}
+              buttonStyles={{
+                height: 2 * addBudgetButtonRadius,
+                width: 2 * addBudgetButtonRadius,
+                borderRadius: addBudgetButtonRadius,
+              }}
+              onPress={this.props.toggleEditor}
+              text="+"
+              textStyles={{ lineHeight: 125, fontSize: 100 }}
+            />
+            {this.props.isEditorOpen && <BudgetEditorContainer
+              toggleEditor={this.props.toggleEditor}
+            />}
+          </View>
+          : <View>
+            <Text>Hello World!</Text>
+          </View>
+        }
       </View>
     );
   }

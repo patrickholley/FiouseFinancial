@@ -1,4 +1,6 @@
-export default {
+import { fromJS } from 'immutable';
+
+export default fromJS({
   login: {
     fields: {
       email: {
@@ -62,4 +64,4 @@ export default {
       },
     },
   },
-};
+});

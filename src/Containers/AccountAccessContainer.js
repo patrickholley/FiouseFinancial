@@ -171,18 +171,13 @@ class AccountAccessContainer extends React.Component {
 }
 
 const mapStateToProps = state => {
-  const {
-    clientError,
-    networkActionDone,
-    showResetPasswordModal,
-    user,
-  } = state.auth;
+  const { auth } = state.auth;
 
   return {
-    clientError,
-    networkActionDone,
-    showResetPasswordModal,
-    user,
+    clientError: auth.get('clientError'),
+    networkActionDone: auth.get('networkActionDone'),
+    showResetPasswordModal: auth.get('showResetPasswordModal'),
+    user: auth.get('user'),
   };
 };
 

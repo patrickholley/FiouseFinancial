@@ -25,7 +25,7 @@ export default class BudgetEditorPresentation extends React.Component {
       >
         <FForm
           submitButtonStyles={{ width: '90%' }}
-          fields={formValues.fields}
+          fields={formValues.get('fields').toJS()}
           canSubmit={canSubmit}
           onFieldChange={onFieldChange}
           onFormSubmit={onFormSubmit}

@@ -3,30 +3,31 @@ import { Animated } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { fromJS } from 'immutable';
 import NavigationDrawerPresentation from '../Presentations/NavigationDrawerPresentation';
 import { LOGOUT_REQUEST } from '../constants/actions';
 
-const budgetListOptions = {
+const budgetListOptions = fromJS({
   addBudget: {
     index: 0,
     name: '+ Add a Budget',
   },
-};
+});
 
 class NavigationDrawerContainer extends React.Component {
   constructor(props) {
     super(props);
 
-    const baseLinkAttributes = {
+    const baseLinkAttributes = fromJS({
       budgetList: {
         text: 'Budgets',
         isSubMenuOpen: false,
-        subMenuItems: Object.assign({}, props.budgets, budgetListOptions),
+        subMenuItems: props.budgets.concat(budgetListOptions),
         subMenuAnim: new Animated.Value(0),
       },
       settings: { text: 'Settings' },
       signOut: { text: 'Sign Out' },
-    };
+    });
 
     this.state = {
       linkAttributes: baseLinkAttributes,
@@ -48,11 +49,11 @@ class NavigationDrawerContainer extends React.Component {
   };
 
   onSubMenuPress = (linkKey) => {
-    const { linkAttributes } = this.state;
-    const willSubMenuOpen = !linkAttributes[linkKey].isSubMenuOpen;
-    linkAttributes[linkKey].isSubMenuOpen = willSubMenuOpen;
+    let { linkAttributes } = this.state;
+    const willSubMenuOpen = !linkAttributes.getIn([linkKey, 'isSubMenuOpen']);
+    linkAttributes = linkAttributes.setIn([linkKey, 'isSubMenuOpen'], willSubMenuOpen);
     Animated.timing(
-      this.state.linkAttributes[linkKey].subMenuAnim,
+      this.state.linkAttributes.getIn([linkKey, 'subMenuAnim']),
       { toValue: willSubMenuOpen, duration: 250 },
     ).start();
     this.setState({ linkAttributes });
@@ -77,8 +78,8 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const mapStateToProps = state => {
-  const { user } = state.auth;
-  const { budgets } = state.budget;
+  const user = state.auth.get('user');
+  const budgets = state.budget.get('budgets');
   return { user, budgets };
 };
 

@@ -33,6 +33,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "fbjs": "^0.8.16",
+    "immutable": "^3.8.2",
     "prop-types": "^15.6.2",
     "react": "^16.3.1",
     "react-dom": "^16.4.1",

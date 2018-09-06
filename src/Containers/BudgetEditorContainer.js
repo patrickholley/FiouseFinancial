@@ -13,33 +13,29 @@ class BudgetEditorContainer extends React.Component {
   constructor(props) {
     super(props);
 
-    const formValues = Object.assign({}, allFormsValues.budgetEdit);
-    const { fields } = formValues;
+    const formValues = allFormsValues.get('budgetEdit');
+    const fields = formValues.get('fields');
     const budget = props.budgets[Actions.currentParams.budgetId]
       || new Budget(
         'new',
         props.user.uid,
-        fields.name.defaultValue,
-        fields.lengthType.defaultValue,
-        fields.balance.defaultValue,
+        fields.getIn(['name', 'defaultValue']),
+        fields.getIn(['lengthType', 'defaultValue']),
+        fields.getIn(['balance', 'defaultValue']),
       );
 
-    fields.lengthType.items = this.generateLengthTypePickerItems();
-
-    Object.keys(fields).forEach(fieldId => {
-      fields[fieldId].value = budget[fieldId];
-    });
+    const baseFields = fields
+      .setIn(['lengthType', 'items'], this.generateLengthTypePickerItems())
+      .map((value, key) => value.set('value', budget[key]));
 
     this.state = {
       budget,
       canSubmit: false,
-      formValues,
+      formValues: formValues.set('fields', baseFields),
     };
   }
 
   componentWillUpdate = newProps => {
-    console.log(newProps.budgets);
-
     if (newProps.user === null) {
       Actions.replace('login');
     }
@@ -59,17 +55,15 @@ class BudgetEditorContainer extends React.Component {
   }
 
   onFormSubmit = () => {
-    const { fields } = this.state.formValues;
-    const balance = fields.balance.value;
-
-    const reformattedBalance = parseFloat(balance).toFixed(2);
+    const fields = this.state.formValues.get('fields');
+    const balance = parseFloat(fields.getIn(['balance', 'value'])).toFixed(2);
 
     const submittedBudget = new Budget(
       this.state.budget.id,
       this.props.user.uid,
-      fields.name.value,
-      fields.lengthType.value,
-      reformattedBalance,
+      fields.getIn(['name', 'value']),
+      fields.getIn(['lengthType', 'value']),
+      balance,
     );
 
     this.props.onBudgetSubmit(submittedBudget, this.props.budgets);
@@ -113,11 +107,10 @@ const mapDispatchToProps = dispatch => ({
   }),
 });
 
-const mapStateToProps = state => {
-  const { user } = state.auth;
-  const { budgets } = state.budget;
-  return { user, budgets };
-};
+const mapStateToProps = state => ({
+  user: state.auth.get('user'),
+  budgets: state.budget.get('budgets'),
+});
 
 BudgetEditorContainer.propTypes = {
   budgets: PropTypes.object.isRequired,

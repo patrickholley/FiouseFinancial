@@ -25,6 +25,7 @@ class BudgetListContainer extends React.Component {
   render() {
     return (
       <BudgetListPresentation
+        budgets={this.props.budgets}
         isEditorOpen={this.state.isEditorOpen}
         toggleEditor={this.toggleEditor}
       />
@@ -39,8 +40,9 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const mapStateToProps = state => {
-  const { user } = state.auth;
-  return { user };
+  const user = state.auth.get('user');
+  const budgets = state.budget.get('budgets');
+  return { budgets, user };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(BudgetListContainer);

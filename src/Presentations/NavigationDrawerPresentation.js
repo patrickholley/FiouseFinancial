@@ -31,14 +31,13 @@ const LinkView = styled.View`
 
 /* eslint-disable react/prefer-stateless-function */
 export default class NavigationDrawerPresentation extends React.Component {
-  generateSubLinks = (subMenuItems, key) => Object.keys(subMenuItems).sort((a, b) => {
-    const subA = subMenuItems[a];
-    const subB = subMenuItems[b];
-    console.log(subA.index, subB.index);
+  generateSubLinks = (subMenuItems, key) => subMenuItems.keySeq().toArray().sort((a, b) => {
+    const subAIndex = subMenuItems.getIn(a, 'index');
+    const subBIndex = subMenuItems.getIn(b, 'index');
 
-    if (subA.index) return subB.index ? subA.index < subB.index : 1;
+    if (subAIndex) return subBIndex ? subAIndex < subBIndex : 1;
 
-    return subB.index ? -1 : subA.name < subB.name;
+    return subBIndex ? -1 : subMenuItems.getIn(a, 'name') < subMenuItems.getIn(b, 'name');
   }).map(subKey => (
     <FButton
       key={subKey}
@@ -51,17 +50,16 @@ export default class NavigationDrawerPresentation extends React.Component {
       backgroundColor="white"
       onPress={() => { this.props.onLinkPress(key, subKey); }}
       // eslint-disable-next-line no-restricted-globals
-      textColor={isNaN(subMenuItems[subKey].index) ? colors[0] : colors[3]}
-      text={subMenuItems[subKey].name}
+      textColor={isNaN(subMenuItems.getIn([subKey, 'index'])) ? colors[0] : colors[3]}
+      text={subMenuItems.getIn([subKey, 'name'])}
     />
   ))
 
-  generateLinks = (linkAttributes) => Object.keys(linkAttributes).map(key => {
-    const {
-      subMenuAnim,
-      subMenuItems,
-      text,
-    } = linkAttributes[key];
+  generateLinks = (linkAttributes) => linkAttributes.keySeq().toArray().map(key => {
+    const link = linkAttributes.get(key);
+    const subMenuAnim = link.get('subMenuAnim');
+    const subMenuItems = link.get('subMenuItems');
+    const text = link.get('text');
 
     let arrowSubMenuAnim;
     let subMenuItemsAnim;
@@ -74,7 +72,7 @@ export default class NavigationDrawerPresentation extends React.Component {
 
       subMenuItemsAnim = subMenuAnim.interpolate({
         inputRange: [0, 1],
-        outputRange: [0, Object.keys(subMenuItems).length * 30],
+        outputRange: [0, subMenuItems.keySeq().toArray().length * 30],
       });
     }
 
