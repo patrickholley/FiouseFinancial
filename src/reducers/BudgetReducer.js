@@ -9,7 +9,6 @@ export default(state = INITIAL_STATE, action) => {
   switch (type) {
     case SAVE_BUDGET_RESPONSE:
     case RESTORE_BUDGETS:
-      console.log(state.merge({ budgets: payload.budgets }).toJS());
       return state.merge({ budgets: payload.budgets });
     default:
       return state;

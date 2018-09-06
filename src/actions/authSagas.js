@@ -22,8 +22,8 @@ export function* authUserSaga({ type, payload }) {
         firebase.auth(),
         firebaseAuthMethod,
       ],
-      payload.fields.email.value,
-      payload.fields.password.value,
+      payload.fields.getIn(['email', 'value']),
+      payload.fields.getIn(['password', 'value']),
     );
 
     const user = type === LOGIN_REQUEST ? authResult.user : authResult;
@@ -51,7 +51,7 @@ export function* resetPasswordSaga({ payload }) {
         firebase.auth(),
         'sendPasswordResetEmail',
       ],
-      payload.fields.email.value,
+      payload.fields.getIn(['email', 'value']),
     );
 
     yield put({ type: RESET_PASSWORD_RESPONSE });

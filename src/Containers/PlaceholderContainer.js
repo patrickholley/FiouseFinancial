@@ -3,6 +3,7 @@ import { Actions } from 'react-native-router-flux';
 import { AsyncStorage, View } from 'react-native';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { fromJS } from 'immutable';
 import { RESTORE_USER, RESTORE_BUDGETS } from '../constants/actions';
 
 class PlaceholderContainer extends React.Component {
@@ -18,7 +19,13 @@ class PlaceholderContainer extends React.Component {
           this.props.restoreUser(user);
           AsyncStorage.getItem('budgets')
             .then(budgetsData => {
-              if (budgetsData) this.props.restoreBudgets(JSON.parse(budgetsData), user);
+              if (budgetsData) {
+                this.props.restoreBudgets(
+                  fromJS(JSON.parse(budgetsData)),
+                  user,
+                );
+              }
+
               Actions.replace('budgetList');
             }).catch(budgetsError => {
               console.error(budgetsError);

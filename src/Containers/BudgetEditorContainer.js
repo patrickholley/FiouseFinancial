@@ -26,7 +26,7 @@ class BudgetEditorContainer extends React.Component {
 
     const baseFields = fields
       .setIn(['lengthType', 'items'], this.generateLengthTypePickerItems())
-      .map((value, key) => value.set('value', budget[key]));
+      .map((field, fieldId) => field.set('value', budget[fieldId]));
 
     this.state = {
       budget,
@@ -43,13 +43,15 @@ class BudgetEditorContainer extends React.Component {
 
   onFieldChange = (fieldId, updatedValue) => {
     // eslint-disable-next-line no-restricted-globals
-    if (fieldId !== 'balance' || (!isNaN(updatedValue) && updatedValue.length <= 9)) {
-      const { formValues } = this.state;
-      const { fields } = formValues;
-      fields[fieldId].value = updatedValue;
-      this.setState({
-        canSubmit: Object.keys(fields).every(fId => fields[fId].value !== ''),
-        formValues,
+    if (fieldId !== 'balance' || !isNaN(updatedValue)) {
+      this.setState(oldState => {
+        const formValues = oldState.formValues
+          .setIn(['fields', fieldId, 'value'], updatedValue);
+
+        return {
+          canSubmit: formValues.get('fields').every(field => field.get('value') !== ''),
+          formValues,
+        };
       });
     }
   }

@@ -76,20 +76,20 @@ export default class AccountAccessPresentation extends React.PureComponent {
               resizeMode="center"
             />}
           <HeaderText>
-            {formValues.headerText}
+            {formValues.get('headerText')}
           </HeaderText>
           <SubheaderAnimatedText
-            error={formValues.error}
+            error={formValues.get('error')}
             style={{ opacity: this.props.fadeAnim }}
           >
-            {formValues.subheaderText}
+            {formValues.get('subheaderText')}
           </SubheaderAnimatedText>
           <FForm
-            fields={formValues.fields}
+            fields={formValues.get('fields').toJS()}
             canSubmit={this.props.canSubmit}
             onFieldChange={onFieldChange}
             onFormSubmit={onFormSubmit}
-            submitText={formValues.submitText}
+            submitText={formValues.get('submitText')}
             submitButtonStyles={{ width: '60%' }}
           />
           {isLoginForm && [

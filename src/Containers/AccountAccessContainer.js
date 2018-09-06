@@ -30,16 +30,17 @@ class AccountAccessContainer extends React.Component {
     super();
 
     const formType = Actions.currentScene;
-    const formValues = Object.assign({}, allFormsValues[formType]);
-    Object.keys(formValues.fields).forEach(fieldId => {
-      formValues.fields[fieldId].value = '';
-    });
 
     this.state = {
       canSubmit: false,
       fadeAnim: new Animated.Value(1),
       formType,
-      formValues,
+      formValues: allFormsValues.get(formType)
+        .set(
+          'fields',
+          allFormsValues.getIn([formType, 'fields'])
+            .map(field => field.set('value', '')),
+        ),
       isNetworkActionInProgress: false,
       showResetPasswordModal: false,
     };
@@ -91,21 +92,23 @@ class AccountAccessContainer extends React.Component {
   }
 
   onFieldChange = (fieldId, updatedValue) => {
-    const { formValues } = this.state;
-    const { fields } = formValues;
-    fields[fieldId].value = updatedValue;
-    this.setState({
-      canSubmit: Object.keys(fields).every(fId => fields[fId].value),
-      formValues,
+    this.setState(oldState => {
+      const formValues = oldState.formValues
+        .setIn(['fields', fieldId, 'value'], updatedValue);
+
+      return {
+        canSubmit: formValues.get('fields').every(field => field.get('value') !== ''),
+        formValues,
+      };
     });
   }
 
   onFormSubmit = () => {
     const { formType, formValues } = this.state;
-    const { fields } = formValues;
+    const fields = formValues.get('fields');
 
     if (formType === 'createAccount'
-      && fields.password.value !== fields.confirmPassword.value) {
+      && fields.getIn(['password', 'value']) !== fields.getIn(['confirmPassword', 'value'])) {
       this.postSubheader('Passwords must match');
     } else {
       this.setState({ isNetworkActionInProgress: true },
@@ -118,10 +121,10 @@ class AccountAccessContainer extends React.Component {
   }
 
   postSubheader = (subheaderText, isError = true) => {
-    const { formValues } = this.state;
-    formValues.error = isError;
-    formValues.subheaderText = subheaderText;
-    this.setState({ fadeAnim: new Animated.Value(0), formValues }, () => {
+    this.setState(oldState => ({
+      fadeAnim: new Animated.Value(0),
+      formValues: oldState.formValues.merge({ error: isError, subheaderText }),
+    }), () => {
       Animated.timing(
         this.state.fadeAnim,
         { toValue: 1, duration: 1000 },
@@ -171,7 +174,7 @@ class AccountAccessContainer extends React.Component {
 }
 
 const mapStateToProps = state => {
-  const { auth } = state.auth;
+  const { auth } = state;
 
   return {
     clientError: auth.get('clientError'),

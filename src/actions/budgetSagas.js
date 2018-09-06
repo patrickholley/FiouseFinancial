@@ -8,7 +8,7 @@ export function* saveBudgetSaga({ payload }) {
     const { budget, budgets } = payload;
 
     if (budget.id === 'new') {
-      const budgetIds = Object.keys(budgets);
+      const budgetIds = budgets.keySeq().toArray();
       budget.id = `local${
         budgetIds.length > 0
           ? Number(budgetIds[budgetIds.length - 1].replace('local', '')) + 1
@@ -16,11 +16,11 @@ export function* saveBudgetSaga({ payload }) {
       }`;
     }
 
-    budgets[budget.id] = budget;
+    const updatedBudgets = budgets.set('budget.id', budget);
 
-    yield call([AsyncStorage, 'setItem'], 'budgets', JSON.stringify(budgets));
+    yield call([AsyncStorage, 'setItem'], 'budgets', updatedBudgets.toJSON());
 
-    yield put({ type: SAVE_BUDGET_RESPONSE, payload: { budgets } });
+    yield put({ type: SAVE_BUDGET_RESPONSE, payload: { updatedBudgets } });
   } catch (error) {
     console.error(error);
     yield put({ type: SAVE_BUDGET_ERROR, payload: { clientError: 'Something went wrong' } });
