@@ -61,6 +61,7 @@ class AccountAccessContainer extends React.Component {
 
     if (this.state.formType === Actions.currentScene && networkActionDone) {
       if (clientError) this.postSubheader(clientError);
+
       const updatedState = {
         isNetworkActionInProgress: false,
         showResetPasswordModal: showResetPasswordModal || this.state.showResetPasswordModal,

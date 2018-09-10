@@ -15,12 +15,11 @@ export default(state = INITIAL_STATE, action) => {
 
   switch (type) {
     case CLEAR_NETWORK_ACTION:
-      return {
-        ...state,
+      return state.merge({
         clientError: null,
         networkActionDone: false,
         showResetPasswordModal: false,
-      };
+      });
     case USER_RESPONSE:
       return state.merge({ networkActionDone: true, user: payload.user });
     case NETWORK_ERROR:
