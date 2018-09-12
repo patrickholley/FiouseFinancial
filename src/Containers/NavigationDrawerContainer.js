@@ -51,7 +51,7 @@ class NavigationDrawerContainer extends React.Component {
     if (linkKey === 'signOut') {
       this.props.onLogout();
     } else if (subKey) {
-      Actions.push('budget');
+      Actions.push(subKey === 'addBudget' ? 'budgetEditor' : 'budget');
     } else Actions.push(linkKey);
   };
 

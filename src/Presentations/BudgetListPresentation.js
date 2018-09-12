@@ -1,10 +1,9 @@
 import React from 'react';
 import { Text, View } from 'react-native';
-import PropTypes from 'prop-types';
+import { Actions } from 'react-native-router-flux';
 import styled from 'styled-components';
-import { FButton } from '../FiouseUI';
+import { FButton, FWrapper } from '../FiouseUI';
 import colors from '../constants/colors';
-import BudgetEditorContainer from '../Containers/BudgetEditorContainer';
 
 const addBudgetButtonRadius = 50;
 
@@ -20,8 +19,8 @@ export default class BudgetListPresentation extends React.Component {
   render() {
     return (
       <View style={{ flex: 1 }}>
-        {this.props.budgets.keySeq().toArray().length < 1000
-          ? <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        {this.props.budgets.keySeq().toArray().length === 0
+          ? <FWrapper wrapperStyles={{ justifyContent: 'center', flex: 1 }}>
             <InstructionText>
               {'You have no budgets yet!'}
             </InstructionText>
@@ -35,14 +34,11 @@ export default class BudgetListPresentation extends React.Component {
                 width: 2 * addBudgetButtonRadius,
                 borderRadius: addBudgetButtonRadius,
               }}
-              onPress={this.props.toggleEditor}
+              onPress={() => { Actions.push('budgetEditor', { title: 'Add Budget' }); }}
               text="+"
               textStyles={{ lineHeight: 125, fontSize: 100 }}
             />
-            {this.props.isEditorOpen && <BudgetEditorContainer
-              toggleEditor={this.props.toggleEditor}
-            />}
-          </View>
+          </FWrapper>
           : <View>
             <Text>Hello World!</Text>
           </View>
@@ -51,11 +47,3 @@ export default class BudgetListPresentation extends React.Component {
     );
   }
 }
-
-BudgetListPresentation.propTypes = {
-  isEditorOpen: PropTypes.bool.isRequired,
-  toggleEditor: PropTypes.func.isRequired,
-};
-
-BudgetListPresentation.defaultProps = {
-};

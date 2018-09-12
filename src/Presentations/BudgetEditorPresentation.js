@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Actions } from 'react-native-router-flux';
 import colors from '../constants/colors';
-import FOverlay from '../FiouseUI/FOverlay';
-import { FButton, FForm } from '../FiouseUI';
+import { FButton, FForm, FWrapper } from '../FiouseUI';
 
 /* eslint-disable react/prefer-stateless-function */
 export default class BudgetEditorPresentation extends React.Component {
@@ -15,16 +15,17 @@ export default class BudgetEditorPresentation extends React.Component {
     } = this.props;
 
     return (
-      <FOverlay
+      /* <FOverlay
         containerStyles={{
           height: 300,
           width: 300,
         }}
         enableFeedback
         onOverlayPress={this.props.toggleEditor}
-      >
+      > */
+      <FWrapper wrapperStyles={{ marginTop: 40 }}>
         <FForm
-          submitButtonStyles={{ width: '90%' }}
+          submitButtonStyles={{ width: '80%' }}
           fields={formValues.get('fields').toJS()}
           canSubmit={canSubmit}
           onFieldChange={onFieldChange}
@@ -32,13 +33,14 @@ export default class BudgetEditorPresentation extends React.Component {
           submitText={`${this.props.budgetId === 'new' ? 'Create' : 'Update'} Budget`}
         />
         <FButton
-          onPress={this.props.toggleEditor}
+          onPress={() => { Actions.pop(); }}
           backgroundColor={colors[1]}
           text="Cancel"
-          buttonStyles={{ width: '90%', marginLeft: '5%' }}
+          buttonStyles={{ width: '80%' }}
           textStyles={{ fontSize: 20 }}
         />
-      </FOverlay>
+      </FWrapper>
+      /* </FOverlay> */
     );
   }
 }
@@ -49,5 +51,4 @@ BudgetEditorPresentation.propTypes = {
   formValues: PropTypes.object.isRequired,
   onFieldChange: PropTypes.func.isRequired,
   onFormSubmit: PropTypes.func.isRequired,
-  toggleEditor: PropTypes.func.isRequired,
 };

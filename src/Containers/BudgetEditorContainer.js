@@ -95,7 +95,6 @@ class BudgetEditorContainer extends React.Component {
         lengthTypes={this.lengthTypes}
         onFieldChange={this.onFieldChange}
         onFormSubmit={this.onFormSubmit}
-        toggleEditor={this.props.toggleEditor}
       />
     );
   }
@@ -115,7 +114,6 @@ const mapStateToProps = state => ({
 
 BudgetEditorContainer.propTypes = {
   budgets: PropTypes.object.isRequired,
-  toggleEditor: PropTypes.func.isRequired,
   onBudgetSubmit: PropTypes.func.isRequired,
   user: PropTypes.object.isRequired,
 };

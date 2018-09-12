@@ -18,7 +18,7 @@ export function* saveBudgetSaga({ payload }) {
 
     const updatedBudgetsJson = JSON.stringify(budgets.set(budget.id, budget));
 
-    yield call([AsyncStorage, 'setItem'], 'budgets', JSON.stringify(updatedBudgetsJson));
+    yield call([AsyncStorage, 'setItem'], 'budgets', updatedBudgetsJson);
 
     yield put({ type: SAVE_BUDGET_RESPONSE, payload: { budgets: JSON.parse(updatedBudgetsJson) } });
   } catch (error) {
