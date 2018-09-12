@@ -35,6 +35,13 @@ class NavigationDrawerContainer extends React.Component {
   }
 
   componentWillUpdate = (newProps) => {
+    if (newProps.budgets !== this.props.budgets) {
+      this.setState(oldState => ({
+        linkAttributes: oldState.linkAttributes
+          .setIn(['budgetList', 'subMenuItems'], newProps.budgets.concat(budgetListOptions)),
+      }));
+    }
+
     if (newProps.user === null) {
       Actions.replace('login');
     }

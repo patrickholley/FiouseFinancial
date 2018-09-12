@@ -124,7 +124,7 @@ export default class NavigationDrawerPresentation extends React.Component {
             color="white"
           />
           <UserHeaderText>
-            {this.props.user ? this.props.user.email : 'null@null.com' }
+            {this.props.user ? this.props.user.get('email') : 'null@null.com' }
           </UserHeaderText>
         </UserHeaderView>
         {this.generateLinks(this.props.linkAttributes)}

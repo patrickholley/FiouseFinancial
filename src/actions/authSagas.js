@@ -26,11 +26,13 @@ export function* authUserSaga({ type, payload }) {
       payload.fields.getIn(['password', 'value']),
     );
 
-    const user = type === LOGIN_REQUEST ? authResult.user : authResult;
+    // the user object changes after being stringified and parsed
+    // we do that here to ensure the user object is consistent throughout the app
+    const userJson = JSON.stringify(type === LOGIN_REQUEST ? authResult.user : authResult);
 
-    yield call([AsyncStorage, 'setItem'], 'user', JSON.stringify(user));
+    yield call([AsyncStorage, 'setItem'], 'user', userJson);
 
-    yield put({ type: USER_RESPONSE, payload: { user } });
+    yield put({ type: USER_RESPONSE, payload: { user: JSON.parse(userJson) } });
   } catch (authError) {
     const clientError = userFriendlyErrors[authError.code] || 'Something went wrong';
     yield put({ type: NETWORK_ERROR, payload: { clientError } });

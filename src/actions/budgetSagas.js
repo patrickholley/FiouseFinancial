@@ -16,11 +16,11 @@ export function* saveBudgetSaga({ payload }) {
       }`;
     }
 
-    const updatedBudgets = budgets.set('budget.id', budget);
+    const updatedBudgetsJson = JSON.stringify(budgets.set(budget.id, budget));
 
-    yield call([AsyncStorage, 'setItem'], 'budgets', updatedBudgets.toJSON());
+    yield call([AsyncStorage, 'setItem'], 'budgets', JSON.stringify(updatedBudgetsJson));
 
-    yield put({ type: SAVE_BUDGET_RESPONSE, payload: { updatedBudgets } });
+    yield put({ type: SAVE_BUDGET_RESPONSE, payload: { budgets: JSON.parse(updatedBudgetsJson) } });
   } catch (error) {
     console.error(error);
     yield put({ type: SAVE_BUDGET_ERROR, payload: { clientError: 'Something went wrong' } });

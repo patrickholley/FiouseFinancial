@@ -7,7 +7,6 @@ import BudgetEditorPresentation from '../Presentations/BudgetEditorPresentation'
 import { SAVE_BUDGET_REQUEST } from '../constants/actions';
 import allFormsValues from '../constants/allFormsValues';
 import lengthTypes from '../constants/lengthTypes';
-import Budget from '../Classes/Budget';
 
 class BudgetEditorContainer extends React.Component {
   constructor(props) {
@@ -16,20 +15,20 @@ class BudgetEditorContainer extends React.Component {
     const formValues = allFormsValues.get('budgetEdit');
     const fields = formValues.get('fields');
     const budget = props.budgets[Actions.currentParams.budgetId]
-      || new Budget(
-        'new',
-        props.user.uid,
-        fields.getIn(['name', 'defaultValue']),
-        fields.getIn(['lengthType', 'defaultValue']),
-        fields.getIn(['balance', 'defaultValue']),
-      );
+      || {
+        id: 'new',
+        userId: props.user.uid,
+        name: fields.getIn(['name', 'defaultValue']),
+        lengthType: fields.getIn(['lengthType', 'defaultValue']),
+        balance: fields.getIn(['balance', 'defaultValue']),
+      };
 
     const baseFields = fields
       .setIn(['lengthType', 'items'], this.generateLengthTypePickerItems())
       .map((field, fieldId) => field.set('value', budget[fieldId]));
 
     this.state = {
-      budget,
+      budgetId: budget.id,
       canSubmit: false,
       formValues: formValues.set('fields', baseFields),
     };
@@ -60,13 +59,13 @@ class BudgetEditorContainer extends React.Component {
     const fields = this.state.formValues.get('fields');
     const balance = parseFloat(fields.getIn(['balance', 'value'])).toFixed(2);
 
-    const submittedBudget = new Budget(
-      this.state.budget.id,
-      this.props.user.uid,
-      fields.getIn(['name', 'value']),
-      fields.getIn(['lengthType', 'value']),
+    const submittedBudget = {
+      id: this.state.budgetId,
+      userId: this.props.user.uid,
+      name: fields.getIn(['name', 'value']),
+      value: fields.getIn(['lengthType', 'value']),
       balance,
-    );
+    };
 
     this.props.onBudgetSubmit(submittedBudget, this.props.budgets);
   }
@@ -90,7 +89,7 @@ class BudgetEditorContainer extends React.Component {
   render() {
     return (
       <BudgetEditorPresentation
-        budgetId={this.state.budget.id}
+        budgetId={this.state.budgetId}
         canSubmit={this.state.canSubmit}
         formValues={this.state.formValues}
         lengthTypes={this.lengthTypes}

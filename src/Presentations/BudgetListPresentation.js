@@ -20,7 +20,7 @@ export default class BudgetListPresentation extends React.Component {
   render() {
     return (
       <View style={{ flex: 1 }}>
-        {this.props.budgets.keySeq().toArray().length === 0
+        {this.props.budgets.keySeq().toArray().length < 1000
           ? <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
             <InstructionText>
               {'You have no budgets yet!'}
