@@ -31,14 +31,14 @@ const LinkView = styled.View`
 
 /* eslint-disable react/prefer-stateless-function */
 export default class NavigationDrawerPresentation extends React.Component {
-  generateSubLinks = (subMenuItems, key) => subMenuItems.keySeq().toArray().sort((a, b) => {
-    const subAIndex = subMenuItems.getIn(a, 'index');
-    const subBIndex = subMenuItems.getIn(b, 'index');
+  generateSubLinks = (subMenuItems, key) => subMenuItems.sort((a, b) => {
+    const subAIndex = a.get('index');
+    const subBIndex = b.get('index');
 
     if (subAIndex) return subBIndex ? subAIndex < subBIndex : 1;
 
-    return subBIndex ? -1 : subMenuItems.getIn(a, 'name') < subMenuItems.getIn(b, 'name');
-  }).map(subKey => (
+    return subBIndex ? -1 : a.get('name') < b.get('name');
+  }).map((subItem, subKey) => (
     <FButton
       key={subKey}
       buttonStyles={{
@@ -50,10 +50,10 @@ export default class NavigationDrawerPresentation extends React.Component {
       backgroundColor="white"
       onPress={() => { this.props.onLinkPress(key, subKey); }}
       // eslint-disable-next-line no-restricted-globals
-      textColor={isNaN(subMenuItems.getIn([subKey, 'index'])) ? colors[0] : colors[3]}
-      text={subMenuItems.getIn([subKey, 'name'])}
+      textColor={isNaN(subItem.get('index')) ? colors[0] : colors[3]}
+      text={subItem.get('name')}
     />
-  ))
+  )).toArray()
 
   generateLinks = (linkAttributes) => linkAttributes.keySeq().toArray().map(key => {
     const link = linkAttributes.get(key);
