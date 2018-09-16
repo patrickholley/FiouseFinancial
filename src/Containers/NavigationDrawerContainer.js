@@ -22,7 +22,7 @@ class NavigationDrawerContainer extends React.Component {
       budgetList: {
         text: 'Budgets',
         isSubMenuOpen: false,
-        subMenuItems: props.budgets.concat(budgetListOptions),
+        subMenuItems: this.sortSubMenuItems(props.budgets.concat(budgetListOptions)),
         subMenuAnim: new Animated.Value(0),
       },
       settings: { text: 'Settings' },
@@ -38,7 +38,10 @@ class NavigationDrawerContainer extends React.Component {
     if (newProps.budgets !== this.props.budgets) {
       this.setState(oldState => ({
         linkAttributes: oldState.linkAttributes
-          .setIn(['budgetList', 'subMenuItems'], newProps.budgets.concat(budgetListOptions)),
+          .setIn(
+            ['budgetList', 'subMenuItems'],
+            this.sortSubMenuItems(newProps.budgets.concat(budgetListOptions)),
+          ),
       }));
     }
 
@@ -65,6 +68,15 @@ class NavigationDrawerContainer extends React.Component {
     ).start();
     this.setState({ linkAttributes });
   };
+
+  sortSubMenuItems = (subMenuItems) => subMenuItems.sort((a, b) => {
+    const subAIndex = a.get('index');
+    const subBIndex = b.get('index');
+
+    if (subAIndex) return subBIndex ? subAIndex < subBIndex : 1;
+
+    return subBIndex ? -1 : a.get('name') < b.get('name');
+  });
 
   render() {
     return (

@@ -5,10 +5,14 @@ import {
 } from 'react-native';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { FButton, FForm, FLoader } from '../FiouseUI';
+import {
+  FButton,
+  FForm,
+  FLoader,
+  FOverlay,
+} from '../FiouseUI';
 import colors from '../constants/colors';
 import logoPath from '../../assets/fiouse_logo_clear.png';
-import FOverlay from '../FiouseUI/FOverlay';
 
 const AccountAccessView = styled.View`
   alignItems: center;

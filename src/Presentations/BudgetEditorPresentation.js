@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Actions } from 'react-native-router-flux';
-import colors from '../constants/colors';
-import { FButton, FForm, FWrapper } from '../FiouseUI';
+import { FForm, FWrapper } from '../FiouseUI';
 
 /* eslint-disable react/prefer-stateless-function */
 export default class BudgetEditorPresentation extends React.Component {
@@ -15,14 +13,6 @@ export default class BudgetEditorPresentation extends React.Component {
     } = this.props;
 
     return (
-      /* <FOverlay
-        containerStyles={{
-          height: 300,
-          width: 300,
-        }}
-        enableFeedback
-        onOverlayPress={this.props.toggleEditor}
-      > */
       <FWrapper wrapperStyles={{ marginTop: 40 }}>
         <FForm
           submitButtonStyles={{ width: '80%' }}
@@ -32,15 +22,7 @@ export default class BudgetEditorPresentation extends React.Component {
           onFormSubmit={onFormSubmit}
           submitText={`${this.props.budgetId === 'new' ? 'Create' : 'Update'} Budget`}
         />
-        <FButton
-          onPress={() => { Actions.pop(); }}
-          backgroundColor={colors[1]}
-          text="Cancel"
-          buttonStyles={{ width: '80%' }}
-          textStyles={{ fontSize: 20 }}
-        />
       </FWrapper>
-      /* </FOverlay> */
     );
   }
 }
