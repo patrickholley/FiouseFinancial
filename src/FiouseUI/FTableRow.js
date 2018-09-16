@@ -12,10 +12,15 @@ const RowView = styled.View`
 
 export default class FTableRow extends React.PureComponent {
   render() {
-    const { data, columns, columnStyles } = this.props;
+    const {
+      data,
+      columns,
+      columnStyles,
+      rowStyles,
+    } = this.props;
 
     return (
-      <RowView>
+      <RowView style={rowStyles} >
         {columns.map(column => (
           <FTableCell
             key={column}
@@ -29,7 +34,11 @@ export default class FTableRow extends React.PureComponent {
 }
 
 FTableRow.propTypes = {
+  columnStyles: PropTypes.object,
+  rowStyles: PropTypes.object,
 };
 
 FTableRow.defaultProps = {
+  columnStyles: {},
+  rowStyles: {},
 };

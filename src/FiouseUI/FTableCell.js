@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import colors from '../constants/colors';
 
 const Cell = styled.Text`
-  border: 2px solid ${colors[3]};
+  border: 1px solid ${colors[3]};
   color: ${colors[1]}
   font-size: 24px;
   text-align: center;

@@ -1,29 +1,51 @@
 import React from 'react';
-import { Text } from 'react-native';
+import { FlatList, View } from 'react-native';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import FTableRow from './FTableRow';
+import colors from '../constants/colors';
 
-const TableList = styled.FlatList`
+const TableView = styled.View`
+  flex: 1;
+  align-items: center;
   width: 80%;
 `;
 
 export default class FTable extends React.PureComponent {
   render() {
-    const { data, columns, columnStyles } = this.props;
+    const {
+      data,
+      columns,
+      columnStyles,
+    } = this.props;
     const tableData = Array.isArray(data) ? data : Object.keys(data).map(key => data[key]);
+    const headers = {};
+    columns.forEach(column => {
+      headers[column] = column.charAt(0).toUpperCase() + column.slice(1);
+    });
 
     return (
-      <TableList
-        data={tableData}
-        renderItem={({ item }) => (
-          <FTableRow
-            data={item}
-            columns={columns}
-            columnStyles={columnStyles}
-          />
-        )}
-      />
+      <TableView>
+        <FTableRow
+          data={headers}
+          columns={columns}
+          columnStyles={columnStyles}
+          rowStyles={{
+            backgroundColor: colors[5],
+          }}
+        />
+        <FlatList
+          data={tableData}
+          renderItem={({ item }) => (
+            <FTableRow
+              data={item}
+              columns={columns}
+              columnStyles={columnStyles}
+            />
+          )}
+          style={{ width: '100%' }}
+        />
+      </TableView>
     );
   }
 }
