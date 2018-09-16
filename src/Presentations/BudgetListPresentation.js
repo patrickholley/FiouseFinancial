@@ -1,8 +1,8 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import styled from 'styled-components';
-import { FButton, FWrapper } from '../FiouseUI';
+import { FButton, FTable, FWrapper } from '../FiouseUI';
 import colors from '../constants/colors';
 
 const addBudgetButtonRadius = 50;
@@ -39,9 +39,10 @@ export default class BudgetListPresentation extends React.Component {
               textStyles={{ lineHeight: 125, fontSize: 100 }}
             />
           </FWrapper>
-          : <View>
-            <Text>Hello World!</Text>
-          </View>
+          : <FTable
+            data={this.props.budgets.toJS()}
+            displayFields={['name', 'balance']}
+          />
         }
       </View>
     );
