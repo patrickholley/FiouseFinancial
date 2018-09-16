@@ -3,16 +3,26 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import FTableCell from './FTableCell';
 
-const RowView = styled.View``;
+const RowView = styled.View`
+  display: flex;
+  flex-flow: row;
+  justifyContent: space-around;
+  background-color: white;
+`;
 
 export default class FTableRow extends React.PureComponent {
   render() {
-    const { data, displayFields } = this.props;
-    console.log(data, displayFields);
+    const { data, columns, columnStyles } = this.props;
 
     return (
       <RowView>
-        {displayFields.map(field => <FTableCell key={field} text={data[field]} />)}
+        {columns.map(column => (
+          <FTableCell
+            key={column}
+            text={data[column]}
+            style={columnStyles[column]}
+          />
+        ))}
       </RowView>
     );
   }

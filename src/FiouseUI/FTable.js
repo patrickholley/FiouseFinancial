@@ -5,12 +5,12 @@ import PropTypes from 'prop-types';
 import FTableRow from './FTableRow';
 
 const TableList = styled.FlatList`
-  background-color: blue;
+  width: 80%;
 `;
 
 export default class FTable extends React.PureComponent {
   render() {
-    const { data, displayFields } = this.props;
+    const { data, columns, columnStyles } = this.props;
     const tableData = Array.isArray(data) ? data : Object.keys(data).map(key => data[key]);
 
     return (
@@ -19,7 +19,8 @@ export default class FTable extends React.PureComponent {
         renderItem={({ item }) => (
           <FTableRow
             data={item}
-            displayFields={displayFields}
+            columns={columns}
+            columnStyles={columnStyles}
           />
         )}
       />

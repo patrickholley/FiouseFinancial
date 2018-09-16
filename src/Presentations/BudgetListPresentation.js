@@ -39,10 +39,16 @@ export default class BudgetListPresentation extends React.Component {
               textStyles={{ lineHeight: 125, fontSize: 100 }}
             />
           </FWrapper>
-          : <FTable
-            data={this.props.budgets.toJS()}
-            displayFields={['name', 'balance']}
-          />
+          : <View style={{ flex: 1, alignItems: 'center', paddingTop: 40 }}>
+            <FTable
+              data={this.props.budgets.toJS()}
+              columns={['name', 'balance']}
+              columnStyles={{
+                name: { flex: 2 },
+                balance: { flex: 1 },
+              }}
+            />
+          </View>
         }
       </View>
     );
