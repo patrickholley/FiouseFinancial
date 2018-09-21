@@ -19,11 +19,10 @@ class PlaceholderContainer extends React.Component {
           this.props.restoreUser(user);
           AsyncStorage.multiGet(['budgets', 'expenses'])
             .then(budgetsData => {
-              console.log(budgetsData);
               if (budgetsData) {
                 this.props.restoreBudgets(
                   fromJS(JSON.parse(budgetsData[0][1])),
-                  fromJS(JSON.parse(budgetsData[1][1])),
+                  budgetsData[1][1] ? fromJS(JSON.parse(budgetsData[1][1])) : {},
                 );
               }
 

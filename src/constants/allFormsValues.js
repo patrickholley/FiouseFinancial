@@ -64,4 +64,15 @@ export default fromJS({
       },
     },
   },
+  expenseEdit: {
+    fields: {
+      description: { placeholder: 'Description', defaultValue: '' },
+      amount: {
+        placeholder: 'Expense Amount',
+        keyboardType: 'numeric',
+        maxLength: 10,
+        defaultValue: '',
+      },
+    },
+  },
 });

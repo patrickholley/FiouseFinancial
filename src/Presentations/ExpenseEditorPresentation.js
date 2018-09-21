@@ -20,7 +20,7 @@ export default class ExpenseEditorPresentation extends React.Component {
           canSubmit={canSubmit}
           onFieldChange={onFieldChange}
           onFormSubmit={onFormSubmit}
-          submitText={`${this.props.budgetId === 'new' ? 'Create' : 'Update'} Budget`}
+          submitText={`${this.props.expenseId === 'new' ? 'Add' : 'Update'} Expense`}
         />
       </FWrapper>
     );
