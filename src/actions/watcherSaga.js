@@ -10,8 +10,9 @@ import {
   RESET_PASSWORD_REQUEST,
   LOGOUT_REQUEST,
   SAVE_BUDGET_REQUEST,
+  SAVE_EXPENSE_REQUEST,
 } from '../constants/actions';
-import { saveBudgetSaga } from './budgetSagas';
+import { saveBudgetSaga, saveExpenseSaga } from './budgetSagas';
 
 export default function* watcherSaga() {
   yield takeLatest(LOGIN_REQUEST, authUserSaga);
@@ -19,4 +20,5 @@ export default function* watcherSaga() {
   yield takeLatest(NEW_ACCOUNT_REQUEST, authUserSaga);
   yield takeLatest(RESET_PASSWORD_REQUEST, resetPasswordSaga);
   yield takeLatest(SAVE_BUDGET_REQUEST, saveBudgetSaga);
+  yield takeLatest(SAVE_EXPENSE_REQUEST, saveExpenseSaga);
 }

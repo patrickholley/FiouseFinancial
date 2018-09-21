@@ -11,6 +11,7 @@ import PlaceholderContainer from './Containers/PlaceholderContainer';
 import SettingsContainer from './Containers/SettingsContainer';
 import NavigationDrawerContainer from './Containers/NavigationDrawerContainer';
 import BudgetEditorContainer from './Containers/BudgetEditorContainer';
+import ExpenseEditorContainer from './Containers/ExpenseEditorContainer';
 import BudgetContainer from './Containers/BudgetContainer';
 import colors from './constants/colors';
 
@@ -92,6 +93,12 @@ export default class RouterWrapper extends React.Component {
               key="budget"
               component={BudgetContainer}
               title="Budget"
+            />
+
+            <Scene
+              key="expenseEditor"
+              component={ExpenseEditorContainer}
+              title="Edit Expense"
             />
 
             <Scene

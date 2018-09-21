@@ -31,7 +31,7 @@ export default class FButton extends React.PureComponent {
           color={this.props.textColor}
           style={this.props.textStyles}
         >
-          {this.props.preserveCasing ? this.props.text.toUpperCase() : this.props.text}
+          {this.props.text}
         </ButtonText>
         {this.props.children}
       </ButtonTouchableOpacity>
@@ -44,7 +44,6 @@ FButton.propTypes = {
   onPress: PropTypes.func.isRequired,
   backgroundColor: PropTypes.string.isRequired,
   buttonStyles: PropTypes.object,
-  preserveCasing: PropTypes.bool,
   textColor: PropTypes.string,
   textStyles: PropTypes.object,
   text: PropTypes.string.isRequired,
@@ -55,5 +54,4 @@ FButton.defaultProps = {
   isDisabled: false,
   textColor: 'white',
   textStyles: {},
-  preserveCasing: false,
 };

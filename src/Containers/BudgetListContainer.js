@@ -8,7 +8,9 @@ class BudgetListContainer extends React.Component {
   constructor() {
     super();
 
-    this.state = { isEditorOpen: false };
+    this.state = {
+      rowPressTimer: null,
+    };
   }
 
   componentWillUpdate = (newProps) => {
@@ -17,9 +19,15 @@ class BudgetListContainer extends React.Component {
     }
   };
 
-  toggleEditor = () => {
-    const { isEditorOpen } = this.state;
-    this.setState({ isEditorOpen: !isEditorOpen });
+  onRowPressIn = budget => {
+    /* this.setState({
+      rowPressTimer: setTimeout(() => { console.log('hello'); }, 1000),
+    }); */
+  }
+
+  onRowPressOut = budget => {
+    // clearTimeout(this.state.rowPressTimer);
+    Actions.budget({ title: budget.name, budget });
   }
 
   render() {
@@ -27,7 +35,8 @@ class BudgetListContainer extends React.Component {
       <BudgetListPresentation
         budgets={this.props.budgets}
         isEditorOpen={this.state.isEditorOpen}
-        toggleEditor={this.toggleEditor}
+        onRowPressIn={this.onRowPressIn}
+        onRowPressOut={this.onRowPressOut}
       />
     );
   }

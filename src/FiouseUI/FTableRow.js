@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import FTableCell from './FTableCell';
 
-const RowView = styled.View`
+const RowTouchableOpacity = styled.TouchableOpacity`
   display: flex;
   flex-flow: row;
   justifyContent: space-around;
@@ -14,21 +14,28 @@ export default class FTableRow extends React.PureComponent {
   render() {
     const {
       data,
+      disabled,
       columns,
       columnStyles,
+      onPressIn,
+      onPressOut,
       rowStyles,
     } = this.props;
 
     return (
-      <RowView style={rowStyles} >
+      <RowTouchableOpacity
+        disabled={disabled}
+        onPressIn={() => { onPressIn(data); }}
+        onPressOut={() => { onPressOut(data); }}
+      >
         {columns.map(column => (
           <FTableCell
             key={column}
             text={data[column]}
-            style={columnStyles[column]}
+            style={Object.assign({}, columnStyles[column], rowStyles)}
           />
         ))}
-      </RowView>
+      </RowTouchableOpacity>
     );
   }
 }

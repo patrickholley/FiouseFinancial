@@ -17,9 +17,15 @@ const InstructionText = styled.Text`
 /* eslint-disable react/prefer-stateless-function */
 export default class BudgetListPresentation extends React.Component {
   render() {
+    const {
+      budgets,
+      onRowPressIn,
+      onRowPressOut,
+    } = this.props;
+
     return (
       <View style={{ flex: 1 }}>
-        {this.props.budgets.size === 0
+        {budgets.size === 0
           ? <FWrapper wrapperStyles={{ justifyContent: 'center', flex: 1 }}>
             <InstructionText>
               {'You have no budgets yet!'}
@@ -41,12 +47,14 @@ export default class BudgetListPresentation extends React.Component {
           </FWrapper>
           : <View style={{ flex: 1, alignItems: 'center', paddingTop: 40 }}>
             <FTable
-              data={this.props.budgets.toJS()}
+              data={budgets.toJS()}
               columns={['name', 'balance']}
               columnStyles={{
                 name: { flex: 2 },
                 balance: { flex: 1 },
               }}
+              onRowPressIn={onRowPressIn}
+              onRowPressOut={onRowPressOut}
             />
           </View>
         }

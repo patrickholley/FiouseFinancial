@@ -1,5 +1,5 @@
 import React from 'react';
-import { FlatList, View } from 'react-native';
+import { FlatList } from 'react-native';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import FTableRow from './FTableRow';
@@ -17,6 +17,8 @@ export default class FTable extends React.PureComponent {
       data,
       columns,
       columnStyles,
+      onRowPressIn,
+      onRowPressOut,
     } = this.props;
     const tableData = Array.isArray(data) ? data : Object.keys(data).map(key => data[key]);
     const headers = {};
@@ -28,10 +30,12 @@ export default class FTable extends React.PureComponent {
       <TableView>
         <FTableRow
           data={headers}
+          disabled
           columns={columns}
           columnStyles={columnStyles}
           rowStyles={{
             backgroundColor: colors[5],
+            fontWeight: 'bold',
           }}
         />
         <FlatList
@@ -41,6 +45,8 @@ export default class FTable extends React.PureComponent {
               data={item}
               columns={columns}
               columnStyles={columnStyles}
+              onPressIn={onRowPressIn}
+              onPressOut={onRowPressOut}
             />
           )}
           style={{ width: '100%' }}
